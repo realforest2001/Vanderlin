@@ -63,12 +63,10 @@
 
 /datum/antagonist/bandit/proc/equip_bandit()
 
-	owner.unknow_all_people()
-	for(var/datum/mind/MF in get_minds())
-		owner.become_unknown_to(MF)
-	for(var/datum/mind/MF in get_minds("Bandit"))
-		owner.i_know_person(MF)
-		owner.person_knows_me(MF)
+	owner.forget_and_be_forgotten()
+
+	for(var/datum/mind/found_mind in get_minds("Bandit"))
+		owner.share_identities(found_mind)
 
 	return TRUE
 

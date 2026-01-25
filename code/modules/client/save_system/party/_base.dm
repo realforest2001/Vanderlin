@@ -311,11 +311,7 @@ GLOBAL_LIST_EMPTY(pending_party_invites) // Format: invitee_ckey = list(party, i
 
 
 // Not really sure where is best to put this, so it can go in here for now.
-/mob/living/carbon/verb/make_acquaintance()
-	set name = "Make Acquaintance"
-	set category = "IC"
-	set desc = "Add someone to your list of known people. With permission."
-
+/mob/living/carbon/proc/make_acquaintance()
 	var/mob/living/carbon/inviter = usr
 	var/list/mobs = view(1, inviter)
 	for(var/mob/living/carbon/person in mobs)

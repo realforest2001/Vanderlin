@@ -118,6 +118,13 @@
 	if(!isturf(flier.loc))
 		to_chat(flier, span_warning("I need space to fly!"))
 		return FALSE
+	if(!owner.can_zTravel(direction = UP))
+		to_chat(owner, span_warning("I need space to fly!"))
+		return FALSE
+	var/turf/above_turf = GET_TURF_ABOVE(turf)
+	if(!isopenspace(above_turf))
+		to_chat(owner, span_warning("I need space to fly!"))
+		return FALSE
 	if(flier.pulledby?.grab_state >= GRAB_AGGRESSIVE)
 		to_chat(flier, span_warning("I can't fly while being grabbed so tightly!"))
 		return FALSE
@@ -139,9 +146,14 @@
 // Start flying normally
 /datum/action/item_action/organ_action/use/flight/proc/start_flying()
 	var/turf/turf = get_turf(owner)
-	if(owner.can_zTravel(direction = UP))
-		if(isopenspace(GET_TURF_ABOVE(turf)))
-			turf = GET_TURF_ABOVE(turf)
+	if(!owner.can_zTravel(direction = UP)) // Repeated from can_fly() for safety checks.
+		to_chat(owner, span_warning("I need space to fly!"))
+		return FALSE
+	var/turf/above_turf = GET_TURF_ABOVE(turf)
+	if(!isopenspace(above_turf)) // Repeated from can_fly() for safety checks.
+		to_chat(owner, span_warning("I need space to fly!"))
+		return FALSE
+	turf = above_turf
 	owner.movement_type |= FLYING
 	flying = TRUE
 	to_chat(owner, span_notice("I start flying."))

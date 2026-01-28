@@ -1,3 +1,4 @@
+/*
 #define MAX_COOKIE_LENGTH 5
 
 /*********************************
@@ -297,3 +298,5 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	owner.force_dark_theme()
 
 #undef MAX_COOKIE_LENGTH
+
+*/

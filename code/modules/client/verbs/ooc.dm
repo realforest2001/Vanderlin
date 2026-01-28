@@ -360,12 +360,10 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 		return
 
 	else
-		chatOutput.start()
 		var/action = alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start()")
 		else
-			chatOutput.load()
 			alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start() and forcing a load()")

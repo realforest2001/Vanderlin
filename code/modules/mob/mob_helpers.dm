@@ -994,7 +994,7 @@
 /mob/proc/can_see_reagents()
 	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
 
-/mob/living/carbon/human/proc/get_role_title(ignore_pronouns = FALSE, steward_check = TRUE)
+/mob/living/carbon/human/proc/get_role_title(ignore_pronouns = FALSE, steward_check = FALSE)
 	var/used_title
 	if(is_apprentice())
 		used_title = return_our_apprentice_name()
@@ -1002,7 +1002,7 @@
 		var/datum/job/job_datum = SSjob.GetJob(job)
 		if(!job_datum)
 			return job
-		if(job_datum.department_flag == OUTSIDERS)
+		if(steward_check && (job_datum.department_flag == OUTSIDERS))
 			return "Visitor"
 		used_title = job_datum.get_informed_title(src, ignore_pronouns)
 

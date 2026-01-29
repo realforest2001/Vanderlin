@@ -119,6 +119,10 @@
 	icon_state = "spoon"
 	smeltresult = /obj/item/fertilizer/ash
 
+/obj/item/kitchen/spoon/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_IS_SPOON)
+
 /obj/item/kitchen/spoon/iron
 	name = "iron spoon"
 	icon_state = "spoon_iron"
@@ -241,7 +245,7 @@
 	if(reagents.total_volume > 0 && istype(I, /obj/item/natural/cloth) && user?.used_intent?.type == INTENT_USE)
 		to_chat(user, span_warning("You can't clean the [src] while it has something inside of it!"))
 		return
-	if(!istype(I, /obj/item/kitchen/spoon))
+	if(!HAS_TRAIT(I, TRAIT_IS_SPOON))
 		return ..()
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))

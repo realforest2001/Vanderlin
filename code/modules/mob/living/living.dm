@@ -113,7 +113,7 @@
 	if(dex_save >= 5) // Master climbers can fall down 2 levels without hurting themselves
 		if(levels <= 2)
 			to_chat(src, span_info("My dexterity allowed me to land on my feet unscathed!"))
-			if(m_intent == MOVE_INTENT_SNEAK) // If we're sneaking, don't make a sound
+			if(m_intent != MOVE_INTENT_SNEAK) // If we're sneaking, don't make a sound
 				playsound(src, 'sound/foley/bodyfall (1).ogg', 100, FALSE)
 			return
 	if(movement_type & FLYING)

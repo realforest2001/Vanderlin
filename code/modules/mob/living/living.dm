@@ -109,6 +109,10 @@
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE1))
 		if(levels <= 2)
 			return
+	if(movement_type & FLYING)
+		to_chat(src, span_info("You glide down to a more manageable height."))
+		playsound(src, 'sound/mobs/wingflap.ogg', 75, FALSE)
+		return
 	var/dex_save = src.get_skill_level(/datum/skill/misc/climbing)
 	if(dex_save >= 5) // Master climbers can fall down 2 levels without hurting themselves
 		if(levels <= 2)
@@ -116,9 +120,6 @@
 			if(m_intent != MOVE_INTENT_SNEAK) // If we're sneaking, don't make a sound
 				playsound(src, 'sound/foley/bodyfall (1).ogg', 100, FALSE)
 			return
-	if(movement_type & FLYING)
-		to_chat(src, span_info("You glide down to a more manageable height."))
-		return
 	var/points
 	for(var/i in 2 to levels)
 		i++

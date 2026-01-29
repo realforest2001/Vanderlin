@@ -168,6 +168,7 @@
 	owner.movement_type |= FLYING
 	flying = TRUE
 	to_chat(owner, span_notice("I start flying."))
+	playsound(owner, 'sound/mobs/wingflap.ogg', 75, FALSE)
 	init_signals()
 	if(turf != get_turf(owner))
 		var/matrix/original = owner.transform

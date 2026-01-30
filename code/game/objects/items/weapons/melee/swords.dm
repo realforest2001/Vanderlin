@@ -529,7 +529,6 @@
 	icon_state = "rapier"
 	bigboy = TRUE
 	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
-	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
 	force_wielded = 0
 	gripped_intents = null
 	alt_intents = null

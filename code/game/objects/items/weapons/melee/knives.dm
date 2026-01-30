@@ -64,6 +64,10 @@
 	clickcd = 10	// between normal and fast
 	item_damage_type = "slash"
 
+/// Weaker at cutting due to the needle blade
+/datum/intent/dagger/cut/stiletto
+	penfactor = 5
+
 /*------------\
 | Stab intent |	good AP, fast
 \---------.--*/
@@ -79,6 +83,9 @@
 	clickcd = CLICK_CD_FAST
 	swingdelay = 1
 	item_damage_type = "stab"
+
+/datum/intent/dagger/thrust/stiletto
+	penfactor = 40
 
 /// special intent for profane dagger, steals the appearance of another
 /datum/intent/peculate
@@ -365,6 +372,13 @@
 /obj/item/weapon/knife/dagger/steel/special
 	icon_state = "sdaggeralt"
 	desc = "A dagger of refined steel, and even more refined appearance."
+
+/obj/item/weapon/knife/dagger/steel/stiletto
+	name = "stiletto"
+	desc = "A needle thin dagger made of refined steel, the favored weapon of assassins and angry nobles."
+	icon_state = "stiletto"
+	possible_item_intents = list(/datum/intent/dagger/thrust/stiletto, /datum/intent/dagger/cut/stiletto)
+	melt_amount = 45
 
 /obj/item/weapon/knife/dagger/kukri/steel
 	name = "steel kukri"

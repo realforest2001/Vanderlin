@@ -373,6 +373,10 @@
 	icon_state = "sdaggeralt"
 	desc = "A dagger of refined steel, and even more refined appearance."
 
+/obj/item/weapon/knife/dagger/steel/royal
+	icon_state = "gsdagger"
+	desc = "A dagger of refined steel with lavish gold decoration, even in the hands of most nobles it is considered overly decadent."
+
 /obj/item/weapon/knife/dagger/steel/stiletto
 	name = "stiletto"
 	desc = "A needle thin dagger made of refined steel, the favored weapon of assassins and angry nobles."

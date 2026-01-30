@@ -85,7 +85,7 @@
 	item_damage_type = "stab"
 
 /datum/intent/dagger/thrust/stiletto
-	penfactor = 40
+	penfactor = 35
 
 /// special intent for profane dagger, steals the appearance of another
 /datum/intent/peculate

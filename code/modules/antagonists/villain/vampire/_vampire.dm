@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	// Create a custom clan instance
 	var/datum/clan/custom/new_clan = new /datum/clan/custom()
 	new_clan.name = custom_clan_name
-	new_clan.clane_covens = selected_covens.Copy()
+	new_clan.clan_covens = selected_covens.Copy()
 
 	// Apply the custom clan
 	vampdude.set_clan_direct(new_clan)

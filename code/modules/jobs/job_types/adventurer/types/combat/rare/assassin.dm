@@ -518,7 +518,7 @@
 		/obj/item/clothing/shoes/boots = ITEM_SLOT_SHOES,
 		/obj/item/storage/backpack/satchel = ITEM_SLOT_BACK_L,
 		/obj/item/storage/belt/pouch/coins/poor = ITEM_SLOT_BELT_L,
-		/obj/item/weapon/knife/dagger/steel = ITEM_SLOT_BELT_R,
+		/obj/item/weapon/knife/dagger/steel/stiletto = ITEM_SLOT_BELT_R,
 		/obj/item/clothing/cloak/faceless = ITEM_SLOT_CLOAK,
 		/obj/item/clothing/shirt/undershirt/colored/black = ITEM_SLOT_SHIRT,
 		/obj/item/clothing/face/lordmask/faceless = ITEM_SLOT_MASK,

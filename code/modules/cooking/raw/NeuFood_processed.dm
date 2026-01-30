@@ -373,7 +373,7 @@
 /obj/item/reagent_containers/glass/bucket/wooden/attackby(obj/item/I, mob/living/user, params)
 	if(user.mind)
 		long_cooktime = (200 - ((user.get_skill_level(/datum/skill/craft/cooking))*22))
-	if(HAS_TRAIT(I, TRAIT_IS_SPOON))
+	if(tool_behaviour == TOOL_SPOON)
 		if(!reagents.has_reagent(/datum/reagent/consumable/milk/salted, 15) && !reagents.has_reagent(/datum/reagent/consumable/milk/salted_gote, 15))
 			to_chat(user, span_warning(">Not enough salted milk."))
 			return

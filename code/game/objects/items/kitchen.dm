@@ -23,11 +23,8 @@
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/blank.ogg'
 	armor = list("blunt" = 0, "slash" = 0, "stab" = 0,  "piercing" = 0, "fire" = 50, "acid" = 30)
+	tool_behaviour = TOOL_FORK
 	var/datum/reagent/forkload //used to eat omelette
-
-/obj/item/kitchen/fork/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_IS_FORK)
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")

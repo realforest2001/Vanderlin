@@ -118,10 +118,7 @@
 	desc = "Traditional utensil for shoveling soup into your mouth, or to churn butter with."
 	icon_state = "spoon"
 	smeltresult = /obj/item/fertilizer/ash
-
-/obj/item/kitchen/spoon/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_IS_SPOON)
+	tool_behaviour = TOOL_SPOON
 
 /obj/item/kitchen/spoon/iron
 	name = "iron spoon"
@@ -245,7 +242,7 @@
 	if(reagents.total_volume > 0 && istype(I, /obj/item/natural/cloth) && user?.used_intent?.type == INTENT_USE)
 		to_chat(user, span_warning("You can't clean the [src] while it has something inside of it!"))
 		return
-	if(!HAS_TRAIT(I, TRAIT_IS_SPOON))
+	if(!tool_behaviour == TOOL_SPOON)
 		return ..()
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))

@@ -377,7 +377,7 @@ All foods are distributed among various categories. Use common sense.
 		if(istype(loc,/obj/item/plate))
 			plate_check = loc
 
-		if(possible_fork.tool_behaviour == TOOL_FORK)
+		if(possible_fork?.tool_behaviour == TOOL_FORK)
 			if(!plate_check)
 				if(HAS_TRAIT(M,TRAIT_NOBLE))
 					M.add_stress(/datum/stress_event/noble_ate_with_just_a_fork)

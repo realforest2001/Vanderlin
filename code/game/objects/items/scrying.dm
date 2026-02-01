@@ -5,11 +5,22 @@
 
 	var/vision_duration = 8 SECONDS
 	var/cooldown_duration = 30 SECONDS
+
+	var/mob/scry_eye/scrying_eye
+	var/mob/living/carbon/held_user
 	COOLDOWN_DECLARE(scry_cooldown)
 
-/datum/scrying_component/New()
+/datum/scrying_component/New(var/obj/item/scrying/parent)
 	. = ..()
 	text_cooldown_fail = replacetext(text_cooldown_fail, "NAME_HERE", "\the [name]")
+	if(!parent)
+		return
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del), parent)
+
+/datum/scrying_component/proc/handle_parent_del(var/obj/item/scrying/parent)
+	SIGNAL_HANDLER
+	parent?.scry_comp = null
+	qdel(src)
 
 /datum/scrying_component/proc/activate(mob/living/user)
 	if(!pass_extra_checks())
@@ -32,39 +43,64 @@
 		to_chat(user, span_warning(text_cooldown_fail))
 		return FALSE
 
+	var/mob/living/carbon/human/found_target
 	for(var/mob/living/carbon/human/human_target in GLOB.human_list)
 		if(human_target.real_name == search_name)
 			var/turf/target_turf = get_turf(human_target)
 			if(!target_turf)
 				continue
-			if(HAS_TRAIT(human_target, TRAIT_ANTISCRYING))
-				to_chat(user, span_warning("I peer into \the [name], but an impenetrable fog shrouds [search_name]."))
-				to_chat(human_target, span_warning("My magical shrouding reacted to something."))
-				return
-			log_game("SCRYING: [user.real_name] ([user.ckey]) has used the [name] to leer at [human_target.real_name] ([human_target.ckey])")
-			ADD_TRAIT(user, TRAIT_NOSSDINDICATOR, "scrying")//Consider changing this -------------------------------------
-			var/mob/dead/observer/screye/eye = user.scry_ghost()//Consider changing this -------------------------------------
-			if(!eye)//Consider changing this -------------------------------------
-				return//Consider changing this -------------------------------------
-			eye.ManualFollow(human_target)//Consider changing this -------------------------------------
+			found_target = human_target
+			break
 
-			COOLDOWN_START(src, scry_cooldown, cooldown_duration)
-			user.visible_message(span_danger("[user] stares into \the [name], [user.p_their()] eyes rolling back into [user.p_their()] head."))
-			addtimer(CALLBACK(eye, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), vision_duration)
-			if(!human_target.stat)
-				if(human_target.STAPER >= 15)
-					if(human_target.mind)
-						if(human_target.mind.do_i_know(name = user.real_name))
-							to_chat(human_target, span_warning("I can clearly see the face of [user.real_name] staring at me!"))
-							to_chat(user, span_warning("[human_target.real_name] stares back at me!"))
-							return
-					to_chat(human_target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
+	held_user = user
+	if(HAS_TRAIT(found_target, TRAIT_ANTISCRYING))
+		to_chat(user, span_warning("I peer into \the [name], but an impenetrable fog shrouds [search_name]."))
+		to_chat(found_target, span_warning("My magical shrouding reacted to something."))
+		held_user = null
+		return
+	log_game("SCRYING: [user.real_name] ([user.ckey]) has used the [name] to leer at [found_target.real_name] ([found_target.ckey])")
+
+	scrying_eye = create_eye(held_user)
+	if(!scrying_eye)
+		remove_eye()
+		return
+	scrying_eye.orbit(found_target)
+
+	var/real_cooldown = cooldown_duration + vision_duration
+	COOLDOWN_START(src, scry_cooldown, real_cooldown)
+	user.visible_message(span_danger("[user] stares into \the [name], [user.p_their()] eyes rolling back into [user.p_their()] head."))
+	if(!found_target.stat)
+		if(found_target.STAPER >= 15)
+			if(found_target.mind)
+				if(found_target.mind.do_i_know(name = user.real_name))
+					to_chat(found_target, span_warning("I can clearly see the face of [user.real_name] staring at me!"))
+					to_chat(user, span_warning("[found_target.real_name] stares back at me!"))
+					remove_eye()
 					return
-				if(human_target.STAPER >= 11)
-					to_chat(human_target, span_warning("I feel a pair of unknown eyes on me."))
-			REMOVE_TRAIT(user, TRAIT_NOSSDINDICATOR, "scrying")//Consider changing this -------------------------------------
+			to_chat(found_target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
+			remove_eye()
 			return
+		if(found_target.STAPER >= 11)
+			to_chat(found_target, span_warning("I feel a pair of unknown eyes on me."))
+		remove_eye()
+		return
 	to_chat(user, span_warning("I peer into \the [name], but can't find [search_name]."))
+	remove_eye()
+
+/datum/scrying_component/proc/create_eye()
+	if(!held_user)
+		return FALSE
+	scrying_eye = new
+	held_user.client?.eye = scrying_eye
+	addtimer(CALLBACK(src, PROC_REF(remove_eye)), vision_duration)
+
+/datum/scrying_component/proc/remove_eye()
+	if(!held_user)
+		return FALSE
+	held_user.client?.eye = held_user
+	QDEL_NULL(scrying_eye)
+	held_user = null
+
 
 /datum/scrying_component/proc/pass_extra_checks(mob/living/user)
 	return TRUE
@@ -107,14 +143,12 @@
 	grid_height = 32
 	grid_width = 32
 
-	var/mob/current_owner
-
 	var/datum/scrying_component/scry_comp
 	var/scry_comp_path = /datum/scrying_component/orb
 
 /obj/item/scrying/Initialize(mapload)
 	. = ..()
-	scry_comp = new scry_comp_path
+	scry_comp = new scry_comp_path(src)
 
 /obj/item/scrying/eye
 	name = "accursed eye"
@@ -144,8 +178,37 @@
 
 /obj/structure/nocdevice/Initialize()
 	. = ..()
-	scry_comp = new
+	scry_comp = new(src)
 
 /obj/structure/nocdevice/attack_hand(mob/user)
 	. = ..()
 	scry_comp.activate(user)
+
+
+
+
+/*	..................   THE EYE   ................... */
+/mob/scry_eye
+	sight = 0
+	see_in_dark = 0
+	hud_type = /datum/hud/obs
+	invisibility = INVISIBILITY_GHOST
+	see_invisible = SEE_INVISIBLE_GHOST
+
+/mob/scry_eye/blackmirror
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+	see_in_dark = 100
+
+/mob/scry_eye/Move(n, direct)
+	return
+/*
+/mob/proc/scry_ghost()
+	if(key)
+		stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+		var/mob/dead/observer/screye/ghost = new(src)	// Transfer safety to observer spawning proc.
+		ghost.ghostize_time = world.time
+		SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
+		ghost.can_reenter_corpse = TRUE
+		ghost.key = key
+		return ghost
+*/

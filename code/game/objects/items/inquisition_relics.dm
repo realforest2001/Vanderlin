@@ -1269,14 +1269,14 @@
 
 	ADD_TRAIT(user, TRAIT_NOSSDINDICATOR, "blackmirror")
 
-	var/mob/dead/observer/screye/blackmirror/S = user.scry_ghost()
-	if(!S)
-		return
-	S.ManualFollow(target)
-	S.add_client_colour(/datum/client_colour/nocshaded)
+//	var/mob/scry_eye/blackmirror/S = user.scry_ghost()--------------------------------------------
+//	if(!S)--------------------------------------------
+//		return--------------------------------------------
+//	S.ManualFollow(target)--------------------------------------------
+//	S.add_client_colour(/datum/client_colour/nocshaded)--------------------------------------------
 	user.visible_message(span_warning("[user] stares into [src], their eyes glazing over..."))
 
-	addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 4 SECONDS)
+//	addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 4 SECONDS)--------------------------------------------
 	addtimer(CALLBACK(user, GLOBAL_PROC_REF(playsound), user, 'sound/items/blackeye.ogg', 100, FALSE), 4 SECONDS)
 	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_NOSSDINDICATOR, "blackmirror"), 4 SECONDS)
 
@@ -1399,14 +1399,14 @@
 	var/mob/living/target = lookat?.resolve()
 	if(!target)
 		return
-	var/mob/dead/observer/screye/blackmirror/S = L.scry_ghost()
-	if(!S)
-		return
-	S.ManualFollow(target)
-	S.add_client_colour(/datum/client_colour/nocshaded)
+//	var/mob/scry_eye/blackmirror/S = L.scry_ghost()--------------------------
+//	if(!S)------------------------------------
+//		return-----------------------------------------
+//	S.ManualFollow(target)----------------------------------
+//	S.add_client_colour(/datum/client_colour/nocshaded)-------------------------
 	L.visible_message(span_warning("[L] looks inward as their eyes glaze over..."))
 
-	addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 4 SECONDS)
+//	addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 4 SECONDS)
 	addtimer(CALLBACK(L, GLOBAL_PROC_REF(playsound), L, 'sound/items/blackeye.ogg', 100, FALSE), 4 SECONDS)
 	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_NOSSDINDICATOR, "blackmirror"), 4 SECONDS)
 

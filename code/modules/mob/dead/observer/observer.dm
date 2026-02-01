@@ -107,22 +107,6 @@ GLOBAL_LIST_INIT(ghost_verbs, list(
 			return
 	. = ..()
 
-/mob/dead/observer/screye
-//	see_invisible = SEE_INVISIBLE_LIVING
-	sight = 0
-	see_in_dark = 0
-	hud_type = /datum/hud/obs
-	can_reenter_corpse = FALSE
-	invisibility = INVISIBILITY_GHOST
-	see_invisible = SEE_INVISIBLE_GHOST
-
-/mob/dead/observer/screye/blackmirror
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	see_in_dark = 100
-
-/mob/dead/observer/screye/Move(n, direct)
-	return
-
 /mob/dead/observer/profane // Ghost type for souls trapped by the profane dagger. They can't move, but can talk to the dagger's wielder and other trapped souls.
 	sight = 0
 	invisibility = INVISIBILITY_GHOST
@@ -214,9 +198,8 @@ GLOBAL_LIST_INIT(ghost_verbs, list(
 	. = ..()
 
 	if(!istype(src, /mob/dead/observer/rogue/arcaneeye))
-		if(!istype(src, /mob/dead/observer/screye))
-			client?.verbs += GLOB.ghost_verbs
-			to_chat(src, span_danger("Click the <b>SKULL</b> on the left of your HUD to respawn."))
+		client?.verbs += GLOB.ghost_verbs
+		to_chat(src, span_danger("Click the <b>SKULL</b> on the left of your HUD to respawn."))
 
 	grant_all_languages()
 
@@ -327,16 +310,6 @@ Works together with spawning an observer, noted above.
 			// 		to_chat(src, "<span class='warning'>I'm preparing to walk again.</span>")
 			// 	return
 	return ..()
-
-/mob/proc/scry_ghost()
-	if(key)
-		stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-		var/mob/dead/observer/screye/ghost = new(src)	// Transfer safety to observer spawning proc.
-		ghost.ghostize_time = world.time
-		SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-		ghost.can_reenter_corpse = TRUE
-		ghost.key = key
-		return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.

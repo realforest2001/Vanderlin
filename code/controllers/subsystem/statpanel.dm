@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(statpanels)
 		var/list/global_data = list(
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Round Time: [duration2text()]",
+			//"Round Time: [duration2text()]",
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
 		)
 
@@ -31,15 +31,15 @@ SUBSYSTEM_DEF(statpanels)
 			continue
 		if(target.stat_tab == "Status")
 //			var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
-			var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
+			var/other_str = ""//url_encode(json_encode(target.mob.get_status_tab_items()))
 			target << output("[encoded_global_data];null;[other_str]", "statbrowser:update")
-		if(!target.admin_holder)
+		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
-			if(!("Admin" in target.panel_tabs))
-				target << output("[url_encode(target.admin_holder.href_token)]", "statbrowser:add_admin_tabs")
-			if(!("MC" in target.panel_tabs) && check_client_rights(target, R_DEBUG|R_HOST, FALSE))
-				target << output("", "statbrowser:add_mc_tab")
+			//if(!("Admin" in target.panel_tabs))
+			//	target << output("[url_encode(target.holder.href_token)]", "statbrowser:add_admin_tabs")
+			//if(!("MC" in target.panel_tabs) && check_client_rights(target, R_DEBUG|R_HOST, FALSE))
+			//	target << output("", "statbrowser:add_mc_tab")
 			if(target.stat_tab == "MC")
 				var/turf/eye_turf = get_turf(target.eye)
 				var/coord_entry = url_encode(COORD(eye_turf))
@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(statpanels)
 						if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 							continue
 						overrides += target_image.loc
-					turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf), htmlicon(target_mob.listed_turf, target, sourceonly=TRUE))
+					turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf))//, htmlicon(target_mob.listed_turf, target, sourceonly=TRUE))
 					for(var/tc in target_mob.listed_turf)
 						var/atom/movable/turf_content = tc
 						if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
@@ -77,9 +77,9 @@ SUBSYSTEM_DEF(statpanels)
 								cached_images += REF(turf_content)
 								turf_content.RegisterSignal(turf_content, COMSIG_PARENT_QDELETING, /atom/.proc/remove_from_cache) // we reset cache if anything in it gets deleted
 								if(ismob(turf_content) || length(turf_content.overlays) > 2)
-									turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), costly_icon2html(turf_content, target, sourceonly=TRUE))
+									turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), costly_icon2html(turf_content, target))
 								else
-									turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), icon2html(turf_content, target, sourceonly=TRUE))
+									turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content), icon2html(turf_content, target))
 							else
 								turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 						else
@@ -142,3 +142,6 @@ SUBSYSTEM_DEF(statpanels)
 
 	statbrowser_ready = TRUE
 	init_verbs()
+
+/// Stat panel window declaration
+/client/var/datum/tgui_window/stat_panel

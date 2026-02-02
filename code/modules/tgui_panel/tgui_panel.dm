@@ -39,12 +39,12 @@
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	initialized_at = world.time
 	// Perform a clean initialization
-	window.initialize(inline_assets = list(
-		get_asset_datum(/datum/asset/simple/tgui_common),
-		get_asset_datum(/datum/asset/simple/tgui_panel),
-	))
-	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
-	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
+//	window.initialize(inline_assets = list(
+//		get_asset_datum(/datum/asset/simple/tgui_common),
+//		get_asset_datum(/datum/asset/simple/tgui_panel),
+//	))
+//	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
+//	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
 	request_telemetry()
 	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 2 SECONDS)
 
@@ -93,3 +93,28 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+/**
+* Compiles a full list of verbs to be sent to the browser
+* Sends the 2D verbs vector of (verb category, verb name)
+*/
+/client/proc/init_verbs()
+	if(IsAdminAdvancedProcCall())
+		return
+	var/list/verblist = list()
+	var/list/verbstoprocess = verbs.Copy()
+	if(mob)
+		verbstoprocess += mob.verbs
+		for(var/atom/movable/thing as anything in mob.contents)
+			verbstoprocess += thing.verbs
+	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
+	for(var/procpath/verb_to_init as anything in verbstoprocess)
+		if(!verb_to_init)
+			continue
+		if(verb_to_init.hidden)
+			continue
+		if(!istext(verb_to_init.category))
+			continue
+		panel_tabs |= verb_to_init.category
+		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
+	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))

@@ -159,7 +159,7 @@
 	scry_comp_path = /datum/scrying_component/eye
 
 
-/obj/item/scrying/attack_self(mob/user, params)
+/obj/item/scrying/attack_self(mob/user, list/modifiers)
 	. = ..()
 	scry_comp.activate(user)
 

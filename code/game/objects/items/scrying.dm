@@ -48,6 +48,7 @@
 		if(human_target.real_name == search_name)
 			var/turf/target_turf = get_turf(human_target)
 			if(!target_turf)
+				message_admins("SCRY DEBUG: NO TURF")
 				continue
 			found_target = human_target
 			break
@@ -58,46 +59,58 @@
 		to_chat(found_target, span_warning("My magical shrouding reacted to something."))
 		held_user = null
 		return
-	log_game("SCRYING: [user.real_name] ([user.ckey]) has used the [name] to leer at [found_target.real_name] ([found_target.ckey])")
 
-	scrying_eye = create_eye(held_user)
+	create_eye()
 	if(!scrying_eye)
-		remove_eye()
+		remove_eye(TRUE)
+		message_admins("SCRY DEBUG: NO EYE")
 		return
-	scrying_eye.orbit(found_target)
+
+	if(found_target.stat)
+		to_chat(user, span_warning("I peer into \the [name], but can't find [search_name]."))
+		remove_eye(TRUE)
+		return FALSE
+
+	log_game("SCRYING: [user.real_name] ([user.ckey]) has used the [name] to leer at [found_target.real_name] ([found_target.ckey])")
 
 	var/real_cooldown = cooldown_duration + vision_duration
 	COOLDOWN_START(src, scry_cooldown, real_cooldown)
-	user.visible_message(span_danger("[user] stares into \the [name], [user.p_their()] eyes rolling back into [user.p_their()] head."))
-	if(!found_target.stat)
-		if(found_target.STAPER >= 15)
-			if(found_target.mind)
-				if(found_target.mind.do_i_know(name = user.real_name))
-					to_chat(found_target, span_warning("I can clearly see the face of [user.real_name] staring at me!"))
-					to_chat(user, span_warning("[found_target.real_name] stares back at me!"))
-					remove_eye()
-					return
-			to_chat(found_target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
-			remove_eye()
-			return
-		if(found_target.STAPER >= 11)
-			to_chat(found_target, span_warning("I feel a pair of unknown eyes on me."))
-		remove_eye()
-		return
-	to_chat(user, span_warning("I peer into \the [name], but can't find [search_name]."))
-	remove_eye()
+	user.visible_message(span_danger("[user] stares into \the [name], [user.p_their()] eyes rolling back into [user.p_their()] head."), span_warning("My eyes roll into the back of my head as I'm lost in the depths of the orb."))
+	scrying_eye.orbit(found_target)
+	if(found_target.STAPER >= 15)
+		if(found_target.mind)
+			if(found_target.mind.do_i_know(name = user.real_name))
+				to_chat(found_target, span_warning("I can clearly see the face of [user.real_name] staring at me!"))
+				to_chat(user, span_warning("[found_target.real_name] stares back at me!"))
+				message_admins("SCRY DEBUG: WATCHING AWARE FULLY")
+				return TRUE
+		to_chat(found_target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
+		message_admins("SCRY DEBUG: WATCHING AWARE MORE")
+		return TRUE
+	if(found_target.STAPER >= 11)
+		to_chat(found_target, span_warning("I feel a pair of unknown eyes on me."))
+		message_admins("SCRY DEBUG: WATCHING AWARE")
+	message_admins("SCRY DEBUG: WATCHING")
+	return TRUE
 
 /datum/scrying_component/proc/create_eye()
 	if(!held_user)
 		return FALSE
 	scrying_eye = new
-	held_user.client?.eye = scrying_eye
+	scrying_eye.component = src
+	held_user.reset_perspective(scrying_eye)
+	held_user.Immobilize(vision_duration)
+	held_user.overlay_fullscreen("scrying", /atom/movable/screen/backhudl/obs)
 	addtimer(CALLBACK(src, PROC_REF(remove_eye)), vision_duration)
 
-/datum/scrying_component/proc/remove_eye()
+/datum/scrying_component/proc/remove_eye(early = FALSE)
+	message_admins("SCRY DEBUG: REMOVE CALL")
 	if(!held_user)
 		return FALSE
-	held_user.client?.eye = held_user
+	held_user.reset_perspective(held_user)
+	held_user.clear_fullscreen("scrying")
+	if(early)
+		held_user.SetImmobilized(2 SECONDS)
 	QDEL_NULL(scrying_eye)
 	held_user = null
 
@@ -189,26 +202,21 @@
 
 /*	..................   THE EYE   ................... */
 /mob/scry_eye
-	sight = 0
-	see_in_dark = 0
-	hud_type = /datum/hud/obs
-	invisibility = INVISIBILITY_GHOST
-	see_invisible = SEE_INVISIBLE_GHOST
-
-/mob/scry_eye/blackmirror
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 100
+	hud_type = /datum/hud/obs
+	invisibility = INVISIBILITY_GHOST
+	see_invisible = SEE_INVISIBLE_LIVING
+	var/datum/scrying_component/component
+
+/mob/scry_eye/blackmirror
 
 /mob/scry_eye/Move(n, direct)
 	return
-/*
-/mob/proc/scry_ghost()
-	if(key)
-		stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-		var/mob/dead/observer/screye/ghost = new(src)	// Transfer safety to observer spawning proc.
-		ghost.ghostize_time = world.time
-		SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-		ghost.can_reenter_corpse = TRUE
-		ghost.key = key
-		return ghost
-*/
+
+/mob/scry_eye/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), original_message)
+	if(!component)
+		qdel(src)
+		return
+	component.held_user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods, original_message)
+	return

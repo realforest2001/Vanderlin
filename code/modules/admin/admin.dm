@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
 /datum/admins/proc/show_player_panel(mob/M in GLOB.mob_list)
-	set category = "GameMaster"
+	set category = "Admin.Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 
@@ -329,7 +329,7 @@
 /datum/admins/proc/admin_heal(mob/living/M in GLOB.mob_list)
 	set name = "Heal Mob"
 	set desc = "Heal a mob to full health"
-	set category = "GameMaster"
+	set category = "Admin.Admin"
 
 	if(!check_rights())
 		return
@@ -340,7 +340,7 @@
 /datum/admins/proc/admin_curse(mob/living/carbon/human/M in GLOB.mob_list)
 	set name = "Curse"
 	set desc = "Curse or lift a curse from a character"
-	set category = "GameMaster"
+	set category = "GameMaster.Gods"
 	if(!check_rights())
 		return FALSE
 
@@ -402,7 +402,7 @@
 /datum/admins/proc/admin_sleep(mob/living/M in GLOB.mob_list)
 	set name = "Toggle Sleeping"
 	set desc = "Toggle a mob's sleeping state"
-	set category = "GameMaster"
+	set category = "Admin.Admin"
 
 	if(!check_rights())
 		return
@@ -595,8 +595,8 @@
 
 
 /datum/admins/proc/announce()
-	set category = "Special"
-	set name = "Announce"
+	set category = "GameMaster"
+	set name = "OOC Announcement"
 	set desc="Announce your desires to the world"
 	if(!check_rights(0))
 		return
@@ -613,7 +613,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
-	set category = "Special"
+	set category = "GameMaster"
 	set name = "Set Admin Notice"
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
 	if(!check_rights(0))
@@ -845,7 +845,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
-	set category = "GameMaster"
+	set category = "GameMaster.Antags"
 	set desc = ""
 	set name = "Show Traitor Panel"
 
@@ -1072,7 +1072,7 @@
 	log_admin("[key_name(usr)] spawned pollution at [epicenter.loc] ([choice] - [amount_choice]).")
 
 /datum/admins/proc/anoint_priest(mob/living/carbon/human/M in GLOB.human_list)
-	set category = "GameMaster"
+	set category = "GameMaster.Interactions"
 	set name = "Anoint New Priest"
 	set desc = "Choose a new priest. The previous one will be excommunicated."
 
@@ -1145,7 +1145,7 @@
 		QDEL_NULL(user.client.holder.path_debug)
 
 /datum/admins/proc/give_all_triumphs()
-	set category = "GameMaster"
+	set category = "GameMaster.Triumphs"
 	set desc = "Triumph Giver"
 	set name = "Give All Triumphs"
 

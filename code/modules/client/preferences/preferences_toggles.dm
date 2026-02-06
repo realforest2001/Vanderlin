@@ -412,7 +412,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -423,7 +423,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -434,7 +434,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide Radio Chatter"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -445,7 +445,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc ="Toggles seeing deadchat"
 	if(!holder)
 		return
@@ -456,7 +456,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -467,7 +467,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggle_prayer_sound()
 	set name = "Hear/Silence Prayer Sounds"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -478,7 +478,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/colorasay()
 	set name = "Set Admin Say Color"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -495,7 +495,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/proc/resetasaycolor()
 	set name = "Reset your Admin Say Color"
 	set desc = ""
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	if(!holder)
 		return
 	if(!CONFIG_GET(flag/allow_admin_asaycolor))
@@ -507,7 +507,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/proc/set_ghost_sprite()
 	set name = "Set Ghost Icon State"
 	set desc = "This is the ghost icon state you will use when ghosted"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	if(!holder)
 		return
 	var/new_icon = input(src, "Input the typepath.", "GHOST ICON", prefs.admin_ghost_icon) as text|null
@@ -524,7 +524,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/proc/set_ui_theme()
 	set name = "Toggle UI theme"
 	set desc = "Toggle UI theme"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	if(!holder)
 		return
 
@@ -537,7 +537,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/set_personal_admin_ooc_color()
 	set name = "Set Personal Admin OOC Color"
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	set desc = ""
 	if(!holder)
 		return
@@ -552,7 +552,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/proc/reset_personal_admin_ooc_color()
 	set name = "Reset Personal Admin OOC Color"
 	set desc = ""
-	set category = "Prefs"
+	set category = "Preferences.Admin"
 	if(!holder)
 		return
 	prefs.ooccolor = null

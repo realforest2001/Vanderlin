@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(events)
 
 /client/proc/forceEvent()
 	set name = "Trigger Event"
-	set category = "GameMaster"
+	set category = "GameMaster.Interactions"
 	if(!holder ||!check_rights(R_FUN))
 		return
 	holder.forceEvent(usr)

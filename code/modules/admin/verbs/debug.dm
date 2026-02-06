@@ -25,7 +25,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 */
 
 /client/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
-	set category = "GameMaster"
+	set category = "GameMaster.Equipping"
 	set name = "Make Simple Animal"
 
 	if(!SSticker.HasRoundStarted())
@@ -230,8 +230,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	cmd_admin_areatest(FALSE)
 
 /client/proc/cmd_admin_dress(mob/M in GLOB.mob_list)
-	set category = "GameMaster"
-	set name = "Admin Dress"
+	set category = "GameMaster.Equipping"
+	set name = "Select Equipment"
 
 	if(!(ishuman(M) || isobserver(M)))
 		return

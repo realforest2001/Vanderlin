@@ -176,7 +176,7 @@
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/sendmob()
-	set category = "Admin.Admin"
+	set category = "Admin.Jump"
 	set name = "Send Mob"
 
 	if(!holder)
@@ -211,7 +211,7 @@
 /client/proc/spawn_in_test_area()
 	set name = "Spawn in Test Area"
 	set desc = ""
-	set category = "GameMaster"
+	set category = "Admin.Jump"
 
 	if(!holder)
 		return
@@ -231,7 +231,7 @@
 /client/proc/jump_to_test_area()
 	set name = "Jump to Test Area"
 	set desc = ""
-	set category = "GameMaster"
+	set category = "Admin.Jump"
 
 	if(!holder)
 		return

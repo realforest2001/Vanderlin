@@ -1,25 +1,10 @@
 /// The default command report announcement sound.
 #define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
 
-/// Verb to change the global command name.
-/client/proc/cmd_change_command_name()
-	set category = "Special"
-	set name = "Change Command Name"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/input = input(usr, "Please input a new name for priority announcements.", "What?", "") as text|null
-	if(!input)
-		return
-	change_command_name(input)
-	message_admins("[key_name_admin(src)] has changed the priority announcement name to [input]")
-	log_admin("[key_name(src)] has changed the priority announcement name to: [input]")
-
 /// Verb to open the create command report window and send command reports.
-/client/proc/cmd_admin_create_centcom_report()
-	set category = "Special"
-	set name = "Create Command Report"
+/client/proc/cmd_admin_create_announcement()
+	set category = "GameMaster.Gods"
+	set name = "Announcement"
 
 	if(!check_rights(R_ADMIN))
 		return

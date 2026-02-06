@@ -9,7 +9,7 @@
 		#include "map_files/debug/roguetest.dmm"
 		#include "map_files/daftmarsh/daftmarsh_outland.dmm"
 		#include "map_files/daftmarsh/daftmarsh.dmm"
-		#include "map_files/kalypso/project_kalypso.dmm"
+		#include "map_files/kalypso/projectkalypso.dmm"
 		#include "map_files/rosewood/rosewood_forest.dmm"
 		#include "map_files/rosewood/rosewood_marsh.dmm"
 		#include "map_files/rosewood/rosewood_mountain.dmm"

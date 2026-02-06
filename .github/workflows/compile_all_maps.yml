@@ -9,7 +9,7 @@ on:
 
 jobs:
   compile_all_stations:
-    name: Compile All Station Maps
+    name: Compile All Regular Maps
     runs-on: ubuntu-24.04
     timeout-minutes: 5
 

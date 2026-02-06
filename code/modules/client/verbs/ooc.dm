@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 //Checks admin notice
 /client/verb/admin_notice()
 	set name = "Adminnotice"
-	set category = "Admin"
+	set category = "Admin.Admin"
 	set desc ="Check the admin notice if it has been set"
 	set hidden = 1
 	if(!holder)
@@ -580,7 +580,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 /client/verb/policy()
 	set name = "Show Policy"
 	set desc = ""
-	set category = "OOC"
+	set category = "OOC.Links"
 	set hidden = 1
 	if(!holder)
 		return

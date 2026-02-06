@@ -2,7 +2,7 @@
 /client/verb/wiki(query as text)
 	set name = "Wiki"
 	set desc = ""
-	set category = "OOC"
+	set category = "OOC.Links"
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
 		if(query)
@@ -30,7 +30,7 @@
 /client/verb/rules()
 	set name = "Rules"
 	set desc = ""
-	set category = "OOC"
+	set category = "OOC.Links"
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
 		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
@@ -43,7 +43,7 @@
 /client/verb/github()
 	set name = "Github"
 	set desc = ""
-	set category = "OOC"
+	set category = "OOC.Links"
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
 		if(browser_alert(src, "This will open the Github repository in your browser. Are you sure?", null, DEFAULT_INPUT_CHOICES) != CHOICE_YES)
@@ -175,7 +175,7 @@
 /client/verb/list_test_merges()
 	set name = "List Test Merges"
 	set desc = "See active Test Merges"
-	set category = "OOC"
+	set category = "OOC.Links"
 
 	var/testmerge_text = GLOB.revdata.GetTestMergeInfo()
 
@@ -287,7 +287,7 @@
 
 /client/verb/changelog()
 	set name = "Changelog"
-	set category = "OOC"
+	set category = "OOC.Links"
 
 	if(!GLOB.changelog_browser)
 		GLOB.changelog_browser = new /datum/changelog()
@@ -302,7 +302,7 @@
 
 /client/verb/do_rp_prompt()
 	set name = "Lore Primer"
-	set category = "OOC"
+	set category = "OOC.Links"
 	var/list/dat = list()
 	dat += GLOB.roleplay_readme
 	if(dat)

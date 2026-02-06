@@ -54,7 +54,7 @@
 	owner.special_role = "Zizoid Lackey"
 	H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 	H.playsound_local(get_turf(H), 'sound/music/maniac.ogg', 80, FALSE, pressure_affected = FALSE)
-	H.verbs |= /mob/living/carbon/human/proc/communicate
+	add_verb(H, /mob/living/carbon/human/proc/communicate)
 
 	if(change_stats)
 		H.change_stat(STATKEY_STR, 2)
@@ -73,7 +73,7 @@
 
 	add_objective(/datum/objective/zizo)
 	owner.special_role = ROLE_ZIZOIDCULTIST
-	H.verbs |= /mob/living/carbon/human/proc/release_minion
+	add_verb(H, /mob/living/carbon/human/proc/release_minion)
 	if(!change_stats)
 		return
 	H.clamped_adjust_skillrank(/datum/skill/combat/knives, 4, 4, TRUE)

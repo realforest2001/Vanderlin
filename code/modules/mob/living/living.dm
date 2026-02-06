@@ -970,7 +970,7 @@
 		if(ishuman(src))
 			var/mob/living/carbon/human/human = src
 			human.funeral = FALSE
-		client?.verbs -= /client/proc/descend
+		add_verb(src, /client/proc/descend)
 		if(excess_healing)
 			INVOKE_ASYNC(src, PROC_REF(emote), "breathgasp")
 			log_combat(src, src, "revived")

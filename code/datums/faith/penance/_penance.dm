@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(active_penances) // List of all active penances
 	to_chat(penitent, span_notice("[desc]"))
 	to_chat(penitent, span_notice("Progress: [current_count]/[required_count]"))
 
-	target.verbs += list(/mob/living/carbon/human/proc/check_penance_verb)
+	add_verb(target, list(/mob/living/carbon/human/proc/check_penance_verb))
 
 /datum/penance/Destroy()
 	if(signal_type && penitent)

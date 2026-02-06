@@ -62,11 +62,11 @@
 		spawned.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 		spawned.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 
-	spawned.verbs |= /mob/living/carbon/human/proc/coronate_lord
-	spawned.verbs |= /mob/living/carbon/human/proc/churchexcommunicate
-	spawned.verbs |= /mob/living/carbon/human/proc/churchcurse
-	spawned.verbs |= /mob/living/carbon/human/proc/churchannouncement
-	spawned.verbs += list(/mob/living/carbon/human/proc/absolve_penance_verb, /mob/living/carbon/human/proc/assign_penance_verb)
+	add_verb(spawned, /mob/living/carbon/human/proc/coronate_lord)
+	add_verb(spawned, /mob/living/carbon/human/proc/churchexcommunicate)
+	add_verb(spawned, /mob/living/carbon/human/proc/churchcurse)
+	add_verb(spawned, /mob/living/carbon/human/proc/churchannouncement)
+	add_verb(spawned, list(/mob/living/carbon/human/proc/absolve_penance_verb, /mob/living/carbon/human/proc/assign_penance_verb))
 
 	spawned.virginity = TRUE
 

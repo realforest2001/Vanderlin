@@ -1125,10 +1125,10 @@
 			HL.job = "Ex-Priest"
 
 
-			HL.verbs -= /mob/living/carbon/human/proc/coronate_lord
-			HL.verbs -= /mob/living/carbon/human/proc/churchexcommunicate
-			HL.verbs -= /mob/living/carbon/human/proc/churchcurse
-			HL.verbs -= /mob/living/carbon/human/proc/churchannouncement
+			remove_verb(HL, /mob/living/carbon/human/proc/coronate_lord)
+			remove_verb(HL, /mob/living/carbon/human/proc/churchexcommunicate)
+			remove_verb(HL, /mob/living/carbon/human/proc/churchcurse)
+			remove_verb(HL, /mob/living/carbon/human/proc/churchannouncement)
 			priest_job?.remove_spells(HL)
 			GLOB.excommunicated_players |= HL.real_name
 			HL.cleric?.excommunicate()
@@ -1142,10 +1142,10 @@
 		var/datum/devotion/devotion = new holder()
 		devotion.make_priest()
 		devotion.grant_to(M)
-	M.verbs |= /mob/living/carbon/human/proc/coronate_lord
-	M.verbs |= /mob/living/carbon/human/proc/churchexcommunicate
-	M.verbs |= /mob/living/carbon/human/proc/churchcurse
-	M.verbs |= /mob/living/carbon/human/proc/churchannouncement
+	add_verb(M, /mob/living/carbon/human/proc/coronate_lord)
+	add_verb(M, /mob/living/carbon/human/proc/churchexcommunicate)
+	add_verb(M, /mob/living/carbon/human/proc/churchcurse)
+	add_verb(M, /mob/living/carbon/human/proc/churchannouncement)
 	removeomen(OMEN_NOPRIEST)
 	priority_announce("Astrata has anointed [M.real_name] as the new head of the Church of the Ten!", title = "Astrata Shines!", sound = 'sound/misc/bell.ogg')
 

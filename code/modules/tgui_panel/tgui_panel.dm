@@ -12,11 +12,13 @@
 	var/datum/tgui_window/window
 	var/broken = FALSE
 	var/initialized_at
+	/// Each client notifies on protected playback, so this prevents spamming admins.
+	var/static/admins_warned = FALSE
 
-/datum/tgui_panel/New(client/client)
+/datum/tgui_panel/New(client/client, id)
 	src.client = client
-	window = new(client, "browseroutput")
-	window.subscribe(src, .proc/on_message)
+	window = new(client, id)
+	window.subscribe(src, PROC_REF(on_message))
 
 /datum/tgui_panel/Del()
 	window.unsubscribe(src)
@@ -37,16 +39,22 @@
  * Initializes tgui panel.
  */
 /datum/tgui_panel/proc/initialize(force = FALSE)
+	set waitfor = FALSE
+	// Minimal sleep to defer initialization to after client constructor
+	sleep(1 TICKS)
 	initialized_at = world.time
 	// Perform a clean initialization
-//	window.initialize(inline_assets = list(
-//		get_asset_datum(/datum/asset/simple/tgui_common),
-//		get_asset_datum(/datum/asset/simple/tgui_panel),
-//	))
-//	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
-//	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
+	window.initialize(
+		strict_mode = TRUE,
+		assets = list(
+			get_asset_datum(/datum/asset/simple/tgui_panel),
+		))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
+	window.send_asset(get_asset_datum(/datum/asset/spritesheet_batched/chat))
+	// Other setup
 	request_telemetry()
-	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(on_initialize_timed_out)), 5 SECONDS)
+	window.send_message("testTelemetryCommand")
 
 /**
  * private
@@ -55,7 +63,7 @@
  */
 /datum/tgui_panel/proc/on_initialize_timed_out()
 	// Currently does nothing but sending a message to old chat.
-	SEND_TEXT(client, "<span class=\"userdanger\">Failed to load fancy chat, click <a href='?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span>")
+	SEND_TEXT(client, span_userdanger("Failed to load fancy chat, click <a href='byond://?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it."))
 
 /**
  * private
@@ -79,9 +87,18 @@
 			),
 		))
 		return TRUE
+
 	if(type == "audio/setAdminMusicVolume")
 		client.admin_music_volume = payload["volume"]
 		return TRUE
+
+	if(type == "audio/protected")
+		if(!admins_warned)
+			message_admins(span_notice("Audio returned a protected playback error, likely due to being copyrighted."))
+			admins_warned = TRUE
+			addtimer(VARSET_CALLBACK(src, admins_warned, FALSE), 10 SECONDS)
+		return TRUE
+
 	if(type == "telemetry")
 		analyze_telemetry(payload)
 		return TRUE
@@ -93,28 +110,3 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
-
-/**
-* Compiles a full list of verbs to be sent to the browser
-* Sends the 2D verbs vector of (verb category, verb name)
-*/
-/client/proc/init_verbs()
-	if(IsAdminAdvancedProcCall())
-		return
-	var/list/verblist = list()
-	var/list/verbstoprocess = verbs.Copy()
-	if(mob)
-		verbstoprocess += mob.verbs
-		for(var/atom/movable/thing as anything in mob.contents)
-			verbstoprocess += thing.verbs
-	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
-	for(var/procpath/verb_to_init as anything in verbstoprocess)
-		if(!verb_to_init)
-			continue
-		if(verb_to_init.hidden)
-			continue
-		if(!istext(verb_to_init.category))
-			continue
-		panel_tabs |= verb_to_init.category
-		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))

@@ -85,10 +85,10 @@
 
 /datum/asset/simple/notes
 
-/datum/asset/spritesheet_batched/goonchat
+/datum/asset/spritesheet_batched/chat
 	name = "chat"
 
-/datum/asset/spritesheet_batched/goonchat/create_spritesheets()
+/datum/asset/spritesheet_batched/chat/create_spritesheets()
 	// pre-loading all lanugage icons also helps to avoid meta
 	insert_all_icons("language", 'icons/language.dmi')
 	// catch languages which are pulling icons from another file
@@ -98,14 +98,12 @@
 			var/icon_state = initial(L.icon_state)
 			insert_icon("language-[icon_state]", uni_icon(icon, icon_state))
 
-/datum/asset/group/tgui
-
 /datum/asset/group/goonchat
 	children = list(
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/purify,
 		/datum/asset/simple/namespaced/goonchat,
-		/datum/asset/spritesheet_batched/goonchat,
+		/datum/asset/spritesheet_batched/chat,
 		/datum/asset/simple/namespaced/fontawesome,
 		/datum/asset/simple/namespaced/roguefonts
 	)

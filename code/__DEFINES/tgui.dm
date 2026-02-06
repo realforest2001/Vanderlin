@@ -13,9 +13,9 @@
 #define TGUI_WINDOW_HARD_LIMIT 9
 
 /// Maximum ping timeout allowed to detect zombie windows
-#define TGUI_PING_TIMEOUT 4 SECONDS
+#define TGUI_PING_TIMEOUT (4 SECONDS)
 /// Used for rate-limiting to prevent DoS by excessively refreshing a TGUI window
-#define TGUI_REFRESH_FULL_UPDATE_COOLDOWN 2 SECONDS
+#define TGUI_REFRESH_FULL_UPDATE_COOLDOWN (1 SECONDS)
 
 /// Window does not exist
 #define TGUI_WINDOW_CLOSED 0
@@ -23,6 +23,16 @@
 #define TGUI_WINDOW_LOADING 1
 /// Window is free and ready to receive data
 #define TGUI_WINDOW_READY 2
+
+/// Though not the maximum renderable ByondUis within tgui, this is the maximum that the server will manage per-UI
+#define TGUI_MANAGED_BYONDUI_LIMIT 10
+
+// These are defines instead of being inline, as they're being sent over
+// from tgui-core, so can't be easily played with
+#define TGUI_MANAGED_BYONDUI_TYPE_RENDER "renderByondUi"
+#define TGUI_MANAGED_BYONDUI_TYPE_UNMOUNT "unmountByondUi"
+
+#define TGUI_MANAGED_BYONDUI_PAYLOAD_ID "renderByondUi"
 
 /// Get a window id based on the provided pool index
 #define TGUI_WINDOW_ID(index) "tgui-window-[index]"
@@ -37,20 +47,10 @@
 	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
 )
 
-/// Creates a message packet for sending via output() specifically for opening tgsay using an embedded winget
-// This is {"type":"open","payload":{"channel":channel,"mapfocus":[[map.focus]],"lobyfocus":[[lobby_browser.focus]]}}, but pre-encoded.
-#define TGUI_CREATE_OPEN_MESSAGE(channel) ( \
-	"%7b%22type%22%3a%22open%22%2c%22payload%22%3a%7b%22channel%22%3a%22[channel]%22%2c%22mapfocus%22%3a\[\[map.focus\]\]%2c%22lobbyfocus%22%3a\[\[lobby_browser.focus\]\]%7d%7d" \
-)
-
-/*
-*Defines for the TGUI health analyser interface
-*The higher the level, the more information you can see
-*/
-
-#define DETAIL_LEVEL_HEALTHANALYSER 0
-#define DETAIL_LEVEL_BODYSCAN 1
-#define DETAIL_LEVEL_FULL 2
-
-#define UI_MODE_MINIMAL 1
-#define UI_MODE_CLASSIC 0
+/**
+ * Gets a ui_state that checks to see if the user has specific admin permissions.
+ *
+ * Arguments:
+ * * required_perms: Which admin permission flags to check the user for, such as [R_ADMIN]
+ */
+#define ADMIN_STATE(required_perms) (GLOB.admin_states[required_perms] ||= new /datum/ui_state/admin_state(required_perms))

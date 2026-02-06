@@ -7,7 +7,6 @@ SUBSYSTEM_DEF(chat)
 
 	var/list/payload = list()
 
-
 /datum/controller/subsystem/chat/fire()
 	for(var/client/C as anything in payload)
 		C << output(payload[C], "browseroutput:output")
@@ -15,7 +14,6 @@ SUBSYSTEM_DEF(chat)
 
 		if(MC_TICK_CHECK)
 			return
-
 
 /datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
 	if(!target || !message)

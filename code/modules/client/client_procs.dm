@@ -426,6 +426,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	GLOB.keys_by_ckey[ckey] = key
 	GLOB.directory[ckey] = src
 
+	stat_panel = new(src, "statbrowser")
+	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
+
 	chatOutput = new /datum/chatOutput(src)
 	spawn(5) // Goonchat does some non-instant checks in start()
 		chatOutput.start()
@@ -1422,6 +1425,23 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+
+/**
+ * Handles incoming messages from the stat-panel TGUI.
+ */
+/client/proc/on_stat_panel_message(type, payload)
+	switch(type)
+		if("Update-Verbs")
+			init_verbs()
+		if("Remove-Tabs")
+			panel_tabs -= payload["tab"]
+		if("Send-Tabs")
+			panel_tabs |= payload["tab"]
+		if("Reset-Tabs")
+			panel_tabs = list()
+		if("Set-Tab")
+			stat_tab = payload["tab"]
+			//SSstatpanels.immediate_send_stat_data(src)
 
 #undef LIMITER_SIZE
 #undef CURRENT_SECOND

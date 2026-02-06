@@ -777,6 +777,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(length(credits))
 		QDEL_LIST(credits)
 
+	if(obj_window)
+		QDEL_NULL(obj_window)
+
 	if(player_details)
 		player_details.achievements.save()
 

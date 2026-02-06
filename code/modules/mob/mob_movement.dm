@@ -567,7 +567,7 @@
 	playsound_local(src, 'sound/misc/click.ogg', 100)
 
 /client/proc/hearallasghost()
-	set category = "GameMaster"
+	set category = "GameMaster.Preferences"
 	set name = "HearAllAsAdmin"
 	if(!holder)
 		return
@@ -584,7 +584,7 @@
 
 
 /client/proc/ghost_up()
-	set category = "GameMaster"
+	set category = "GameMaster.Preferences"
 	set name = "GhostUp"
 	if(!holder)
 		return
@@ -593,7 +593,7 @@
 		mob.ghost_up()
 
 /client/proc/ghost_down()
-	set category = "GameMaster"
+	set category = "GameMaster.Preferences"
 	set name = "GhostDown"
 	if(!holder)
 		return

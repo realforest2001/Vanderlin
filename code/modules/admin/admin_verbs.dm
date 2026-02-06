@@ -394,7 +394,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		log_admin("[key_name(usr)] toggled context menu OFF.")
 
 /client/proc/toggle_aghost_invis()
-	set category = "GameMaster"
+	set category = "Admin.Ghost"
 	set name = "Aghost (Toggle Invisibility)"
 	if (!holder)
 		return
@@ -402,7 +402,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	to_chat(src, aghost_toggle ? "Aghosting will now turn your mob invisible." : "Aghost will no longer turn your mob invisible.")
 
 /client/proc/admin_ghost()
-	set category = "GameMaster"
+	set category = "Admin.Ghost"
 	set name = "Aghost"
 	if(!holder)
 		return
@@ -485,7 +485,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
-	set category = "Admin"
+	set category = "Admin.Bans"
 	if(!check_rights(R_BAN))
 		return
 	holder.ban_panel()
@@ -493,7 +493,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/role_ban_panel()
 	set name = "Role Ban Panel"
-	set category = "Admin"
+	set category = "Admin.Bans"
 	if(!check_rights(R_BAN))
 		return
 	holder.role_ban_panel.show_ui(usr)
@@ -501,7 +501,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/unban_panel()
 	set name = "Unbanning Panel"
-	set category = "Admin"
+	set category = "Admin.Bans"
 	if(!check_rights(R_BAN))
 		return
 	holder.unban_panel()
@@ -666,7 +666,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
-	set category = "Admin.Fun"
+	set category = "GameMaster.Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 
@@ -708,7 +708,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
 /client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
-	set category = "Admin.Fun"
+	set category = "GameMaster.Fun"
 	set name = "Remove Spell"
 	set desc = "Remove a spell from the selected mob."
 
@@ -837,7 +837,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		to_chat(src, "<span class='interface'>Ending DISABLED.</span>")
 
 /client/proc/manage_books()
-	set category = "Admin"
+	set category = "GameMaster"
 	set name = "Manage Books"
 	if(!holder)
 		return

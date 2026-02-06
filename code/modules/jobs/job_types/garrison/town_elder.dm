@@ -57,7 +57,7 @@
 
 /mob/living/carbon/human/proc/townannouncement()
 	set name = "Elder Announcement"
-	set category = "RoleUnique"
+	set category = "RoleUnique.Elder"
 	if(stat)
 		return
 

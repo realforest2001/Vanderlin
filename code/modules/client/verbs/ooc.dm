@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Default OOC Color"
 	set desc = ""
-	set category = "Fun"
+	set category = "OOC.Admin"
 	set hidden = FALSE
 	if(!holder)
 		return
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 /client/proc/reset_ooc()
 	set name = "Reset Default OOC Color"
 	set desc = ""
-	set category = "Fun"
+	set category = "OOC.Admin"
 	set hidden = FALSE
 	if(!holder)
 		return
@@ -491,8 +491,8 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 	prefs.save_preferences()
 
 /client/verb/select_ignore()
-	set name = "Ignore"
-	set category = "Options"
+	set name = "Ignore Player"
+	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 	set hidden = 1
 	if(!holder)

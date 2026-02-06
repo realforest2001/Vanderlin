@@ -50,6 +50,15 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		return
 #endif
 
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
+		return
+	if(href_list["reload_statbrowser"])
+		stat_panel.reinitialize()
+
+	// Log all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+
 	// ANSWER SCHIZOHELP
 	if(href_list["schizohelp"])
 		var/datum/schizohelp/schizo = locate(href_list["schizohelp"])
@@ -353,18 +362,18 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		return 0
 	return 1
 /*
- * Call back proc that should be checked in all paths where a client can send messages
- *
- * Handles checking for duplicate messages and people sending messages too fast
- *
- * The first checks are if you're sending too fast, this is defined as sending
- * SPAM_TRIGGER_AUTOMUTE messages in
- * 5 seconds, this will start supressing my messages,
- * if you send 2* that limit, you also get muted
- *
- * The second checks for the same duplicate message too many times and mutes
- * you for it
- */
+* Call back proc that should be checked in all paths where a client can send messages
+*
+* Handles checking for duplicate messages and people sending messages too fast
+*
+* The first checks are if you're sending too fast, this is defined as sending
+* SPAM_TRIGGER_AUTOMUTE messages in
+* 5 seconds, this will start supressing my messages,
+* if you send 2* that limit, you also get muted
+*
+* The second checks for the same duplicate message too many times and mutes
+* you for it
+*/
 /client/proc/handle_spam_prevention(message, mute_type)
 
 	//Increment message count

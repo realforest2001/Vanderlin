@@ -81,8 +81,8 @@
 	else
 		spawned.cmode_music = pick('sound/music/cmode/nobility/CombatJester1.ogg', 'sound/music/cmode/nobility/CombatJester2.ogg')
 
-	spawned.verbs |= /mob/living/carbon/human/proc/ventriloquate
-	spawned.verbs |= /mob/living/carbon/human/proc/ear_trick
+	add_verb(spawned, /mob/living/carbon/human/proc/ventriloquate)
+	add_verb(spawned, /mob/living/carbon/human/proc/ear_trick)
 
 /datum/outfit/jester
 	name = "Jester"

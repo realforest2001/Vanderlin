@@ -342,8 +342,8 @@ And it also helps for the character set panel
 	H.process_vampire_life()
 
 /datum/clan/proc/setup_vampire_abilities(mob/living/carbon/human/H)
-	H.verbs |= /mob/living/carbon/human/proc/disguise_button
-	H.verbs |= /mob/living/carbon/human/proc/vampire_telepathy
+	add_verb(H, /mob/living/carbon/human/proc/disguise_button)
+	add_verb(H, /mob/living/carbon/human/proc/vampire_telepathy)
 
 
 	H.cmode_music = 'sound/music/cmode/antag/CombatThrall.ogg'

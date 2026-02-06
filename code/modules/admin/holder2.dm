@@ -117,6 +117,7 @@ GLOBAL_PROTECT(href_token)
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
 		remove_verb(owner, /client/proc/readmin)
+		add_verb(owner, /client/proc/deadmin)
 		GLOB.admins |= C
 		if(!deadmined)
 			C?.native_say?.refresh_channels()

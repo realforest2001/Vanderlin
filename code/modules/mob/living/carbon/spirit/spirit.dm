@@ -104,15 +104,6 @@
 			slow += (health_deficiency / 25)
 	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
-/mob/living/carbon/spirit/Stat()
-	..()
-	if(!client)
-		return
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-	return
-
 /mob/living/carbon/spirit/returntolobby()
 	set name = "{RETURN TO LOBBY}"
 	set category = "Options"

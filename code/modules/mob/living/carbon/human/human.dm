@@ -181,15 +181,10 @@
 	dna.initialize_dna()
 	reset_limb_fingerprints()
 
-/mob/living/carbon/human/Stat()
-	..()
-	if(!client)
-		return
-	if(mind)
-		if(clan)
-			if(statpanel("Stats"))
-				stat("Vitae:",bloodpool)
-	return
+/mob/living/carbon/human/get_status_tab_items()
+	. = ..()
+	if(clan)
+		. += "Vitae: [bloodpool]"
 
 /mob/living/carbon/human/show_inv(mob/user)
 	user.set_machine(src)

@@ -50,6 +50,15 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		return
 #endif
 
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
+		return
+	if(href_list["reload_statbrowser"])
+		stat_panel.reinitialize()
+
+	// Log all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+
 	// ANSWER SCHIZOHELP
 	if(href_list["schizohelp"])
 		var/datum/schizohelp/schizo = locate(href_list["schizohelp"])
@@ -1454,7 +1463,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			panel_tabs = list()
 		if("Set-Tab")
 			stat_tab = payload["tab"]
-			//SSstatpanels.immediate_send_stat_data(src)
+			SSstatpanels.immediate_send_stat_data(src)
 
 #undef LIMITER_SIZE
 #undef CURRENT_SECOND

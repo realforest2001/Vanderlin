@@ -384,7 +384,7 @@ function draw_status() {
   }
   document.getElementById("statcontent").appendChild(table);
   if (verb_tabs.length == 0 || !verbs) {
-    Byond.command("Fix-Stat-Panel");
+    update_verbs()
   }
 }
 

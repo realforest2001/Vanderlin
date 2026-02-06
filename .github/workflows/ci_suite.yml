@@ -3,10 +3,10 @@ name: BYOND Build
 on:
   pull_request:
     branches:
-    - main
+      - main
   merge_group:
     branches:
-    - main
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -37,8 +37,6 @@ jobs:
             ${{ runner.os }}-spacemandmm-
       - name: Setup Bun
         uses: ./.github/actions/setup_bun
-        with:
-          restore-yarn-cache: true
       - name: Restore Bootstrap cache
         uses: actions/cache@v4
         with:
@@ -68,7 +66,7 @@ jobs:
           tools/bootstrap/python -c ''
       - name: Give Linters A Go
         id: linter-setup
-        run: ':'
+        run: ":"
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_grep.sh

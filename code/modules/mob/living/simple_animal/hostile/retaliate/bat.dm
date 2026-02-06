@@ -37,8 +37,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize()
 	. = ..()
-	verbs += list(/mob/living/simple_animal/hostile/retaliate/bat/proc/bat_up,
-	/mob/living/simple_animal/hostile/retaliate/bat/proc/bat_down)
+	add_verb(src, list(/mob/living/simple_animal/hostile/retaliate/bat/proc/bat_up, /mob/living/simple_animal/hostile/retaliate/bat/proc/bat_down))
 
 /mob/living/simple_animal/hostile/retaliate/bat/proc/bat_up()
 	set category = "VAMPIRE"

@@ -426,6 +426,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	GLOB.keys_by_ckey[ckey] = key
 	GLOB.directory[ckey] = src
 
+	stat_panel = new(src, "statbrowser")
+	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
+
 	chatOutput = new /datum/chatOutput(src)
 	spawn(5) // Goonchat does some non-instant checks in start()
 		chatOutput.start()
@@ -551,6 +554,14 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(SSinput.initialized)
 		set_macros()
 		update_movement_keys()
+
+	// Initialize stat panel
+	stat_panel.initialize(
+		inline_html = file("html/statbrowser.html"),
+		inline_js = file("html/statbrowser.js"),
+		inline_css = file("html/statbrowser.css"),
+	)
+	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
 
 //	chatOutput.start() // Starts the chat
 	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
@@ -1401,6 +1412,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		return TRUE
 	return FALSE
 
+/client/proc/check_panel_loaded()
+	if(stat_panel.is_ready())
+		return
+	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
+
 /// compiles a full list of verbs and sends it to the browser
 /client/proc/init_verbs()
 	if(IsAdminAdvancedProcCall())
@@ -1422,6 +1438,23 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+
+/**
+ * Handles incoming messages from the stat-panel TGUI.
+ */
+/client/proc/on_stat_panel_message(type, payload)
+	switch(type)
+		if("Update-Verbs")
+			init_verbs()
+		if("Remove-Tabs")
+			panel_tabs -= payload["tab"]
+		if("Send-Tabs")
+			panel_tabs |= payload["tab"]
+		if("Reset-Tabs")
+			panel_tabs = list()
+		if("Set-Tab")
+			stat_tab = payload["tab"]
+			//SSstatpanels.immediate_send_stat_data(src)
 
 #undef LIMITER_SIZE
 #undef CURRENT_SECOND

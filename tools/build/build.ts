@@ -54,11 +54,6 @@ export const ForceRecutParameter = new Juke.Parameter({
   name: 'force-recut',
 });
 
-export const SkipIconCutter = new Juke.Parameter({
-  type: 'boolean',
-  name: 'skip-icon-cutter',
-});
-
 export const WarningParameter = new Juke.Parameter({
   type: 'string[]',
   alias: 'W',
@@ -90,7 +85,6 @@ export const DmTarget = new Juke.Target({
     DmVersionParameter,
     WarningParameter,
     NoWarningParameter,
-    SkipIconCutter,
   ],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget

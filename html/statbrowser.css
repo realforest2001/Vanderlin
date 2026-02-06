@@ -10,7 +10,7 @@ body {
 }
 
 body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Pterra;
   font-size: 12px;
   margin: 0 !important;
   padding: 0 !important;
@@ -73,12 +73,13 @@ img {
 }
 
 .button {
+  font-family: Blackmoor LET;
+  font-size: 1.1em;
   display: inline-table;
   cursor: pointer;
   user-select: none;
   -ms-user-select: none; /* Remove after Byond 516 */
   text-align: center;
-  font-size: 1em;
   min-width: 2.9em;
   padding: 0.5em 0.5em 0.4em;
   background-color: transparent;
@@ -212,62 +213,62 @@ img {
 /**
  * MARK: Dark theme colors
  */
-.dark:root {
+:root {
   --color-base: #151515;
   --scrollbar-base: #151515;
   --scrollbar-thumb: #363636;
 }
 
-body.dark {
+body{
   background-color: #151515;
   color: #b2c4dd;
 }
 
-.dark a {
+a {
   color: #6699ff;
 }
 
-.dark a:hover,
-.dark .grid-item:hover,
-.dark .grid-item:active {
+a:hover,
+.grid-item:hover,
+.grid-item:active {
   color: #80bfff;
 }
 
-.dark #menu {
+#menu {
   background-color: #151515;
 }
 
-.dark #menu.tabs-classic .button.active {
+#menu.tabs-classic .button.active {
   background-color: #20b142;
 }
 
-.dark .button {
+.button {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.dark .button:hover {
+.button:hover {
   background-color: #252525;
 }
 
-.dark .button.active {
+.button.active {
   background-color: #313131;
   color: #d4dfec;
   border-bottom-color: #d4dfec;
 }
 
-.dark #under-menu,
-.dark #under-content {
+#under-menu,
+#under-content {
   background-color: #202020;
 }
 
-.dark .grid-item {
+.grid-item {
   color: #b2c4dd;
 }
 
-.dark .grid-item:hover .grid-item-text {
+.grid-item:hover .grid-item-text {
   background-color: #252525;
 }
 
-.dark .grid-item:active .grid-item-text {
+.grid-item:active .grid-item-text {
   background-color: #313131;
 }

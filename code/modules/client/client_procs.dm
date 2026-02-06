@@ -555,6 +555,14 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		set_macros()
 		update_movement_keys()
 
+	// Initialize stat panel
+	stat_panel.initialize(
+		inline_html = file("html/statbrowser.html"),
+		inline_js = file("html/statbrowser.js"),
+		inline_css = file("html/statbrowser.css"),
+	)
+	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
+
 //	chatOutput.start() // Starts the chat
 	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
 
@@ -1403,6 +1411,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(twitch?.has_access(ACCESS_TWITCH_SUB_TIER_1))
 		return TRUE
 	return FALSE
+
+/client/proc/check_panel_loaded()
+	if(stat_panel.is_ready())
+		return
+	to_chat(src, span_userdanger("Statpanel failed to load, click <a href='byond://?src=[REF(src)];reload_statbrowser=1'>here</a> to reload the panel "))
 
 /// compiles a full list of verbs and sends it to the browser
 /client/proc/init_verbs()

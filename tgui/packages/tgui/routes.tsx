@@ -7,7 +7,7 @@
 import { useAtomValue } from 'jotai';
 import { KitchenSink } from './debug/KitchenSink';
 import { backendStateAtom } from './events/store';
-import { LoadingScreen } from './interfaces/common/LoadingScreen';
+import { LoadingScreen } from './interfaces/_common/LoadingScreen';
 import { Window } from './layouts';
 
 const requireInterface = require.context(

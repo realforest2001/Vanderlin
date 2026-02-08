@@ -129,7 +129,6 @@
 		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 		"browserOutput_white.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
-	parents = list()
 
 /datum/asset/simple/namespaced/fontawesome
 	assets = list(
@@ -137,7 +136,7 @@
 		"fa-solid-900.ttf" = 'html/font-awesome/webfonts/fa-solid-900.ttf',
 		"fa-v4compatibility.ttf" = 'html/font-awesome/webfonts/fa-v4compatibility.ttf',
 		"v4shim.css" = 'html/font-awesome/css/v4-shims.min.css',
-		"font-awesome.css" = 'html/font-awesome/css/all.min.css',
+		"font-awesome.css" = 'html/font-awesome/css/all.min.css'
 	)
 
 /// Maps icon names to ref values

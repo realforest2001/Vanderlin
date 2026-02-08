@@ -155,10 +155,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"tgui-panel.bundle.css" = file("tgui/public/tgui-panel.bundle.css"),
 	)
 
-/datum/asset/simple/tgfont
+/datum/asset/simple/namespaced/tgfont
 	assets = list(
 		"tgfont.eot" = file("tgui/packages/tgfont/static/tgfont.eot"),
 		"tgfont.woff2" = file("tgui/packages/tgfont/static/tgfont.woff2"),
+	)
+	parents = list(
 		"tgfont.css" = file("tgui/packages/tgfont/static/tgfont.css"),
 	)
 

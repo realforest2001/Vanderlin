@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 
 /mob/dead/new_player/verb/togglobb()
 	set name = "SilenceLobbyMusic"
-	set category = "Options"
+	set category = "Preferences.Sound"
 	stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 /proc/CheckJoinDate(ckey)
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 
 /client/verb/fix_chat()
 	set name = "Fix Chat"
-	set category = "OOC"
+	set category = "OOC.Fix"
 	if (!chatOutput || !istype(chatOutput))
 		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
 		if (action != "Recreate Chat Output data")
@@ -530,7 +530,7 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"
-	set category = "Options"
+	set category = "Preferences.Options"
 	set desc = ""
 	set hidden = 1
 	if(!holder)

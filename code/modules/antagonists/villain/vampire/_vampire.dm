@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 /datum/antagonist/vampire
 	name = "Vampire"
 	roundend_category = "Vampires"
-	antagpanel_category = "Vampire"
+	antagpanel_category = "RoleUnique.Vampire"
 	job_rank = ROLE_VAMPIRE
 	antag_hud_type = ANTAG_HUD_VAMPIRE
 	antag_hud_name = "vamp"

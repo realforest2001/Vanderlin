@@ -2,7 +2,7 @@
 	name = "Death Knight"
 	increase_votepwr = FALSE
 	roundend_category = "Vampires"
-	antagpanel_category = "Vampire"
+	antagpanel_category = "RoleUnique.Vampire"
 
 /datum/antagonist/skeleton/knight/on_gain()
 	. = ..()

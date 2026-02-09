@@ -129,15 +129,40 @@
 		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 		"browserOutput_white.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
-	parents = list()
 
 /datum/asset/simple/namespaced/fontawesome
-	legacy = TRUE
 	assets = list(
-		"fa-regular-400.eot" = 'html/font-awesome/webfonts/fa-regular-400.eot',
-		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
-		"fa-solid-900.eot" = 'html/font-awesome/webfonts/fa-solid-900.eot',
-		"fa-solid-900.woff" = 'html/font-awesome/webfonts/fa-solid-900.woff',
-		"font-awesome.css" = 'html/font-awesome/css/all.min.css',
+		"fa-regular-400.ttf" = 'html/font-awesome/webfonts/fa-regular-400.ttf',
+		"fa-solid-900.ttf" = 'html/font-awesome/webfonts/fa-solid-900.ttf',
+		"fa-v4compatibility.ttf" = 'html/font-awesome/webfonts/fa-v4compatibility.ttf',
+		"v4shim.css" = 'html/font-awesome/css/v4-shims.min.css',
 	)
 	parents = list("font-awesome.css" = 'html/font-awesome/css/all.min.css')
+
+/// Maps icon names to ref values
+/datum/asset/json/icon_ref_map
+	name = "icon_ref_map"
+
+/datum/asset/json/icon_ref_map/generate()
+	var/list/data = list() //"icons/obj/drinks.dmi" => "[0xc000020]"
+
+	//var/start = "0xc000000"
+	var/value = 0
+
+	while(TRUE)
+		value += 1
+		var/ref = "\[0xc[num2text(value,6,16)]\]"
+		var/mystery_meat = locate(ref)
+
+		if(isicon(mystery_meat))
+			if(!isfile(mystery_meat)) // Ignore the runtime icons for now
+				continue
+			var/path = get_icon_dmi_path(mystery_meat) //Try to get the icon path
+			if(path)
+				data[path] = ref
+		else if(mystery_meat)
+			continue //Some other non-icon resource, ogg/json/whatever
+		else //Out of resources end this, could also try to end this earlier as soon as runtime generated icons appear but eh
+			break
+
+	return data

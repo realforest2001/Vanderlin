@@ -32,13 +32,10 @@ SUBSYSTEM_DEF(tgui)
 	helpers = "<script type='text/javascript'>\n[helpers]\n</script>"
 	basehtml = replacetextEx(basehtml, "<!-- tgui:helpers -->", helpers)
 
-	// // Inject inline ntos-error styles
-	// var/ntos_error = file2text('tgui/public/ntos-error.min.css')
-	// ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
-	// basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
-
-	// basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
-
+	// Inject inline ntos-error styles
+	var/ntos_error = file2text('tgui/public/ntos-error.min.css')
+	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
+	basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()

@@ -100,6 +100,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			continue
 		if (legacy)
 			ACI.legacy = TRUE
+		if (keep_local_name)
+			ACI.keep_local_name = keep_local_name
 		assets[asset_name] = ACI
 
 /datum/asset/simple/send(client)
@@ -133,6 +135,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"tgui-panel.bundle.css" = "tgui/public/tgui-panel.bundle.css",
 	)
 
+/datum/asset/simple/tgfont
+	assets = list(
+		"tgfont.eot" = "tgui/packages/tgfont/static/tgfont.eot",
+		"tgfont.woff2" = "tgui/packages/tgfont/static/tgfont.woff2",
+		"tgfont.css" = "tgui/packages/tgfont/static/tgfont.css",
+	)
+
 #else
 /datum/asset/simple/tgui
 	keep_local_name = TRUE
@@ -146,6 +155,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	assets = list(
 		"tgui-panel.bundle.js" = file("tgui/public/tgui-panel.bundle.js"),
 		"tgui-panel.bundle.css" = file("tgui/public/tgui-panel.bundle.css"),
+	)
+
+/datum/asset/simple/namespaced/tgfont
+	assets = list(
+		"tgfont.eot" = file("tgui/packages/tgfont/static/tgfont.eot"),
+		"tgfont.woff2" = file("tgui/packages/tgfont/static/tgfont.woff2"),
+	)
+	parents = list(
+		"tgfont.css" = file("tgui/packages/tgfont/static/tgfont.css"),
 	)
 
 #endif

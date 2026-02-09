@@ -30,7 +30,7 @@
 				"isDefault": true
             },
             "dependsOn": "dm: reparse",
-            "label": "Build All (low memory mode)"
+            "label": "Build All"
         },
 
         {

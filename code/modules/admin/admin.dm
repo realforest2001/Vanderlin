@@ -419,7 +419,7 @@
 /datum/admins/proc/start_vote()
 	set name = "Start Vote"
 	set desc = "Start a vote"
-	set category = "Server"
+	set category = "GameMaster.Fun"
 
 	if(!check_rights(R_POLL))
 		to_chat(usr, "<span class='warning'>You do not have the rights to start a vote.</span>")
@@ -527,7 +527,7 @@
 #define HARDEST_RESTART "Hardest Restart (No actions, just reboot)"
 #define TGS_RESTART "Server Restart (Kill and restart DD)"
 /datum/admins/proc/restart()
-	set category = "Server"
+	set category = "Server.Round Control"
 	set name = "Reboot World"
 	set desc = "Restarts the world immediately"
 	if(!check_rights(R_SERVER))
@@ -580,7 +580,7 @@
 #undef TGS_RESTART
 
 /datum/admins/proc/end_round()
-	set category = "Server"
+	set category = "Server.Round Control"
 	set name = "End Round"
 	set desc = ""
 
@@ -665,7 +665,7 @@
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead OOC", "[GLOB.dooc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/startnow()
-	set category = "Server"
+	set category = "Server.Round Control"
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 	if(SSticker.current_state == GAME_STATE_PREGAME || SSticker.current_state == GAME_STATE_STARTUP)
@@ -685,7 +685,7 @@
 	return 0
 
 /datum/admins/proc/toggleenter()
-	set category = "Server"
+	set category = "Server.Round Control"
 	set desc="People can't enter"
 	set name="Toggle Entering"
 	GLOB.enter_allowed = !( GLOB.enter_allowed )
@@ -728,7 +728,7 @@
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[!new_nores ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/delay()
-	set category = "Server"
+	set category = "Server.Round Control"
 	set desc="Delay the game start"
 	set name="Delay pre-game"
 
@@ -748,7 +748,7 @@
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/accelerate_or_delay_round_end()
-	set category = "Server"
+	set category = "Server.Round Control"
 	set desc="Delay / Accelerate the round ending or vote time"
 	set name="Delay / Accelerate the round ending or vote time"
 
@@ -791,7 +791,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /datum/admins/proc/spawn_atom(object as text)
-	set category = "Debug"
+	set category = "Debug.Spawn"
 	set desc = ""
 	set name = "Spawn"
 
@@ -821,7 +821,7 @@
 	return initial(chosen.name)
 
 /datum/admins/proc/podspawn_atom(object as text)
-	set category = "Debug"
+	set category = "Debug.Spawn"
 	set desc = ""
 	set name = "Podspawn"
 
@@ -999,7 +999,7 @@
 	H.returntolobby()
 
 /client/proc/spawn_liquid()
-	set category = "GameMaster"
+	set category = "Debug.Spawn"
 	set name = "Spawn Liquid"
 	set desc = "Spawns an amount of chosen liquid at your current location."
 
@@ -1033,7 +1033,7 @@
 
 /client/proc/remove_liquid()
 	set name = "Remove Liquids"
-	set category = "GameMaster"
+	set category = "GameMaster.Fun"
 	set desc = "Fixes air in specified radius."
 	var/turf/epicenter = get_turf(mob)
 
@@ -1055,7 +1055,7 @@
 	mob.hud_used?.plane_masters_update()
 
 /client/proc/spawn_pollution()
-	set category = "GameMaster"
+	set category = "Debug.Spawn"
 	set name = "Spawn Pollution"
 	set desc = "Spawns an amount of chosen pollutant at your current location."
 

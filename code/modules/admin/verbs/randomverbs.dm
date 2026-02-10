@@ -31,7 +31,7 @@
 	var/message
 
 	message_admins("[key_name_admin(user)] has started talking into [ADMIN_LOOKUPFLW(target)]'s head.")
-	var/option = alert(user, "What type of SubtlePM do you want?", "Type", "Voice", "Specific God")
+	var/option = tgui_alert(user, "What type of SubtlePM do you want?", "Type", list("Voice", "Specific God"))
 	switch(option)
 		if("Voice")
 			message = input("Message:", text("Subtle PM to [target.key]")) as text|null
@@ -527,7 +527,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Drop a brain?", "Confirm", "Yes", "No","Cancel")
+	var/confirm = tgui_alert(src, "Drop a brain?", "Confirm", list("Yes", "No","Cancel"))
 	if(confirm == "Cancel")
 		return
 	//Due to the delay here its easy for something to have happened to the mob
@@ -605,7 +605,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 
-	var/notifyplayers = alert(src, "Do you want to notify the players?", "Options", "Yes", "No", "Cancel")
+	var/notifyplayers = tgui_alert(src, "Do you want to notify the players?", "Options", list("Yes", "No", "Cancel"))
 	if(notifyplayers == "Cancel")
 		return
 

@@ -586,7 +586,7 @@
 
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("End the round and restart the game world?", "End Round", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr, "End the round and restart the game world?", "End Round", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")

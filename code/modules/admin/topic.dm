@@ -63,7 +63,7 @@
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
 				event.processing = FALSE
-				var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
+				var/prompt = tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel"))
 				switch(prompt)
 					if("Yes")
 						event.announceChance = 100
@@ -238,7 +238,7 @@
 	else if(href_list["deletemessage"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/safety = alert("Delete message/note?",,"Yes","No");
+		var/safety = tgui_alert(usr, "Delete message/note?","Confirm", list("Yes","No"));
 		if (safety == "Yes")
 			var/message_id = href_list["deletemessage"]
 			delete_message(message_id)
@@ -246,7 +246,7 @@
 	else if(href_list["deletemessageempty"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/safety = alert("Delete message/note?",,"Yes","No");
+		var/safety = tgui_alert(usr, "Delete message/note?", "Confirm", list("Yes","No"));
 		if (safety == "Yes")
 			var/message_id = href_list["deletemessageempty"]
 			delete_message(message_id, browse = TRUE)
@@ -386,9 +386,9 @@
 			return
 
 		if(SSticker.HasRoundStarted())
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return alert(usr, "The game has already started.")
 		if(GLOB.master_mode != "secret")
-			return alert(usr, "The game mode has to be secret!", null, null, null, null)
+			return alert(usr, "The game mode has to be secret!")
 		GLOB.secret_force_mode = href_list["f_secret2"]
 		log_admin("[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode].</span>")
@@ -1572,9 +1572,9 @@
 		return
 
 	if(SSticker.HasRoundStarted())
-		return alert(usr, "The game has already started.", null, null, null, null)
+		return alert(usr, "The game has already started.")
 	if(GLOB.master_mode != "secret")
-		return alert(usr, "The game mode has to be secret!", null, null, null, null)
+		return alert(usr, "The game mode has to be secret!")
 	var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
 	for(var/mode in config.modes)
 		dat += {"<A href='byond://?src=[REF(src)];[HrefToken()];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}

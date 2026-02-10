@@ -2945,6 +2945,7 @@
 #include "code\modules\language\language.dm"
 #include "code\modules\language\language_holder.dm"
 #include "code\modules\language\language_menu.dm"
+#include "code\modules\language\newpsydonic.dm"
 #include "code\modules\language\oldpsydonic.dm"
 #include "code\modules\language\orc.dm"
 #include "code\modules\language\otavan.dm"

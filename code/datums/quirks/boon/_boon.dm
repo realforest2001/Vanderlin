@@ -102,7 +102,7 @@
 		/datum/language/dwarvish,
 		/datum/language/deepspeak,
 		/datum/language/zalad,
-		/datum/language/oldpsydonic,
+		/datum/language/newpsydonic,
 		/datum/language/hellspeak,
 		/datum/language/orcish,
 	)

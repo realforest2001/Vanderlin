@@ -1,6 +1,6 @@
 /datum/language/newpsydonic
-	name = "New Psydonic"
-	desc = ""
+	name = "Psydonic"
+	desc = "The common language of Grenzelhoft, evolved from Old Psydonic over centuries."
 	speech_verb = "states"
 	ask_verb = "questions"
 	exclaim_verb = "shouts"

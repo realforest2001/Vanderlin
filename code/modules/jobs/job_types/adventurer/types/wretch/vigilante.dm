@@ -45,7 +45,7 @@
 
 /datum/job/advclass/wretch/vigilante/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	if(tgui_alert("Do you wish for a random title? You will not receive one if you click No.", "Confirm", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, "Do you wish for a random title? You will not receive one if you click No.", "Confirm", list("Yes", "No")) == "Yes")
 		var/prev_real_name = spawned.real_name
 		var/prev_name = spawned.name
 		var/title

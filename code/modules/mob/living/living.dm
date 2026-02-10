@@ -1262,7 +1262,7 @@
 	if(stat)
 		return
 	surrendering = 1
-	if(alert(src, "Yield in surrender?",,"YES","NO") == "YES")
+	if(tgui_alert(src, "Yield in surrender?","Yield", list("YES","NO")) == "YES")
 		record_round_statistic(STATS_YIELDS)
 		changeNext_move(CLICK_CD_EXHAUSTED)
 		var/image/flaggy = image('icons/effects/effects.dmi',src,"surrender",ABOVE_MOB_LAYER)

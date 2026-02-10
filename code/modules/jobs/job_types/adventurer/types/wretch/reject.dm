@@ -63,7 +63,7 @@
 	if(spawned.dna.species.id != SPEC_ID_TIEFLING)
 		ADD_TRAIT(spawned, TRAIT_NOBLE, TRAIT_GENERIC)
 
-	if(tgui_alert("Do you wish to be recognized as a non-foreigner?", "Foreigner", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, "Do you wish to be recognized as a non-foreigner?", "Foreigner", list("Yes", "No")) == "Yes")
 		REMOVE_TRAIT(spawned, TRAIT_FOREIGNER, TRAIT_GENERIC)
 
 	wretch_select_bounty(spawned)

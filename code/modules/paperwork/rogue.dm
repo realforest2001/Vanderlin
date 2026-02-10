@@ -170,7 +170,7 @@
 			if(signedname)
 				to_chat(user, span_warning("[signedname]"))
 				return
-			switch(alert("Sign your name?",,"Yes","No"))
+			switch(tgui_alert(usr, "Sign your name?","Sign", list("Yes","No")))
 				if("No")
 					return
 				if("Yes")

@@ -20,7 +20,7 @@
 	set hidden = 1
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(usr, "This will open the forum in your browser. Are you sure?","Confirm", list("Yes","No"))!="Yes")
 			return
 		src << link(forumurl)
 	else
@@ -33,7 +33,7 @@
 	set category = "OOC.Links"
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
-		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
+		if(tgui_alert(usr, "This will open the rules in your browser. Are you sure?","Confirm", list("Yes","No")) != "Yes")
 			return
 		src << link(rulesurl)
 	else

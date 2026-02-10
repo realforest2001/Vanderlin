@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	if(!holder)
 		return
 	if(is_content_unlocked())
-		switch(alert("Which setting do you want to change?",,"Ghost Form","Ghost Orbit","Ghost Accessories"))
+		switch(tgui_alert(usr, "Which setting do you want to change?", "Which", list("Ghost Form","Ghost Orbit","Ghost Accessories")))
 			if("Ghost Form")
 				pick_form()
 			if("Ghost Orbit")

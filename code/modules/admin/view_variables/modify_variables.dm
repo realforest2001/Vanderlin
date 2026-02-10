@@ -96,7 +96,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	L += var_value
 
-	switch(tgui_alert("Would you like to associate a value with the list entry?", "Assoc Value", list("Yes","No")))
+	switch(tgui_alert(usr, "Would you like to associate a value with the list entry?", "Assoc Value", list("Yes","No")))
 		if("Yes")
 			L[var_value] = mod_list_add_ass(O) //hehe
 	if (O)

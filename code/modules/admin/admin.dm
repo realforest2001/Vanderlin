@@ -1084,7 +1084,7 @@
 		return
 	if(is_priest_job(M.mind.assigned_role))
 		return
-	var/appointment_type = browser_alert(usr, "Are you sure you want to anoint [M.real_name] as the new Priest?", "Confirmation", DEFAULT_INPUT_CHOICES)
+	var/appointment_type = tgui_alert(usr, "Are you sure you want to anoint [M.real_name] as the new Priest?", "Confirmation", DEFAULT_INPUT_CHOICES)
 	if(appointment_type == CHOICE_NO)
 		return
 

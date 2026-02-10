@@ -664,7 +664,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 
-	var/which = browser_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
+	var/which = tgui_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
 	if(QDELETED(spell_recipient))

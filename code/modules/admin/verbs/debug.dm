@@ -236,7 +236,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!(ishuman(M) || isobserver(M)))
 		return
 
-	var/answer = browser_alert(src, "Apply an outfit or a full job? (Does not consume slots or change job)", "Admin Dress", list("Outfit", "Job", "Cancel"))
+	var/answer = tgui_alert(src, "Apply an outfit or a full job? (Does not consume slots or change job)", "Admin Dress", list("Outfit", "Job", "Cancel"))
 	if(!answer || QDELETED(src))
 		return
 	switch(answer)

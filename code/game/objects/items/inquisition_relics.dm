@@ -538,7 +538,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!full)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(browser_alert(user, "EMPTY THE INDEXER?", "INDEXING...", "YES", "NO") != "NO")
+	if(tgui_alert(user, "EMPTY THE INDEXER?", "INDEXING...", "YES", "NO") != "NO")
 		playsound(src, 'sound/items/indexer_empty.ogg', 75, FALSE, 3)
 		visible_message(span_warning("[src] boils its contents away!"))
 		fullreset(user)
@@ -1210,7 +1210,7 @@
 		return
 
 	if(!active)
-		var/input = browser_alert(user, "WHAT DO YOU SEEK?", "THE PRICE IS PAID", list("BLOOD", "FIXATION"))
+		var/input = tgui_alert(user, "WHAT DO YOU SEEK?", "THE PRICE IS PAID", list("BLOOD", "FIXATION"))
 		if(!input || QDELETED(user) || QDELETED(src))
 			return
 

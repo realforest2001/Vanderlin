@@ -46,7 +46,7 @@
 	set category = "OOC.Links"
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
-		if(browser_alert(src, "This will open the Github repository in your browser. Are you sure?", null, DEFAULT_INPUT_CHOICES) != CHOICE_YES)
+		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?", null, DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 			return
 		src << link(githuburl)
 	else
@@ -91,7 +91,7 @@
 		message += "<br>The following experimental changes are active and may be the cause of any new or sudden issues:<br>"
 		message += GLOB.revdata.GetTestMergeInfo(FALSE)
 
-	if(browser_alert(src, message, "Report Issue", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
+	if(tgui_alert(src, message, "Report Issue", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 		return
 
 	// Keep a static version of the template to avoid reading file

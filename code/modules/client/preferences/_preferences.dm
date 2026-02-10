@@ -1188,7 +1188,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(user.client?.prefs)
 		if(!user.client.prefs.lastclass)
 			return
-	if(browser_alert(user, "Use 2 TRIUMPHS to play as this class again?", "OUROBOROS", DEFAULT_INPUT_CONFIRMATIONS) != CHOICE_CONFIRM)
+	if(tgui_alert(user, "Use 2 TRIUMPHS to play as this class again?", "OUROBOROS", DEFAULT_INPUT_CONFIRMATIONS) != CHOICE_CONFIRM)
 		return
 	if(user.client?.prefs)
 		if(user.client.prefs.lastclass)
@@ -1455,7 +1455,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				SetKeybinds(user)
 
 			if("keybindings_reset")
-				var/choice = browser_alert(user, "Do you really want to reset your keybindings?", "Setup keybindings", DEFAULT_INPUT_CONFIRMATIONS)
+				var/choice = tgui_alert(user, "Do you really want to reset your keybindings?", "Setup keybindings", DEFAULT_INPUT_CONFIRMATIONS)
 				if(choice != CHOICE_CONFIRM)
 					return
 				hotkeys = TRUE

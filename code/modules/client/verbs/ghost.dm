@@ -25,7 +25,7 @@
 		if(liver.has_quirk(/datum/quirk/vice/hardcore))
 			SEND_SIGNAL(liver, COMSIG_LIVING_TRY_ENTER_AFTERLIFE)
 			return
-	var/answer = browser_alert(src, "Begin the long walk in the Underworld to your judgement?", "JUDGEMENT", DEFAULT_INPUT_CHOICES)
+	var/answer = tgui_alert(src, "Begin the long walk in the Underworld to your judgement?", "JUDGEMENT", DEFAULT_INPUT_CHOICES)
 	if(!answer || QDELETED(src) || QDELETED(mob))
 		return
 	if(answer == CHOICE_NO)

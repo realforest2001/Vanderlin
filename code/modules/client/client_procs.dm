@@ -308,7 +308,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(commendedsomeone)
 		return
 	if(!intentional)
-		if(browser_alert(src, "DOES ANY SOUL DESERVE COMMENDATION?", "THE CURTAINS CLOSE", reverseRange(DEFAULT_INPUT_CHOICES), 20 SECONDS) != CHOICE_YES)
+		if(tgui_alert(src, "DOES ANY SOUL DESERVE COMMENDATION?", "THE CURTAINS CLOSE", reverseRange(DEFAULT_INPUT_CHOICES), 20 SECONDS) != CHOICE_YES)
 			return
 	var/list/selections = GLOB.character_ckey_list.Copy()
 	if(!selections.len)
@@ -328,7 +328,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			selection_w_title["[real_name], [H.get_role_title()]"] = ckey
 	if(!selection_w_title)
 		ASYNC {
-			browser_alert(src, "this dude really playing VANDERLIN all by themself lmfaoooo")
+			tgui_alert(src, "this dude really playing VANDERLIN all by themself lmfaoooo")
 		}
 	var/selection = browser_input_list(src, "WHO RECIEVES YOUR COMMENDATION?", null, shuffle(selection_w_title), pick(selection_w_title))
 	if(!selection)
@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	var/theykey = selection_w_title[selection]
 	if(theykey == ckey)
 		ASYNC {
-			browser_alert(src,"YOU MAY NOT COMMEND YOURSELF", "THE EGO")
+			tgui_alert(src,"YOU MAY NOT COMMEND YOURSELF", "THE EGO")
 		}
 		return
 	if(theykey)

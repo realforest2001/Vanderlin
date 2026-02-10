@@ -848,7 +848,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/custom_message
-	var/check = browser_alert(usr, "Do you want a custom message for the heart attack?", "Confirmation", DEFAULT_INPUT_CHOICES)
+	var/check = tgui_alert(usr, "Do you want a custom message for the heart attack?", "Confirmation", DEFAULT_INPUT_CHOICES)
 	if(check == CHOICE_YES)
 		custom_message = browser_input_text(usr, "Write the Custom Message", "Custom Message")
 		if(!custom_message)

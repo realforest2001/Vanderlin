@@ -2235,7 +2235,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		switch(browser_alert(usr, "Add or remove?", "MODIFY STATS", list("ADD", "REMOVE")))
+		switch(tgui_alert(usr, "Add or remove?", "MODIFY STATS", list("ADD", "REMOVE")))
 			if("REMOVE")
 				if(!LAZYLEN(stat_modifiers))
 					return

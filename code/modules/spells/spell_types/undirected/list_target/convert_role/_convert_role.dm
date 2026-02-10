@@ -43,7 +43,7 @@
 	. = ..()
 	owner.say(replacetext(recruitment_message, "%RECRUIT", "[cast_on]"), forced = "Convert spell ([src])")
 
-	var/answer = browser_alert(cast_on, "Do you wish to become a [new_role]?", "[recruitment_faction] recruitment.", DEFAULT_INPUT_CONFIRMATIONS)
+	var/answer = tgui_alert(cast_on, "Do you wish to become a [new_role]?", "[recruitment_faction] recruitment.", DEFAULT_INPUT_CONFIRMATIONS)
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
 		return
 	if(answer != CHOICE_CONFIRM)

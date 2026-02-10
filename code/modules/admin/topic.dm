@@ -109,7 +109,7 @@
 			if(isnull(SSticker.admin_delay_notice))
 				return
 		else
-			if(alert(usr, "Really cancel current round end delay? The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Undelay round end", "Yes", "No") != "Yes")
+			if(tgui_alert(usr, "Really cancel current round end delay? The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Undelay round end", list("Yes", "No")) != "Yes")
 				return
 			SSticker.admin_delay_notice = null
 
@@ -132,8 +132,8 @@
 			return
 
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
-		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
-			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", list("Yes", "No")) == "Yes")
+			if(tgui_alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", list("Yes", "No")) == "Yes")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
 				SSticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
 				return
@@ -153,7 +153,7 @@
 
 		var/delmob = TRUE
 		if(!isobserver(M))
-			switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
+			switch(tgui_alert(usr, "Delete old mob?","Message", list("Yes","No","Cancel")))
 				if("Cancel")
 					return
 				if("No")
@@ -184,7 +184,7 @@
 			if(!check_if_greater_rights_than(M.client))
 				to_chat(usr, "<span class='danger'>Error: They have more rights than you do.</span>")
 				return
-			if(alert(usr, "Kick [key_name(M)]?", "Confirm", "Yes", "No") != "Yes")
+			if(tgui_alert(usr, "Kick [key_name(M)]?", "Confirm", list("Yes", "No")) != "Yes")
 				return
 			if(!M)
 				to_chat(usr, "<span class='danger'>Error: [M] no longer exists!</span>")
@@ -446,7 +446,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		if(alert(usr, "Send [key_name(M)] to Prison?", "Message", "Yes", "No") != "Yes")
+		if(tgui_alert(usr, "Send [key_name(M)] to Prison?", "Message", list("Yes", "No")) != "Yes")
 			return
 
 		M.forceMove(pick(GLOB.prisonwarp))
@@ -461,11 +461,11 @@
 
 		var/mob/M = locate(href_list["sendbacktolobby"])
 
-		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
+		if(tgui_alert(usr, "Send [key_name(M)] back to Lobby?", "Message", list("Yes", "No")) != "Yes")
 			return
 		var/living = isliving(M)
 		if(living)
-			if(alert(usr, "[key_name(M)] is a LIVING MOB. Are you sure you want to send him back?", "Message", "Yes", "No") != "Yes")
+			if(tgui_alert(usr, "[key_name(M)] is a LIVING MOB. Are you sure you want to send him back?", "Message", list("Yes", "No")) != "Yes")
 				return
 		if(!M.client)
 			to_chat(usr, "<span class='warning'>[M] doesn't seem to have an active client.</span>")
@@ -476,7 +476,7 @@
 		var/mob/dead/new_player/NP = new()
 		NP.ckey = M.ckey
 		if(living)
-			if(alert(usr, "Would you like to also delete the living mob [key_name(M)]?", "Message", "Yes", "No") == "Yes")
+			if(tgui_alert(usr, "Would you like to also delete the living mob [key_name(M)]?", "Message", list("Yes", "No")) == "Yes")
 				log_admin("[key_name(usr)] has chosen to delete \the [M] mob while sending the client to lobby.")
 				qdel(M)
 		else
@@ -828,7 +828,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
+		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
 			return
 		var/mob/M = locate(href_list["getmob"])
 		usr.client.Getmob(M)
@@ -1120,7 +1120,7 @@
 			return
 		if(SSticker.IsRoundInProgress())
 			var/afkonly = text2num(href_list["afkonly"])
-			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
+			if(tgui_alert(usr, "Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message", list("Yes","Cancel")) != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")
 				return
 			var/list/listkicked = kick_clients_in_lobby("<span class='danger'>I were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"].</span>", afkonly)
@@ -1342,7 +1342,7 @@
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
 			log_query_debug("[usr.key] | Reported a server hang")
-			if(alert(usr, "Had you just press any admin buttons?", "Query server hang report", "Yes", "No") == "Yes")
+			if(tgui_alert(usr, "Had you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
 				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
 				if(response)
 					log_query_debug("[usr.key] | [response]")
@@ -1352,7 +1352,7 @@
 	else if(href_list["rebootworld"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/confirm = alert("Are you sure you want to reboot the server?", "Confirm Reboot", "Yes", "No")
+		var/confirm = tgui_alert(usr, "Are you sure you want to reboot the server?", "Confirm Reboot", list("Yes", "No"))
 		if(confirm == "No")
 			return
 		if(confirm == "Yes")

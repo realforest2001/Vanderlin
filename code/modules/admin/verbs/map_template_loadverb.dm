@@ -19,7 +19,7 @@
 		item.plane = ABOVE_LIGHTING_PLANE
 		preview += item
 	images += preview
-	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
+	if(tgui_alert(src,"Confirm location.","Template Confirm", list("Yes","No")) == "Yes")
 		if(template.load(T, centered = TRUE))
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
@@ -37,7 +37,7 @@
 		to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map]</span>")
 		return
 	var/datum/map_template/M
-	switch(alert(src, "What kind of map is this?", "Map type", "Normal", "Cancel"))
+	switch(tgui_alert(src, "What kind of map is this?", "Map type", list("Normal", "Cancel")))
 		if("Normal")
 			M = new /datum/map_template(map, "[map]", TRUE)
 		else

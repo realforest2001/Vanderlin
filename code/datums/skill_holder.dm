@@ -194,7 +194,7 @@
 	if(current.stat >= UNCONSCIOUS || youngling.stat >= UNCONSCIOUS)
 		return
 
-	var/choice = input(youngling, "Do you wish to become [current.name]'s apprentice?") as anything in list("Yes", "No")
+	var/choice = tgui_alert(youngling, "Do you wish to become [current.name]'s apprentice?", "Confirm", list("Yes","No"))
 	if(length(apprentices) >= max_apprentices)
 		return
 	if(current.stat >= UNCONSCIOUS || youngling.stat >= UNCONSCIOUS)

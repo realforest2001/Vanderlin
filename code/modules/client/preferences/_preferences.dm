@@ -1904,7 +1904,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						if(user.get_triumphs() < 1)
 							to_chat(user, span_bignotice("YOU DON'T HAVE ENOUGH TRIUMPHS."))
 							return
-					var/result = alert(user, "You'll receive a unique trait for one round\n You cannot back out from or reroll this.\nDo you really wish to [donator ? "" : "spend 1 triumph and " ]proceed?", "Be Special", "Yes", "No")
+					var/result = tgui_alert(user, "You'll receive a unique trait for one round\n You cannot back out from or reroll this.\nDo you really wish to [donator ? "" : "spend 1 triumph and " ]proceed?", "Be Special", list("Yes", "No"))
 					if(result != "Yes")
 						return
 					if(!donator)

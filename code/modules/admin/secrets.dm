@@ -268,7 +268,7 @@
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
-			switch(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel"))
+			switch(tgui_alert(usr, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
 				if("Yes")
 					E.announceChance = 100
 				if("Cancel")

@@ -27,7 +27,7 @@
 				if(istype(G, /mob/dead/observer/rogue/arcaneeye))
 					return
 				if(istype(G, /mob/dead/observer/profane)) // Souls trapped by a dagger can return to lobby if they want
-					if(alert("Return to the lobby?", "", "Yes", "No") == "Yes")
+					if(tgui_alert(G, "Return to the lobby?", "", list("Yes", "No")) == "Yes")
 						G.returntolobby()
 				G.client.descend()
 				return

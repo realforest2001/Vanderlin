@@ -4,7 +4,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/confirm = alert(src, "Make [M] drop everything?", "Message", "Yes", "No")
+	var/confirm = tgui_alert(src, "Make [M] drop everything?", "Message", list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 
@@ -54,11 +54,11 @@
 				message_admins("[key_name_admin(user)] decided not to talk into [ADMIN_LOOKUPFLW(target)]'s head")
 				return FALSE
 
-			var/first_time = alert(user, "Send a god unique 'feelings' message first?", "Atmosphere", "Yes", "No")
+			var/first_time = tgui_alert(user, "Send a god unique 'feelings' message first?", "Atmosphere", list("Yes", "No"))
 			if(first_time == "Yes")
 				first_time_message = get_god_atmosphere_message(chosen_god)
-			volume = alert(user, "How loud (big) should your message be?", "Volume", "Normal", "Loud", "Quiet")
-			message = input(user, "What will [chosen_god] say?", "Speak for [chosen_god]") as text|null
+			volume = tgui_alert(user, "How loud (big) should your message be?", "Volume", list("Normal", "Loud", "Quiet"))
+			message = tgui_input_text(user, "What will [chosen_god] say?", "Speak for [chosen_god]")
 			if(!message)
 				message_admins("[key_name_admin(user)] decided not to talk into [ADMIN_LOOKUPFLW(target)]'s head")
 				return FALSE
@@ -376,7 +376,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 		//check if they were a monkey
 		if(findtext(G_found.real_name,"monkey"))
-			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
+			if(tgui_alert(usr, "This character appears to have been a monkey. Would you like to respawn them as such?", "Confirm", list("Yes","No")) == "Yes")
 				var/mob/living/carbon/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
@@ -509,7 +509,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1) || (hotspots != -1))
 		if ((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20) || (hotspots > 20))
-			if (alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", "Yes", "No") == "No")
+			if(tgui_alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", list("Yes", "No")) == "No")
 				return
 
 		explosion(O, devastation, heavy, light, flash, null, null,flames,hotspots)
@@ -550,7 +550,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Gibself"
 	set category = "GameMaster.Fun"
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	var/confirm = tgui_alert(src, "You sure?", "Confirm", list("Yes", "No"))
 	if(confirm == "Yes")
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")

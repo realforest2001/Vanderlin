@@ -53,7 +53,7 @@
 	spawned.real_name = "[honorary] [prev_real_name]"
 	spawned.name = "[honorary] [prev_name]"
 
-	if(alert("Do you wish to be recognized as a non-foreigner?", "", "Yes", "No") == "Yes")
+	if(tgui_alert(spawned, "Do you wish to be recognized as a non-foreigner?", "Foreigner", list("Yes", "No")) == "Yes")
 		REMOVE_TRAIT(spawned, TRAIT_FOREIGNER, TRAIT_GENERIC)
 
 	if(spawned.dna?.species?.id == SPEC_ID_HUMEN && spawned.gender == MALE)

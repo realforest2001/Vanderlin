@@ -534,7 +534,7 @@
 		return
 
 	if(SSticker.admin_delay_notice)
-		if(alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") != "Yes")
+		if(tgui_alert(usr, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", list("Yes", "No")) != "Yes")
 			return FALSE
 
 	var/list/options = list(REGULAR_RESTART, REGULAR_RESTART_DELAYED, HARD_RESTART, HARDEST_RESTART)
@@ -960,7 +960,7 @@
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = tgui_alert(usr, question, "Place ghost in control of mob?", list("Yes", "No"))
 	if (ask != "Yes")
 		return 1
 
@@ -1152,7 +1152,7 @@
 	var/mob/user = usr
 	if(!user.client.holder)
 		return
-	var/answer = input(user, "ARE YOU ABSOLUTELY SURE? THIS WILL GIVE TRIUMPHS TO EVERYONE CONNECTED.", "TRIUMPHS") as anything in list("Yes", "No")
+	var/answer = tgui_alert(user, "ARE YOU ABSOLUTELY SURE? THIS WILL GIVE TRIUMPHS TO EVERYONE CONNECTED.", "TRIUMPHS", list("Yes", "No"))
 	if(answer != "Yes")
 		return
 	var/amount = input(user, "Choose the amount of triumphs", "Triumph Giver") as num|null
@@ -1161,7 +1161,7 @@
 	if(amount < 0)
 		return
 
-	var/reason = input(user, "Choose a reason", "Triumph Giver") as text|null
+	var/reason = tgui_input_text(user, "Choose a reason", "Triumph Giver")
 
 	for(var/client/client as anything in GLOB.clients)
 		client.mob.adjust_triumphs(amount, reason = reason, override_bonus = TRUE)

@@ -324,7 +324,7 @@
 	if(HAS_TRAIT(user, TRAIT_BURDEN))
 		return TRUE
 
-	var/gaffed = alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", "Yes", "No")
+	var/gaffed = tgui_alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", list("Yes", "No"))
 	var/gaffed_time = world.time
 
 	if((gaffed == "No" || world.time > gaffed_time + 5 SECONDS) && user.is_holding(src))
@@ -436,7 +436,7 @@
 /obj/item/clothing/ring/signet/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(tallowed)
-		if(alert(user, "SCRAPE THE TALLOW OFF?", "SIGNET RING", "YES", "NO") != "NO")
+		if(tgui_alert(user, "SCRAPE THE TALLOW OFF?", "SIGNET RING", list("Yes", "No")) != "NO")
 			tallowed = FALSE
 			update_appearance(UPDATE_ICON_STATE)
 

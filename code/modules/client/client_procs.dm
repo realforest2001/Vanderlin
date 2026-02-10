@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		var/title = href_list["id"]
 		if(!title)
 			return
-		if(alert("Are you sure you want to delete the painting '[title]'?", "Confirm Deletion", "Yes", "No") == "Yes")
+		if(tgui_alert(src, "Are you sure you want to delete the painting '[title]'?", "Confirm Deletion", list("Yes", "No")) == "Yes")
 			if(SSpaintings.del_player_painting(title))
 				message_admins("[key_name_admin(src)] has deleted player made painting called: '[title]'")
 				SSpaintings.update_paintings()
@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		if(!title)
 			return
 		var/real_title = url_decode(title)
-		if(alert("Are you sure you want to delete the book '[real_title]'?", "Confirm Deletion", "Yes", "No") == "Yes")
+		if(tgui_alert(src, "Are you sure you want to delete the book '[real_title]'?", "Confirm Deletion", list("Yes", "No")) == "Yes")
 			if(SSlibrarian.del_player_book(title, author))
 				message_admins("[key_name_admin(src)] has deleted player made book called: '[real_title]' by [author]")
 				manage_books()

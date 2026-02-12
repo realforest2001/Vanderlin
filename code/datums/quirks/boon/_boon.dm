@@ -110,6 +110,8 @@
 /datum/quirk/boon/second_language/on_spawn()
 	if(!customization_value || !ispath(customization_value, /datum/language))
 		return
+	if(!(customization_value in customization_options))
+		return
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner

@@ -171,6 +171,6 @@ GLOBAL_LIST_INIT(admin_categories, build_admin_categories())
 			if(!(clean_cat in final_build))
 				final_build[clean_cat] = list()
 
-			final_build[category] += ckey(rank)
+			final_build[clean_cat] += ckey(rank)
 
 	return final_build

@@ -215,6 +215,8 @@ you will have to do something like if(client.rights & R_ADMIN) myself.
 	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
 
 /datum/admins/proc/get_message_prefix()
+	if(CONFIG_GET(flag/asay_simple_titles))
+		return rank?.name
 	if(ckey(rank.name) in GLOB.admin_categories[ADMIN_CATEGORY_ADMIN])
 		return "ADMIN"
 	if(ckey(rank.name) in GLOB.admin_categories[ADMIN_CATEGORY_MAINT])

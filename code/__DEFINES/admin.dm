@@ -166,9 +166,11 @@ GLOBAL_LIST_INIT(admin_categories, build_admin_categories())
 		var/rank = List[1]
 		var/list/categories = List.Copy(2)
 		for(var/category in categories)
-			if(!(uppertext(category) in final_build))
-				final_build[uppertext(category)] = list()
+			var/clean_cat = uppertext(ckey(category))
 
-			final_build[category] += rank
+			if(!(clean_cat in final_build))
+				final_build[clean_cat] = list()
+
+			final_build[category] += ckey(rank)
 
 	return final_build

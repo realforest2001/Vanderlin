@@ -215,8 +215,8 @@ you will have to do something like if(client.rights & R_ADMIN) myself.
 	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
 
 /datum/admins/proc/get_message_prefix()
-	if(rank.name in GLOB.admin_categories[ADMIN_CATEGORY_ADMIN])
+	if(ckey(rank.name) in GLOB.admin_categories[ADMIN_CATEGORY_ADMIN])
 		return "ADMIN"
-	if(rank.name in GLOB.admin_categories[ADMIN_CATEGORY_MAINT])
+	if(ckey(rank.name) in GLOB.admin_categories[ADMIN_CATEGORY_MAINT])
 		return "MAINT"
 	return "STAFF"

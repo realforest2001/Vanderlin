@@ -214,3 +214,7 @@ you will have to do something like if(client.rights & R_ADMIN) myself.
 /proc/HrefTokenFormField(forceGlobal = FALSE)
 	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
 
+/datum/admins/proc/get_message_prefix()
+	if(rank.name in GLOB.admin_categories[ADMIN_CATEGORY_MAINT])
+		return "MAINT"
+	return "ADMIN"

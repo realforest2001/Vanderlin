@@ -35,6 +35,7 @@
 		/datum/job/forestwarden,
 		/datum/job/royalknight,
 		/datum/job/templar,
+		/datum/job/gmtemplar,
 	)
 
 /datum/round_event_control/antagonist/solo/vampires/valid_for_map()

@@ -27,6 +27,8 @@
 		/datum/job/lord,
 		/datum/job/consort,
 		/datum/job/priest,
+		/datum/job/gmtemplar,
+		/datum/job/templar,
 	)
 
 

@@ -48,7 +48,6 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/helmet/heavy/ordinatorhelm, ///special item //! probably can add this at some point
 		/obj/item/clothing/head/roguehood/psydon/confessor, ///inqport
 		/obj/item/clothing/face/facemask/steel/confessor, ///inqport
-		/obj/item/clothing/neck/psycross/silver/undivided, //Not supposed to get this, not yet at the very least.
 		/obj/item/clothing/gloves/bandages/pugilist,
 		/obj/item/clothing/armor/gambeson/heavy/otavan/inq, ///inqport
 		/obj/item/clothing/armor/gambeson/heavy/otavan, ///null

@@ -38,6 +38,22 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 	return FALSE
 
 /* ----------------- */
+/datum/patron/divine/undivided
+	name = TEN_UNDIVIDED
+	domain = ""
+	desc = "The Divine Pantheon Undivided."
+	flaws = ""
+	worshippers = ""
+	sins = ""
+	boons = ""
+	added_traits = list()
+	devotion_holder = /datum/devotion/divine/undivided
+	confess_lines = list(
+		"ASTRATA IS MY LIGHT!",
+		"ASTRATA BRINGS LAW!",
+		"I SERVE THE GLORY OF THE SUN!",
+	)
+
 
 /datum/patron/divine/astrata
 	name = ASTRATA
@@ -55,7 +71,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I SERVE THE GLORY OF THE SUN!",
 	)
 	storyteller = /datum/storyteller/astrata
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/astrata
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/astrata
 
 /datum/patron/divine/noc
 	name = NOC
@@ -73,7 +89,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I SEEK THE MYSTERIES OF THE MOON!",
 	)
 	storyteller = /datum/storyteller/noc
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/noc
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/noc
 
 /datum/patron/divine/dendor
 	name = DENDOR
@@ -91,7 +107,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I ANSWER THE CALL OF THE WILD!",
 	)
 	storyteller = /datum/storyteller/dendor
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/dendor
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/dendor
 
 /datum/patron/divine/abyssor
 	name = ABYSSOR
@@ -109,7 +125,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I AM DRAWN BY THE PULL OF THE TIDE!",
 	)
 	storyteller = /datum/storyteller/abyssor
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/abyssor
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/abyssor
 
 /datum/patron/divine/necra
 	name = NECRA
@@ -127,7 +143,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I FEAR NOT DEATH, MY LADY AWAITS ME!",
 	)
 	storyteller = /datum/storyteller/necra
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/necra
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/necra
 
 /datum/patron/divine/ravox
 	name = RAVOX
@@ -145,7 +161,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"THE DRUMS OF WAR BEAT IN MY CHEST!",
 	)
 	storyteller = /datum/storyteller/ravox
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/ravox
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/ravox
 
 /datum/patron/divine/xylix
 	name = XYLIX
@@ -170,7 +186,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"EORA BRINGS US TOGETHER!",
 	)
 	storyteller = /datum/storyteller/xylix
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/xylix
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/xylix
 
 /datum/patron/divine/pestra
 	name = PESTRA
@@ -188,7 +204,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"MY AFFLICTION IS MY TESTAMENT!",
 	)
 	storyteller = /datum/storyteller/pestra
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/pestra
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/pestra
 
 /datum/patron/divine/pestra/preference_accessible(datum/preferences/prefs)
 	. = ..()
@@ -214,7 +230,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I AM AN INSTRUMENT OF CREATION!",
 	)
 	storyteller = /datum/storyteller/malum
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/malum
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/malum
 
 /datum/patron/divine/eora
 	name = EORA
@@ -232,4 +248,4 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 		"I LOVE YOU, EVEN AS YOU TRESPASS AGAINST ME!",
 	)
 	storyteller = /datum/storyteller/eora
-	associated_psycross = /obj/item/clothing/neck/psycross/silver/eora
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine/eora

@@ -101,7 +101,7 @@
 	belt = /obj/item/storage/belt/leather/black
 	ring = /obj/item/clothing/ring/silver/rontz
 	gloves = /obj/item/clothing/gloves/plate/silver
-	wrists = /obj/item/clothing/neck/psycross/silver/ravox
+	wrists = /obj/item/clothing/neck/psycross/silver/divine/ravox
 
 
 

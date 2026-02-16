@@ -113,34 +113,34 @@
 	switch(H.patron?.type)
 		if(/datum/patron/psydon, /datum/patron/psydon/extremist)
 			head = /obj/item/clothing/head/helmet/heavy/bucket/gold
-			wrists = /obj/item/clothing/neck/psycross/g
+			wrists = /obj/item/clothing/neck/psycross/gold
 		if(/datum/patron/divine/astrata)
 			head = /obj/item/clothing/head/helmet/heavy/necked/astrata
-			wrists = /obj/item/clothing/neck/psycross/silver/astrata
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/astrata
 		if(/datum/patron/divine/noc)
 			head = /obj/item/clothing/head/helmet/heavy/necked/noc
-			wrists = /obj/item/clothing/neck/psycross/silver/noc
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/noc
 		if(/datum/patron/divine/dendor)
 			head = /obj/item/clothing/head/helmet/heavy/necked/dendorhelm
-			wrists = /obj/item/clothing/neck/psycross/silver/dendor
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/dendor
 		if(/datum/patron/divine/abyssor)
 			head = /obj/item/clothing/head/helmet/heavy/necked/abyssor
-			wrists = /obj/item/clothing/neck/psycross/silver/abyssor
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/abyssor
 		if(/datum/patron/divine/necra)
 			head = /obj/item/clothing/head/helmet/heavy/necked/necra
-			wrists = /obj/item/clothing/neck/psycross/silver/necra
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/necra
 		if(/datum/patron/divine/ravox)
 			head = /obj/item/clothing/head/helmet/heavy/necked/ravox
-			wrists = /obj/item/clothing/neck/psycross/silver/ravox
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/ravox
 		if(/datum/patron/divine/xylix)
 			head = /obj/item/clothing/head/helmet/heavy/necked/xylix
-			wrists = /obj/item/clothing/neck/psycross/silver/xylix
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/xylix
 		if(/datum/patron/divine/pestra)
 			head = /obj/item/clothing/head/helmet/heavy/necked/pestrahelm
-			wrists = /obj/item/clothing/neck/psycross/silver/pestra
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/pestra
 		if(/datum/patron/divine/malum)
 			head = /obj/item/clothing/head/helmet/heavy/necked/malumhelm
-			wrists = /obj/item/clothing/neck/psycross/silver/malum
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/malum
 		if(/datum/patron/divine/eora)
 			head = /obj/item/clothing/head/helmet/sallet/eoran
-			wrists = /obj/item/clothing/neck/psycross/silver/eora
+			wrists = /obj/item/clothing/neck/psycross/silver/divine/eora

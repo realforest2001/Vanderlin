@@ -34,6 +34,7 @@
 	)
 
 	traits = list(
+		TRAIT_DIVINE_SERVANT,
 		TRAIT_HEAVYARMOR,
 		TRAIT_NOBLE,
 	)
@@ -50,7 +51,8 @@
 			spawned.adjust_stat_modifier(STATMOD_JOB, STATKEY_CON, 1)
 			spawned.adjust_stat_modifier(STATMOD_JOB, STATKEY_PER, 1)
 			spawned.grant_language(/datum/language/newpsydonic)
-			ADD_TRAIT(spawned, TRAIT_PSYDONIAN_GRIT, TRAIT_GENERIC)
+			ADD_TRAIT(spawned, TRAIT_PSYDONIAN_GRIT, JOB_TRAIT)
+			REMOVE_TRAIT(spawned, TRAIT_DIVINE_SERVANT, JOB_TRAIT)
 		if(/datum/patron/divine/astrata)
 			spawned.cmode_music = 'sound/music/cmode/church/CombatAstrata.ogg'
 		if(/datum/patron/divine/noc)
@@ -61,7 +63,7 @@
 			spawned.cmode_music = 'sound/music/cmode/church/CombatAbyssor.ogg'
 		if(/datum/patron/divine/necra)
 			spawned.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
-			ADD_TRAIT(spawned, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+			ADD_TRAIT(spawned, TRAIT_GRAVEROBBER, JOB_TRAIT)
 		if(/datum/patron/divine/ravox)
 			spawned.cmode_music = 'sound/music/cmode/church/CombatRavox.ogg'
 		if(/datum/patron/divine/xylix)
@@ -73,11 +75,11 @@
 		if(/datum/patron/divine/eora)
 			spawned.cmode_music = 'sound/music/cmode/church/CombatEora.ogg'
 			spawned.virginity = FALSE
-			ADD_TRAIT(spawned, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+			ADD_TRAIT(spawned, TRAIT_BEAUTIFUL, JOB_TRAIT)
 		else
 			spawned.cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 
-	if(!spawned.has_language(/datum/language/celestial) && (spawned.patron?.type in ALL_TEMPLE_PATRONS) && spawned.patron?.type != /datum/patron/psydon)
+	if(!spawned.has_language(/datum/language/celestial) && (spawned.patron?.type in ALL_TEMPLE_PATRONS))
 		spawned.grant_language(/datum/language/celestial)
 		to_chat(spawned, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
 

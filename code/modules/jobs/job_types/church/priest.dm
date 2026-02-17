@@ -20,9 +20,9 @@
 
 	outfit = /datum/outfit/priest
 	spells = list(
-		/datum/action/cooldown/spell/undirected/list_target/convert_role/templar,
-		/datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte,
-		/datum/action/cooldown/spell/undirected/list_target/convert_role/churchling,
+		/datum/action/cooldown/spell/undirected/list_target/convert_role/church/templar,
+		/datum/action/cooldown/spell/undirected/list_target/convert_role/church/acolyte,
+		/datum/action/cooldown/spell/undirected/list_target/convert_role/church/churchling,
 		/datum/action/cooldown/spell/undirected/call_bird/priest,
 	)
 
@@ -51,6 +51,10 @@
 		/datum/skill/misc/medicine = 3,
 		/datum/skill/craft/cooking = 1,
 		/datum/skill/labor/mathematics = 3
+	)
+
+	traits = list(
+		TRAIT_DIVINE_SERVANT,
 	)
 
 	languages = list(/datum/language/celestial)

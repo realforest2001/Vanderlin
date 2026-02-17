@@ -212,6 +212,7 @@
 #define MALUM "Malum"
 #define EORA "Eora"
 #define DENDOR "Dendor"
+#define TEN_UNDIVIDED "Ten Undivided"
 
 // Inhumen pantheon
 #define ZIZO "Zizo"

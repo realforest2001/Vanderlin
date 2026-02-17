@@ -453,6 +453,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INQUISITION "Member of the Oratorium Throni Vacui"
 #define TRAIT_PURITAN "Puritan"
 #define TRAIT_SILVER_BLESSED "Silver Blessed"
+#define TRAIT_TEN_UNDIVIDED "Worshipper of the Ten Undivided"
+#define TRAIT_DIVINE_SERVANT "Divine Servant"
 
 // Inhumen patron trait bonuses
 #define TRAIT_ORGAN_EATER "Blessing of Graggar"//Can eat organs (duh.) and raw meat

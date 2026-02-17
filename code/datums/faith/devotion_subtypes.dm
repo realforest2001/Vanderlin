@@ -138,7 +138,7 @@
 		/datum/action/cooldown/spell/healing/profane,
 	)
 
-/datum/devotion/inhumen/make_churching()
+/datum/devotion/inhumen/make_churchling()
 	. = ..()
 	miracles_extra += list(
 		/datum/action/cooldown/spell/healing/profane,

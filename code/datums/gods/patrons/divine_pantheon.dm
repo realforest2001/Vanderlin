@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 	worshippers = "The Meek, The Indecisive, The "
 	sins = "Temptation, Ignorance, Denial"
 	boons = "The Ten pull for your devotion."
-	added_traits = list()
+	added_traits = list(TRAIT_TEN_UNDIVIDED)
 	devotion_holder = /datum/devotion/divine/undivided
 	confess_lines = list(
 		"THE TEN GUIDE US!",

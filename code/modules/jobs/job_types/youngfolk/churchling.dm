@@ -46,7 +46,7 @@
 	var/holder = spawned.patron?.devotion_holder
 	if(holder)
 		var/datum/devotion/devotion = new holder()
-		devotion.make_churching()
+		devotion.make_churchling()
 		devotion.grant_to(spawned)
 
 /datum/outfit/churchling

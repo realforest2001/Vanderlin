@@ -40,19 +40,20 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 /* ----------------- */
 /datum/patron/divine/undivided
 	name = TEN_UNDIVIDED
-	domain = ""
-	desc = "The Divine Pantheon Undivided."
-	flaws = ""
-	worshippers = ""
-	sins = ""
-	boons = ""
+	domain = "Unity and Conflict. Denizens of the Eternal Plane."
+	desc = "The Divine Pantheon Undivided. Worship in such a manner is tolerated, but disapproved of. The Ten rarely give their blessings to those who do not give single-minded adoration to a single diety."
+	flaws = "Discordant, Unyielding, Uninterested."
+	worshippers = "The Meek, The Indecisive, The "
+	sins = "Temptation, Ignorance, Denial"
+	boons = "The Ten pull for your devotion."
 	added_traits = list()
 	devotion_holder = /datum/devotion/divine/undivided
 	confess_lines = list(
-		"ASTRATA IS MY LIGHT!",
-		"ASTRATA BRINGS LAW!",
-		"I SERVE THE GLORY OF THE SUN!",
+		"THE TEN GUIDE US!",
+		"THE TEN PROTECT US!",
+		"I SERVE THE DIVINE TEN!",
 	)
+	associated_psycross = /obj/item/clothing/neck/psycross/silver/divine
 
 
 /datum/patron/divine/astrata

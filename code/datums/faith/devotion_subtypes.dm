@@ -1,3 +1,7 @@
+/datum/devotion/divine/undivided
+
+
+
 /datum/devotion/divine/astrata
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,

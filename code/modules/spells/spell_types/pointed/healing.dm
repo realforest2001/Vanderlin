@@ -25,6 +25,8 @@
 	var/stun_undead = FALSE
 	/// Unholy, profane healing
 	var/is_profane = FALSE
+	/// Patron Restrictive
+	var/patron_restrictive = FALSE
 
 /datum/action/cooldown/spell/healing/is_valid_target(atom/cast_on)
 	. = ..()
@@ -34,9 +36,23 @@
 
 /datum/action/cooldown/spell/healing/cast(mob/living/cast_on)
 	. = ..()
+	if(is_profane && patron_restrictive && !(cast_on.patron in ALL_PROFANE_PATRONS))
+		cast_on.visible_message(
+			span_warning("The Inhumen Four sear the flesh of [cast_on]! a non-believer and weakling!"),
+			span_notice("The Inhumen Four lash out at me with a wave of pain!"),
+		)
+		cast_on.emote("scream")
+		return
+
 	if(!is_profane)
 		if(HAS_TRAIT(cast_on, TRAIT_ASTRATA_CURSE))
 			cast_on.visible_message(span_danger("[cast_on] recoils in pain!"), span_userdanger("Divine healing shuns me!"))
+			cast_on.cursed_freak_out()
+			return
+		/// The Ten won't provide greater healing to undivided worshippers, they do not approve.
+		/// This is ignored if they're already a divine servant, like a Templar, as undivded can only become church roles from round start.
+		if(HAS_TRAIT(cast_on, TRAIT_TEN_UNDIVIDED) && !HAS_TRAIT(cast_on, TRAIT_DIVINE_SERVANT) && patron_restrictive)
+			cast_on.visible_message(span_danger("[cast_on] recoils in shame!"), span_userdanger("The Ten reject my indecisiveness!"))
 			cast_on.cursed_freak_out()
 			return
 		if(cast_on.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
@@ -52,7 +68,7 @@
 			return
 		if((cast_on.real_name in GLOB.excommunicated_players) && !HAS_TRAIT(cast_on, TRAIT_FANATICAL))
 			cast_on.visible_message(
-				span_warning("The angry Ten the flesh of [cast_on]! a foolish blasphemer and heretic!"),
+				span_warning("The angry Ten sear the flesh of [cast_on]! a foolish blasphemer and heretic!"),
 				span_notice("I am despised by the Ten, rejected, and they remind me just how unlovable I am with a wave of pain!"),
 			)
 			cast_on.emote("scream")
@@ -232,6 +248,7 @@
 	wound_modifier = 0.5
 	blood_restoration = BLOOD_VOLUME_SURVIVE
 	stun_undead = TRUE
+	patron_restrictive = TRUE
 
 /datum/action/cooldown/spell/healing/greater/profane
 	name = "Corrupt Miracle"

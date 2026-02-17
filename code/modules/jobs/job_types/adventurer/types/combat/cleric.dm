@@ -35,7 +35,6 @@
 	)
 
 	traits = list(
-		TRAIT_DIVINE_SERVANT,
 		TRAIT_MEDIUMARMOR,
 	)
 

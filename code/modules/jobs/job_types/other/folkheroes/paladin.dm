@@ -34,7 +34,6 @@
 	)
 
 	traits = list(
-		TRAIT_DIVINE_SERVANT,
 		TRAIT_HEAVYARMOR,
 		TRAIT_NOBLE,
 	)
@@ -52,7 +51,6 @@
 			spawned.adjust_stat_modifier(STATMOD_JOB, STATKEY_PER, 1)
 			spawned.grant_language(/datum/language/newpsydonic)
 			ADD_TRAIT(spawned, TRAIT_PSYDONIAN_GRIT, JOB_TRAIT)
-			REMOVE_TRAIT(spawned, TRAIT_DIVINE_SERVANT, JOB_TRAIT)
 		if(/datum/patron/divine/astrata)
 			spawned.cmode_music = 'sound/music/cmode/church/CombatAstrata.ogg'
 		if(/datum/patron/divine/noc)

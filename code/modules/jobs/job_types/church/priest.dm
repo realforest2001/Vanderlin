@@ -53,10 +53,6 @@
 		/datum/skill/labor/mathematics = 3
 	)
 
-	traits = list(
-		TRAIT_DIVINE_SERVANT,
-	)
-
 	languages = list(/datum/language/celestial)
 	can_have_apprentices = FALSE
 

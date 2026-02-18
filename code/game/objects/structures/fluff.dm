@@ -1177,9 +1177,9 @@
 		return
 	if(!divine)
 		return
-	if(!HAS_TRAIT(user, TRAIT_TEN_UNDIVIDED) || (HAS_TRAIT(user, TRAIT_DIVINE_SERVANT) && !(user.job == "Churchling")))
+	if(!HAS_TRAIT(user, TRAIT_DIVINE_CENTRIST) || (HAS_TRAIT(user, TRAIT_DIVINE_SERVANT) && !(user.job == "Churchling")))
 		return
-	if(user?.patron.type != /datum/patron/divine/undivided)
+	if(user?.patron.type != /datum/patron/divine/centrist)
 		return
 
 	var/datum/patron/old_patron = user.patron

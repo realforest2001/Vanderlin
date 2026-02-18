@@ -1,5 +1,5 @@
 /datum/action/cooldown/spell/undirected/list_target/convert_role/church
-	var/allow_undivided = FALSE
+	var/allow_centrist = FALSE
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/church/cast(mob/living/carbon/human/cast_on)
 	// Patron-specific checks happen here, AFTER priest picks the target
@@ -23,8 +23,8 @@
 		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
 		return // Stop recruitment
 
-	if(!allow_undivided && istype(cast_on.patron, /datum/patron/divine/undivided))
-		to_chat(owner, span_info("The Ten glare upon you in stubbornness. CHILD, [cast_on.real_name] worships Us undivided. They can serve only one."))
+	if(!allow_centrist && istype(cast_on.patron, /datum/patron/divine/centrist))
+		to_chat(owner, span_info("The Ten glare upon you in stubbornness. [cast_on.real_name] worships The Ten equally. They can serve only one."))
 		return // Stop recruitment
 
 	if(!(cast_on.patron.type in ALL_TEMPLE_PATRONS))
@@ -80,7 +80,7 @@
 	accept_message = "FOR THE TEN!"
 	refuse_message = "I refuse."
 
-	allow_undivided = TRUE
+	allow_centrist = TRUE
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/church/churchling/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()

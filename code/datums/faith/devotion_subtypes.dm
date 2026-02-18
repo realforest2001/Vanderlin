@@ -1,7 +1,7 @@
-/datum/devotion/divine/undivided
+/datum/devotion/divine/centrist
 	traits = list(TRAIT_DIVINE_SERVANT)
 
-/datum/devotion/divine/undivided/make_templar()
+/datum/devotion/divine/centrist/make_templar()
 	devotion = 50
 	max_devotion = CLERIC_REQ_3
 	progression = CLERIC_REQ_1

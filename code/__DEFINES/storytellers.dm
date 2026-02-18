@@ -212,7 +212,7 @@
 #define MALUM "Malum"
 #define EORA "Eora"
 #define DENDOR "Dendor"
-#define TEN_UNDIVIDED "Ten Undivided"
+#define DIVINE_CENTRIST "Enlightened Centrism"
 
 // Inhumen pantheon
 #define ZIZO "Zizo"

@@ -259,8 +259,8 @@
 				else
 					. += span_redtext("[m1] an ex-agent of the court.")
 
-			if((HAS_TRAIT(src, TRAIT_TEN_UNDIVIDED) && !HAS_TRAIT(src, TRAIT_DIVINE_SERVANT)) && HAS_TRAIT(user, TRAIT_DIVINE_SERVANT))
-				. += SPAN_GOD_ASTRATA("A worshipper of The Ten Undivided. Shame!")
+			if(HAS_TRAIT(user, TRAIT_DIVINE_SERVANT) && (HAS_TRAIT(src, TRAIT_DIVINE_CENTRIST) && !HAS_TRAIT(src, TRAIT_DIVINE_SERVANT)))
+				. += SPAN_GOD_ASTRATA("An 'Enlightened Centrist'. Shame!")
 
 			if(real_name in GLOB.excommunicated_players)
 				. += span_userdanger("EXCOMMUNICATED!")

@@ -49,9 +49,9 @@
 			cast_on.visible_message(span_danger("[cast_on] recoils in pain!"), span_userdanger("Divine healing shuns me!"))
 			cast_on.cursed_freak_out()
 			return
-		/// The Ten won't provide greater healing to undivided worshippers, they do not approve.
+		/// The Ten won't provide greater healing to centrist worshippers, they do not approve.
 		/// This is ignored if they're already a divine servant, like a Templar, as undivded can only become church roles from round start.
-		if(HAS_TRAIT(cast_on, TRAIT_TEN_UNDIVIDED) && !HAS_TRAIT(cast_on, TRAIT_DIVINE_SERVANT) && patron_restrictive)
+		if(HAS_TRAIT(cast_on, TRAIT_DIVINE_CENTRIST) && !HAS_TRAIT(cast_on, TRAIT_DIVINE_SERVANT) && patron_restrictive)
 			cast_on.visible_message(span_danger("[cast_on] recoils in shame!"), span_userdanger("The Ten reject my indecisiveness!"))
 			cast_on.cursed_freak_out()
 			return

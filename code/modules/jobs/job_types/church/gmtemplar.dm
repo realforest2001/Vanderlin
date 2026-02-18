@@ -13,7 +13,7 @@
 	cmode_music = 'sound/music/cmode/church/CombatRavox.ogg'
 
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
-	allowed_patrons = list(/datum/patron/divine/undivided)
+	allowed_patrons = list(/datum/patron/divine/centrist)
 
 	outfit = /datum/outfit/gmtemplar
 	give_bank_account = 0
@@ -101,7 +101,7 @@
 	belt = /obj/item/storage/belt/leather/black
 	ring = /obj/item/clothing/ring/silver/rontz
 	gloves = /obj/item/clothing/gloves/plate/silver
-	wrists = /obj/item/clothing/neck/psycross/silver/divine/ravox
+	wrists = /obj/item/clothing/neck/psycross/silver/divine
 
 
 

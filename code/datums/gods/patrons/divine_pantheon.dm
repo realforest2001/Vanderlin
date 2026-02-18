@@ -38,16 +38,16 @@ GLOBAL_LIST_INIT(patron_sound_themes, list(
 	return FALSE
 
 /* ----------------- */
-/datum/patron/divine/undivided
-	name = TEN_UNDIVIDED
+/datum/patron/divine/centrist
+	name = DIVINE_CENTRIST
 	domain = "Unity and Conflict. Denizens of the Eternal Plane."
-	desc = "The Divine Pantheon Undivided. Worship in such a manner is tolerated, but disapproved of. The Ten rarely give their blessings to those who do not give single-minded adoration to a single diety."
+	desc = "Worshipping The Ten equally. Worship in such a manner is tolerated, but greatly disapproved of. The Ten rarely give their blessings to those who do not give single-minded adoration to a single diety."
 	flaws = "Discordant, Unyielding, Uninterested."
 	worshippers = "The Meek and The Indecisive"
 	sins = "Temptation, Ignorance, Denial"
 	boons = "The Ten pull for your devotion."
-	added_traits = list(TRAIT_TEN_UNDIVIDED)
-	devotion_holder = /datum/devotion/divine/undivided
+	added_traits = list(TRAIT_DIVINE_CENTRIST)
+	devotion_holder = /datum/devotion/divine/centrist
 	confess_lines = list(
 		"THE TEN GUIDE US!",
 		"THE TEN PROTECT US!",

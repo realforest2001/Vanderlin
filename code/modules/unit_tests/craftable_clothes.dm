@@ -82,7 +82,7 @@ abstract types are automatically excluded.
 	var/list/excluded_paths_with_their_subtypes = list(
 		/obj/item/clothing/neck/mercmedal, // only earnable via hermes
 		/obj/item/clothing/neck/shalal, // this is a medal
-		/obj/item/clothing/neck/psycross/silver/holy, // unimplemented
+		/obj/item/clothing/neck/psycross/silver/divine/eora/potion, // unimplemented
 		/obj/item/clothing/armor/skin_armor, // bruh
 		/obj/item/clothing/head/hooded, // abstract items connected to a cloak, shouldn't be craftable
 		/obj/item/clothing/accessory, // ???

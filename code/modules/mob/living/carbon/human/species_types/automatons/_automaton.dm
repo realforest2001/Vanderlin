@@ -19,7 +19,7 @@
 	default_color = "B87333"
 
 	changesource_flags = WABBAJACK
-
+	meat = list()
 	no_equip = list(
 		ITEM_SLOT_SHIRT,
 		ITEM_SLOT_MASK,
@@ -194,7 +194,7 @@
 	for(var/datum/action/action as anything in actions)
 		C.add_spell(action)
 
-	C.verbs += given_voices
+	add_verb(C, given_voices)
 	C.add_movespeed_modifier("automaton", multiplicative_slowdown = 0.9)
 
 /datum/species/automaton/on_species_loss(mob/living/carbon/C)

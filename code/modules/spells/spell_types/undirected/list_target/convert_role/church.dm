@@ -1,4 +1,5 @@
 /datum/action/cooldown/spell/undirected/list_target/convert_role/church
+	name = "Recruit Church Nerd"
 	var/allow_centrist = FALSE
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/church/cast(mob/living/carbon/human/cast_on)

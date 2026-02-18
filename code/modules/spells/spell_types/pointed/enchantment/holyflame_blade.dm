@@ -14,6 +14,7 @@
 	enchantment = DIVINE_FIRE_ENCHANT
 	spell_type = SPELL_MIRACLE
 	associated_skill = /datum/skill/magic/holy
+	required_items = list(/obj/item/clothing/neck/psycross/silver/divine)
 
 /datum/action/cooldown/spell/enchantment/holy_flame/is_valid_target(atom/cast_on)
 	var/obj/item/weapon/enchant_item

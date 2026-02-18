@@ -153,7 +153,10 @@
 	else if(enchant_type == DIVINE_FIRE_ENCHANT)
 		if(isliving(target))
 			var/mob/living/target_mob = target
-			target_mob.adjustFireLoss(DIVINE_FIRE_DAMAGE)
+			var/damage_amt = DIVINE_FIRE_DAMAGE
+			if(source.has_enchantment(/datum/enchantment/silver))
+				damage_amt = damage_amt*1.5
+			target_mob.adjustFireLoss(damage_amt)
 			to_chat(target_mob, span_warning("Divine fire leaps from [source] and singes you!"))
 			// Permanent temporary solution until I figure out how to hack a dynamic on mob sprites
 			// Bypass parry & dodge btw.

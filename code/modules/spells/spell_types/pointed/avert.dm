@@ -29,6 +29,9 @@
 		"Some vast, immeasurably distant figure looms beyond my perception - I feel it, more than I see. It waits. It watches.",
 	)
 
+/datum/action/cooldown/spell/avert/templar
+	required_items = list(/obj/item/clothing/neck/psycross/silver/divine)
+
 /datum/action/cooldown/spell/avert/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)

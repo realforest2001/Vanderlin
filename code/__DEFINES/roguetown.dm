@@ -8,6 +8,7 @@
 
 /// Currently same as ALL_ICONOCLAST_PATRONS, but in text format because byond sucks and won't read things properly.
 #define COLORFUL_PATRONS		list("Psydon", "Astrata", "Noc", "Dendor", "Abyssor", "Necra", "Ravox", "Xylix", "Pestra", "Malum", "Eora", "Graggar", "Zizo", "Matthios", "Baotha")
+#define TEMPLE_PATRON_NAMES		list("Astrata", "Noc", "Dendor", "Abyssor", "Necra", "Ravox", "Xylix", "Pestra", "Malum", "Eora")
 
 GLOBAL_LIST_INIT(curse_names, list())
 

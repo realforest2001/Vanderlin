@@ -9,12 +9,13 @@
 
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
-		CLERIC_T1 = /datum/action/cooldown/spell/avert,
+		CLERIC_T1 = /datum/action/cooldown/spell/avert/templar,
 		CLERIC_T2 = /datum/action/cooldown/spell/enchantment/holy_flame,
 	)
 	viable_tasks = list(
 		/datum/devotion_task/astrata_purge,
 	)
+	devotion_class = DEVOTION_CLASS_TEMPLAR
 
 /datum/devotion/divine/astrata
 	miracles = list(

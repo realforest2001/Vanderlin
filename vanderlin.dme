@@ -3529,6 +3529,7 @@
 #include "code\modules\spells\spell_types\pointed\conjure\web.dm"
 #include "code\modules\spells\spell_types\pointed\enchantment\_enchantment.dm"
 #include "code\modules\spells\spell_types\pointed\enchantment\greenflame_blade.dm"
+#include "code\modules\spells\spell_types\pointed\enchantment\holyflame_blade.dm"
 #include "code\modules\spells\spell_types\pointed\projectile\_projectile.dm"
 #include "code\modules\spells\spell_types\pointed\projectile\acid_splash.dm"
 #include "code\modules\spells\spell_types\pointed\projectile\arcyne_bolt.dm"

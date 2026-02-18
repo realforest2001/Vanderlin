@@ -13,7 +13,7 @@
 	cmode_music = 'sound/music/cmode/church/CombatRavox.ogg'
 
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
-	allowed_patrons = list(/datum/patron/divine/ravox)
+	allowed_patrons = list(/datum/patron/divine/undivided)
 
 	outfit = /datum/outfit/gmtemplar
 	give_bank_account = 0

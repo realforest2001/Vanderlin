@@ -1,6 +1,20 @@
 /datum/devotion/divine/undivided
+	traits = list(TRAIT_DIVINE_SERVANT)
 
+/datum/devotion/divine/undivided/make_templar()
+	devotion = 50
+	max_devotion = CLERIC_REQ_3
+	progression = CLERIC_REQ_1
+	max_progression = CLERIC_REQ_2
 
+	miracles = list(
+		CLERIC_T0 = /datum/action/cooldown/spell/healing,
+		CLERIC_T1 = /datum/action/cooldown/spell/avert,
+		CLERIC_T2 = /datum/action/cooldown/spell/enchantment/holy_flame,
+	)
+	viable_tasks = list(
+		/datum/devotion_task/astrata_purge,
+	)
 
 /datum/devotion/divine/astrata
 	miracles = list(

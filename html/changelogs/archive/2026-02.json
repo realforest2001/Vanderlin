@@ -490,5 +490,32 @@
                 "rscadd": "Added new hairstyles"
             }
         ]
+    },
+    "2026-02-18": {
+        "KevinfromHP": [
+            {
+                "rscadd": "Invisible Tiefling misfortune aura"
+            },
+            {
+                "bugfix": "RemoveComponent not working for kobold aberrant eaters."
+            },
+            {
+                "code_imp": "Refactored nutrition tracking completely for food"
+            },
+            {
+                "rscadd": "Cannibalism. Proper."
+            },
+            {
+                "balance": "eating gross food isn't as bad for your health."
+            },
+            {
+                "balance": "some nutrition values for food got thrown around"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed packmule quirk"
+            }
+        ]
     }
 }

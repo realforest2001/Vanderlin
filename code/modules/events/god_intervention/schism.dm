@@ -181,9 +181,7 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 			START_PROCESSING(SSprocessing, C)
 		add_verb(selected_priest, /mob/living/carbon/human/proc/devotionreport)
 		add_verb(selected_priest, /mob/living/carbon/human/proc/clericpray)
-		add_verb(selected_priest, /mob/living/carbon/human/proc/churchexcommunicate)
-		add_verb(selected_priest, /mob/living/carbon/human/proc/churchcurse)
-		add_verb(selected_priest, /mob/living/carbon/human/proc/churchannouncement)
+		selected_priest.give_priest_verbs(coronate = FALSE, penance = FALSE)
 
 		priority_announce("[challenger.name] has selected [selected_priest.real_name] as a new [male ? "Vice Priest" : "Vice Priestess"]! Power sharing begins!", "[male ? "Vice Priest" : "Vice Priestess"] rises", 'sound/magic/inspire_02.ogg')
 

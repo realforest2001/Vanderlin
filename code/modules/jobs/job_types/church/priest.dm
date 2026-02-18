@@ -62,11 +62,7 @@
 		spawned.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 		spawned.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 
-	add_verb(spawned, /mob/living/carbon/human/proc/coronate_lord)
-	add_verb(spawned, /mob/living/carbon/human/proc/churchexcommunicate)
-	add_verb(spawned, /mob/living/carbon/human/proc/churchcurse)
-	add_verb(spawned, /mob/living/carbon/human/proc/churchannouncement)
-	add_verb(spawned, list(/mob/living/carbon/human/proc/absolve_penance_verb, /mob/living/carbon/human/proc/assign_penance_verb))
+	spawned.give_priest_verbs()
 
 	spawned.virginity = TRUE
 
@@ -235,3 +231,21 @@
 			return FALSE
 		priority_announce("[inputty]", title = "The [get_role_title()] Speaks", sound = 'sound/misc/bell.ogg')
 		src.log_talk("[TIMETOTEXT4LOGS] [inputty]", LOG_SAY, tag="Priest announcement")
+
+/// Helper for giving priest verbs, and whether that should include coronation or penance verbs.
+/mob/living/carbon/human/proc/give_priest_verbs(coronate = TRUE, penance = TRUE)
+	add_verb(src, /mob/living/carbon/human/proc/churchexcommunicate)
+	add_verb(src, /mob/living/carbon/human/proc/churchcurse)
+	add_verb(src, /mob/living/carbon/human/proc/churchannouncement)
+	if(coronate)
+		add_verb(src, /mob/living/carbon/human/proc/coronate_lord)
+	if(penance)
+		add_verb(src, list(/mob/living/carbon/human/proc/absolve_penance_verb, /mob/living/carbon/human/proc/assign_penance_verb))
+
+/// Helper for removing priest verbs
+/mob/living/carbon/human/proc/remove_priest_verbs()
+	remove_verb(src, /mob/living/carbon/human/proc/churchexcommunicate)
+	remove_verb(src, /mob/living/carbon/human/proc/churchcurse)
+	remove_verb(src, /mob/living/carbon/human/proc/churchannouncement)
+	remove_verb(src, /mob/living/carbon/human/proc/coronate_lord)
+	remove_verb(src, list(/mob/living/carbon/human/proc/absolve_penance_verb, /mob/living/carbon/human/proc/assign_penance_verb))

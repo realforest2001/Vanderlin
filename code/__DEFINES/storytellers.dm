@@ -222,6 +222,7 @@
 
 // Devotion Classes
 #define DEVOTION_CLASS_PRIEST "Priest"
+#define DEVOTION_CLASS_GRANDMASTER "Grandmaster"
 #define DEVOTION_CLASS_TEMPLAR "Templar"
 #define DEVOTION_CLASS_ACOLYTE "Acolyte"
 #define DEVOTION_CLASS_ABSOLVER "Absolver"

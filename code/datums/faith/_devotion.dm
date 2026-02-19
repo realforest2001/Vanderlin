@@ -154,6 +154,13 @@
 	)
 	devotion_class = DEVOTION_CLASS_PRIEST
 
+/datum/devotion/proc/make_gmtemplar()
+	devotion = 50
+	max_devotion = CLERIC_REQ_3
+	progression = CLERIC_REQ_1
+	max_progression = CLERIC_REQ_2
+	devotion_class = DEVOTION_CLASS_GRANDMASTER
+
 /datum/devotion/proc/make_templar()
 	devotion = 50
 	max_devotion = CLERIC_REQ_3

@@ -13,7 +13,7 @@
 	cmode_music = 'sound/music/cmode/church/CombatRavox.ogg'
 
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
-	allowed_patrons = list(/datum/patron/divine/centrist)
+	allowed_patrons = list(/datum/patron/divine/ravox)
 
 	outfit = /datum/outfit/gmtemplar
 	give_bank_account = 0
@@ -62,7 +62,7 @@
 	var/holder = spawned.patron?.devotion_holder
 	if(holder)
 		var/datum/devotion/devotion = new holder()
-		devotion.make_templar()
+		devotion.make_gmtemplar()
 		devotion.grant_to(spawned)
 
 	var/static/list/selectableweapon = list(
@@ -101,7 +101,7 @@
 	belt = /obj/item/storage/belt/leather/black
 	ring = /obj/item/clothing/ring/silver/rontz
 	gloves = /obj/item/clothing/gloves/plate/silver
-	wrists = /obj/item/clothing/neck/psycross/silver/divine
+	wrists = /obj/item/clothing/neck/psycross/silver/divine/ravox
 
 
 

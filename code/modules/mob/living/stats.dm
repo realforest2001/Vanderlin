@@ -74,6 +74,8 @@
 			switch(stored_cleric_class)
 				if(DEVOTION_CLASS_PRIEST)
 					devotion.make_priest()
+				if(DEVOTION_CLASS_GRANDMASTER)
+					devotion.make_gmtemplar()
 				if(DEVOTION_CLASS_TEMPLAR)
 					devotion.make_templar()
 				if(DEVOTION_CLASS_ACOLYTE)

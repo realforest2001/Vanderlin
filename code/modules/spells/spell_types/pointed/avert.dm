@@ -31,6 +31,7 @@
 
 /datum/action/cooldown/spell/avert/templar
 	name = "Divine Grace"
+	invocation = "May The Ten grace you with time!"
 	required_items = list(/obj/item/clothing/neck/psycross/silver/divine)
 
 /datum/action/cooldown/spell/avert/is_valid_target(atom/cast_on)

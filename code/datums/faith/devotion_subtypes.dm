@@ -1,12 +1,7 @@
 /datum/devotion/divine/centrist
 	traits = list(TRAIT_DIVINE_SERVANT)
 
-/datum/devotion/divine/centrist/make_templar()
-	devotion = 50
-	max_devotion = CLERIC_REQ_3
-	progression = CLERIC_REQ_1
-	max_progression = CLERIC_REQ_2
-
+/datum/devotion/divine/make_gmtemplar()
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/avert/templar,
@@ -15,7 +10,6 @@
 	viable_tasks = list(
 		/datum/devotion_task/astrata_purge,
 	)
-	devotion_class = DEVOTION_CLASS_TEMPLAR
 
 /datum/devotion/divine/astrata
 	miracles = list(

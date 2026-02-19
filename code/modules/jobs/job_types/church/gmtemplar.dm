@@ -67,7 +67,7 @@
 
 	var/static/list/selectableweapon = list(
 		"Longsword" = /obj/item/weapon/sword/long/grandmaster,
-		"Spear" = /obj/item/weapon/polearm/spear/grandmaster,
+		"Trident" = /obj/item/weapon/polearm/spear/grandmaster,
 		"Axe" = /obj/item/weapon/greataxe/steel/grandmaster,
 		"Mace" = /obj/item/weapon/mace/goden/steel/grandmaster,
 	)

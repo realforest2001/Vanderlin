@@ -2,10 +2,12 @@
 	traits = list(TRAIT_DIVINE_SERVANT)
 
 /datum/devotion/divine/make_gmtemplar()
+	. = ..()
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/avert/templar,
 		CLERIC_T2 = /datum/action/cooldown/spell/enchantment/holy_flame,
+		CLERIC_T3 = /datum/action/cooldown/spell/status/divine_shield,
 	)
 	viable_tasks = list(
 		/datum/devotion_task/astrata_purge,

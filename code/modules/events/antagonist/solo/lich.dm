@@ -29,6 +29,7 @@
 		/datum/job/priest,
 		/datum/job/gmtemplar,
 		/datum/job/templar,
+		/datum/job/advclass/combat/assassin,
 	)
 
 

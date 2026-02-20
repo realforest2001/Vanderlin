@@ -20,6 +20,9 @@
 	if(!user)
 		return FALSE
 
+	if(!user.Adjacent(target))
+		return FALSE
+
 	if(user.incapacitated(IGNORE_GRAB))
 		return FALSE
 
@@ -120,11 +123,6 @@
 	name = "swift"
 	desc = "Your attacks have less recovery time but are less accurate and have reduced strength."
 	icon_state = "rmbswift"
-
-/datum/rmb_intent/special
-	name = "special"
-	desc = "(RMB WHILE DEFENSE IS ACTIVE) A special attack that depends on the type of weapon you are using."
-	icon_state = "rmbspecial"
 
 /datum/rmb_intent/feint
 	name = "feint"

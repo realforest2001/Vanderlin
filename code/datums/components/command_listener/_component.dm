@@ -105,11 +105,13 @@ GLOBAL_LIST_INIT(automaton_order_jobs, list("Artificer", "Supreme Artificer"))
 /datum/component/command_follower/proc/receive_command(datum/source, datum/follower_command/new_command, mob/living/carbon/human/issuer)
 	if(!new_command || !issuer)
 		return FALSE
+	/*
 	if(current_command)
 		var/current_priority = get_job_priority(current_command.issuer_job)
 		var/new_priority = get_job_priority(issuer.job_type)
 		if(new_priority > current_priority)
 			owner.say("Command rejected: [issuer] lacks authority to override [current_command.issuer_name]'s command.", forced = TRUE)
+	*/
 	clear_command()
 	current_command = new_command
 	current_command.issuer_name = issuer.real_name

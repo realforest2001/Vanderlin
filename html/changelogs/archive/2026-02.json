@@ -632,5 +632,47 @@
                 "rscdel": "Wretch Vampire"
             }
         ]
+    },
+    "2026-02-22": {
+        "TerraGS": [
+            {
+                "bugfix": "using a shovel full of sand on dirt no longer replaces the sand with dirt"
+            }
+        ],
+        "realforest2001": [
+            {
+                "rscadd": "Added cooldown for automaton sounds."
+            },
+            {
+                "rscdel": "Removed access to the sillier automaton sounds, subject to change."
+            }
+        ],
+        "Ordosian": [
+            {
+                "bugfix": "Guard command on Automaton is now 5 tiles instead of 3."
+            },
+            {
+                "bugfix": "Follow command removed. Use Custom command instead."
+            },
+            {
+                "admin": "Automatons show up correctly in player panel"
+            },
+            {
+                "bugfix": "Automatons no longer feel pain, sleep or be poisoned."
+            },
+            {
+                "bugfix": "Automatons no longer make human sounds"
+            }
+        ],
+        "Snack-Max": [
+            {
+                "rscadd": "Allow Royal Knight Advclass to choose their helmets"
+            }
+        ],
+        "Rockslp": [
+            {
+                "bugfix": "Fixed the pitchfork's sharpness so it didn't deal absolute minimum like 1 force damage"
+            }
+        ]
     }
 }

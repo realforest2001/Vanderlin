@@ -2254,6 +2254,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		return
 	character.age = age
 	character.gender = gender
+	character.set_patron(selected_patron)
 	character.set_species(pref_species.type, icon_update = FALSE, pref_load = src)
 	if(real_name in GLOB.chosen_names)
 		character.real_name = pref_species.random_name(gender)
@@ -2290,7 +2291,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	character.domhand = domhand
 	character.voice_color = voice_color
-	character.set_patron(selected_patron)
 	character.familytree_pref = family
 	character.gender_choice_pref = gender_choice
 	character.setspouse = setspouse
@@ -2498,7 +2498,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 /datum/preferences/proc/get_job_lock_html(datum/job/job, mob/user, used_name)
 	var/player_species = user.client.prefs.pref_species.id_override || user.client.prefs.pref_species.id
-	var/fails_allowed = length(job.allowed_races) && !(player_species in job.allowed_races)
+	var/fails_allowed = length(job.allowed_races) && !job.prefs_species_check(src)
 	var/fails_blacklist = length(job.blacklisted_species) && (player_species in job.blacklisted_species)
 	if(job.required_playtime_remaining(user.client))
 		var/list/lines = list()

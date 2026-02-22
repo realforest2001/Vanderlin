@@ -284,6 +284,12 @@
 				if(!disguise_comp.disguised)
 					. += span_userdanger("A MONSTER!")
 
+			if(isautomaton(user))
+				if(HAS_TRAIT(src, TRAIT_NOBLE))
+					. += span_blue("They are a Blue-blooded Noble.")
+				if(job in GLOB.automaton_order_jobs)
+					. += span_blue("They are an authenticated Artificer.")
+
 			var/inquisition_text =get_inquisition_text(user)
 			if(inquisition_text)
 				. +=span_notice(inquisition_text)

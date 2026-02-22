@@ -285,7 +285,7 @@
 					. += span_userdanger("A MONSTER!")
 
 			if(isautomaton(user))
-				if(HAS_TRAIT(src, TRAIT_NOBLE))
+				if(HAS_TRAIT(src, TRAIT_NOBLE_BLOOD))//The automatons don't care if someone was granted or revoked nobility. They recognise the blood, foreign or local.
 					. += span_blue("They are a Blue-blooded Noble.")
 				if(job in GLOB.automaton_order_jobs)
 					. += span_blue("They are an authenticated Artificer.")

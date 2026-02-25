@@ -196,9 +196,8 @@ GLOBAL_LIST_INIT(ghost_verbs, list(
 
 	. = ..()
 
-	if(!istype(src, /mob/dead/observer/rogue/arcaneeye))
-		add_verb(src, GLOB.ghost_verbs)
-		to_chat(src, span_danger("Click the <b>SKULL</b> on the left of your HUD to respawn."))
+	add_verb(src, GLOB.ghost_verbs)
+	to_chat(src, span_danger("Click the <b>SKULL</b> on the left of your HUD to respawn."))
 
 	grant_all_languages()
 
@@ -728,8 +727,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		O.updateghostimages()
 
 /mob/dead/observer/proc/horde_respawn()
-	if(istype(src, /mob/dead/observer/rogue/arcaneeye))
-		return
 	var/bt = world.time
 	SEND_SOUND(src, sound('sound/misc/notice (2).ogg'))
 	if(alert(src, "You have been summoned to destroy Vanderlin!", "Join the Horde", "Yes", "No") == "Yes")

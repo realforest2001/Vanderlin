@@ -24,8 +24,6 @@
 			return
 		if(ghost.client)
 			if(ghost.client.holder)
-				if(istype(ghost, /mob/dead/observer/rogue/arcaneeye))
-					return
 				if(istype(ghost, /mob/dead/observer/profane)) // Souls trapped by a dagger can return to lobby if they want
 					if(alert("Return to the lobby?", "", "Yes", "No") == "Yes")
 						ghost.returntolobby()

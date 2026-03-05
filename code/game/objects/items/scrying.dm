@@ -53,7 +53,6 @@
 		if(human_target.real_name == search_name)
 			var/turf/target_turf = get_turf(human_target)
 			if(!target_turf)
-				message_admins("SCRY DEBUG: NO TURF")
 				continue
 			found_target = human_target
 			break
@@ -68,7 +67,6 @@
 	create_eye()
 	if(!scrying_eye)
 		remove_eye(TRUE)
-		message_admins("SCRY DEBUG: NO EYE")
 		return
 
 	if(needs_to_live && found_target.stat)
@@ -87,15 +85,11 @@
 			if(found_target.mind.do_i_know(name = user.real_name))
 				to_chat(found_target, span_warning("I can clearly see the face of [user.real_name] staring at me!"))
 				to_chat(user, span_warning("[found_target.real_name] stares back at me!"))
-				message_admins("SCRY DEBUG: WATCHING AWARE FULLY")
 				return TRUE
 		to_chat(found_target, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
-		message_admins("SCRY DEBUG: WATCHING AWARE MORE")
 		return TRUE
 	if(found_target.STAPER >= 11)
 		to_chat(found_target, span_warning("I feel a pair of unknown eyes on me."))
-		message_admins("SCRY DEBUG: WATCHING AWARE")
-	message_admins("SCRY DEBUG: WATCHING")
 	return TRUE
 
 /datum/scrying_component/proc/create_eye()
@@ -109,7 +103,6 @@
 	addtimer(CALLBACK(src, PROC_REF(remove_eye)), vision_duration)
 
 /datum/scrying_component/proc/remove_eye(early = FALSE)
-	message_admins("SCRY DEBUG: REMOVE CALL")
 	if(!held_user)
 		return FALSE
 	held_user.reset_perspective(held_user)
@@ -186,7 +179,6 @@
 		if(human_target.real_name == search_name)
 			var/turf/target_turf = get_turf(human_target)
 			if(!target_turf)
-				message_admins("SCRY DEBUG: NO TURF")
 				continue
 			stored_target = human_target
 			break
@@ -201,7 +193,6 @@
 	create_eye()
 	if(!scrying_eye)
 		remove_eye(TRUE)
-		message_admins("SCRY DEBUG: NO EYE")
 		return
 
 	log_game("SCRYING: [user.real_name] ([user.ckey]) has used the [name] to leer at [stored_target.real_name] ([stored_target.ckey])")
@@ -224,7 +215,6 @@
 	addtimer(CALLBACK(src, PROC_REF(remove_eye)), vision_duration)
 
 /datum/scrying_component/mirror/remove_eye(early = FALSE)
-	message_admins("SCRY DEBUG: REMOVE CALL")
 	if(!held_user)
 		return FALSE
 	held_user.reset_perspective(held_user)

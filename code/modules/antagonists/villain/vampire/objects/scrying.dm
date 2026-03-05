@@ -1,15 +1,18 @@
 /obj/structure/vampire/scryingorb // Method of spying on the town
-	name = "Eye of Night"
+	name = "Damaged Eye of Night"
 	icon_state = "scrying"
 
 /obj/structure/vampire/scryingorb/attack_hand(mob/living/carbon/human/user)
+	to_chat(user, span_warning("Something seems to be wrong with it..."))
+
+/*
 	if(user?.mind.has_antag_datum(/datum/antagonist/vampire/lord))
 		user.visible_message("<font color='red'>[user]'s eyes turn dark red, as they channel the [src]</font>", "<font color='red'>I begin to channel my consciousness into a Predator's Eye.</font>")
 		if(do_after(user, 6 SECONDS, src))
 			user.scry(can_reenter_corpse = 1, force_respawn = FALSE)
 	else
 		to_chat(user, span_warning("I don't have the power to use this!"))
-
+*/
 
 
 /mob/proc/scry(can_reenter_corpse = 1, force_respawn = FALSE, drawskip)

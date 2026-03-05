@@ -1128,24 +1128,20 @@
 	var/usesleft = 3
 	var/active = FALSE
 	var/broken = FALSE
-	/// Target name
-	var/datum/weakref/fixation
-	/// One with the bleed in the mirror
-	var/datum/weakref/feeder
 	var/atom/movable/screen/alert/blackmirror/effect
 	var/datum/looping_sound/blackmirror/soundloop
+	var/datum/scrying_component/mirror/scry_comp
 
 /obj/item/inqarticles/bmirror/Initialize()
 	. = ..()
 	soundloop = new(src, FALSE)
+	scry_comp = new(src)
 
 /obj/item/inqarticles/bmirror/Destroy()
 	if(soundloop)
 		QDEL_NULL(soundloop)
 	if(effect)
 		QDEL_NULL(effect)
-	fixation = null
-	feeder = null
 	return ..()
 
 /obj/item/inqarticles/bmirror/examine(mob/user)
@@ -1160,13 +1156,7 @@
 	active = FALSE
 	fedblood = FALSE
 	openstate = "bloody"
-	feeder = null
-	var/mob/living/fixated = fixation?.resolve()
-	if(fixated)
-		fixated.clear_alert("blackmirror", TRUE)
-		fixated.playsound_local(src, 'sound/items/blackeye.ogg', 40, FALSE)
 	effect = null
-	fixation = null
 	usesleft--
 	soundloop.stop()
 	visible_message(span_info("[src] clouds itself with a chilling fog."))
@@ -1213,67 +1203,9 @@
 		to_chat(user, span_warning("It looks like it needs blood to work properly."))
 		return
 
-	if(!active)
-		var/input = browser_alert(user, "WHAT DO YOU SEEK?", "THE PRICE IS PAID", list("BLOOD", "FIXATION"))
-		if(!input || QDELETED(user) || QDELETED(src))
-			return
+	//add_client_colour(/datum/client_colour/nocshaded)
 
-		var/mob/living/carbon/human/target
-
-		if(input == "FIXATION")
-			var/name = browser_input_text(user, "WHO DO YOU SEEK?", "THE PRICE IS PAID")
-			if(!name)
-				return
-			for(var/mob/living/carbon/human/HL as anything in GLOB.player_list)
-				if(HL.real_name == name)
-					fixation = WEAKREF(HL)
-					target = HL
-				playsound(src, 'sound/items/blackmirror_no.ogg', 100, FALSE)
-				to_chat(user, span_warning("[src] makes a grating sound."))
-				return
-		else if(input == "BLOOD")
-			target = feeder?.resolve()
-
-		if(!target)
-			return
-
-		active = TRUE
-		openstate = "active"
-		update_appearance(UPDATE_ICON_STATE)
-		soundloop.start()
-
-		effect = target.throw_alert("blackmirror", /atom/movable/screen/alert/blackmirror, override = TRUE)
-		effect.source = src
-
-		target.playsound_local(target, 'sound/items/blackeye_warn.ogg', 100, FALSE)
-
-		playsound(src, 'sound/items/blackmirror_active.ogg', 100, FALSE)
-		addtimer(CALLBACK(src, PROC_REF(donefixating)), 2 MINUTES, TIMER_UNIQUE)
-
-		message_admins("SCRYING: [user.real_name] ([user.ckey]) has fixated on [target.real_name] ([target.ckey]) via black mirror.")
-		log_game("SCRYING: [user.real_name] ([user.ckey]) has fixated on [target.real_name] ([target.ckey]) via black mirror.")
-		return
-
-	var/datum/weakref/lookat = fixation ? fixation : feeder
-	var/mob/living/target = lookat?.resolve()
-	if(!target)
-		to_chat(user, span_notice("The mirror remains clear..."))
-		return
-
-	playsound(src, 'sound/items/blackmirror_use.ogg', 100, FALSE)
-
-	ADD_TRAIT(user, TRAIT_NOSSDINDICATOR, "blackmirror")
-
-//	var/mob/scry_eye/blackmirror/S = user.scry_ghost()--------------------------------------------
-//	if(!S)--------------------------------------------
-//		return--------------------------------------------
-//	S.ManualFollow(target)--------------------------------------------
-//	S.add_client_colour(/datum/client_colour/nocshaded)--------------------------------------------
-	user.visible_message(span_warning("[user] stares into [src], their eyes glazing over..."))
-
-//	addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 4 SECONDS)--------------------------------------------
-	addtimer(CALLBACK(user, GLOBAL_PROC_REF(playsound), user, 'sound/items/blackeye.ogg', 100, FALSE), 4 SECONDS)
-	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_NOSSDINDICATOR, "blackmirror"), 4 SECONDS)
+	scry_comp.activate(user)
 
 /obj/item/inqarticles/bmirror/attack(mob/living/carbon/human/attacked, mob/living/carbon/human/user, list/modifiers)
 	if(!istype(attacked) || !istype(user))
@@ -1283,7 +1215,7 @@
 		to_chat(user, span_warning("I need to open it first."))
 		return
 
-	if(feeder)
+	if(fedblood)
 		to_chat(user, span_warning("It's already been fed."))
 		return
 
@@ -1309,7 +1241,6 @@
 		attacked.adjustBruteLoss(40)
 		attacked.blood_volume = max(attacked.blood_volume - 240, 0)
 		attacked.handle_blood()
-		feeder = WEAKREF(attacked)
 		openstate = "bloody"
 		fedblood = TRUE
 		update_appearance(UPDATE_ICON_STATE)
@@ -1339,6 +1270,14 @@
 		to_chat(user, span_warning("I cannot close the mirror while it's active."))
 		return
 
+	opened = !opened
+	if(opened)
+		playsound(src, 'sound/items/blackmirror_open.ogg', 100, FALSE)
+	else
+		playsound(src, 'sound/items/blackmirror_shut.ogg', 100, FALSE)
+	update_appearance(UPDATE_ICON_STATE)
+
+/*
 	var/mob/living/fixated = fixation?.resolve()
 	if(opened)
 		if(fixated)
@@ -1356,10 +1295,10 @@
 	if(fixated)
 		fixated.playsound_local(src, 'sound/items/blackeye_warn.ogg', 100, FALSE)
 		effect = fixated.throw_alert("blackmirror", /atom/movable/screen/alert/blackmirror, override = TRUE)
-		effect.source = src
 
 	opened = TRUE
 	update_appearance(UPDATE_ICON_STATE)
+*/
 
 /obj/item/inqarticles/bmirror/update_icon_state()
 	. = ..()
@@ -1373,37 +1312,6 @@
 	name = "BLACK EYE"
 	desc = "LOOK AT ME. I SEE YOU."
 	icon_state = "blackeye"
-	var/obj/item/inqarticles/bmirror/source
-
-/atom/movable/screen/alert/blackmirror/Destroy()
-	source = null
-	return ..()
-
-/atom/movable/screen/alert/blackmirror/Click()
-	var/mob/living/L = usr
-	if(!istype(L))
-		return
-
-	var/datum/weakref/lookat = null
-	if(alert(L, "KEEP LOOKING, WHAT WILL YOU FIND?", "BLACK EYED GAZE", "BLOOD", "MIRROR") != "BLOOD")
-		lookat = source
-	else
-		lookat = source.feeder
-	playsound(L, 'sound/items/blackmirror_use.ogg', 100, FALSE)
-	ADD_TRAIT(L, TRAIT_NOSSDINDICATOR, "blackmirror")
-	var/mob/living/target = lookat?.resolve()
-	if(!target)
-		return
-//	var/mob/scry_eye/blackmirror/S = L.scry_ghost()--------------------------
-//	if(!S)------------------------------------
-//		return-----------------------------------------
-//	S.ManualFollow(target)----------------------------------
-//	S.add_client_colour(/datum/client_colour/nocshaded)-------------------------
-	L.visible_message(span_warning("[L] looks inward as their eyes glaze over..."))
-
-//	addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 4 SECONDS)
-	addtimer(CALLBACK(L, GLOBAL_PROC_REF(playsound), L, 'sound/items/blackeye.ogg', 100, FALSE), 4 SECONDS)
-	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_NOSSDINDICATOR, "blackmirror"), 4 SECONDS)
 
 // FINISH THIS AT YOUR LEISURE. I'M JUST LEAVING IT HERE UNIMPLEMENTED. IT'S INTENDED TO WORK AS A COMBINATION OF THE NOC FAR-SIGHT AND THE NOCSHADES. HAVE FUN! - YISCHE
 /obj/item/inqarticles/spyglass

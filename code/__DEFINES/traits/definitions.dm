@@ -311,8 +311,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
-/// Hides the SSD indicator. Used with scrying.
-#define TRAIT_NOSSDINDICATOR "nossdindicator"
 /// Instant grabs on someone else.
 #define TRAIT_NOSTRUGGLE "nostruggle"
 /// Black-bagged. More snowflaking.

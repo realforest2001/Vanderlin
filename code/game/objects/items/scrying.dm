@@ -6,11 +6,16 @@
 	var/vision_duration = 8 SECONDS
 	var/cooldown_duration = 30 SECONDS
 
+	/// Whether or not the user of the scrying device needs to personally know the identity of their target.
+	var/needs_to_know = TRUE
+	/// Whether or not the target needs to be alive
+	var/needs_to_live = TRUE
+
 	var/mob/scry_eye/scrying_eye
 	var/mob/living/carbon/held_user
 	COOLDOWN_DECLARE(scry_cooldown)
 
-/datum/scrying_component/New(var/obj/item/scrying/parent)
+/datum/scrying_component/New(obj/item/scrying/parent)
 	. = ..()
 	text_cooldown_fail = replacetext(text_cooldown_fail, "NAME_HERE", "\the [name]")
 	if(!parent)
@@ -34,7 +39,7 @@
 	if(!search_name)
 		return FALSE
 
-	if(!user.mind || !user.mind.do_i_know(name = search_name))
+	if(!user.mind || (needs_to_know && !user.mind.do_i_know(name = search_name)))
 		to_chat(user, span_warning("I don't know anyone by that name."))
 		return FALSE
 
@@ -66,7 +71,7 @@
 		message_admins("SCRY DEBUG: NO EYE")
 		return
 
-	if(found_target.stat)
+	if(needs_to_live && found_target.stat)
 		to_chat(user, span_warning("I peer into \the [name], but can't find [search_name]."))
 		remove_eye(TRUE)
 		return FALSE
@@ -125,9 +130,13 @@
 	name = "Accursed Eye"
 	cooldown_duration = 5 MINUTES
 
-/datum/scrying_component/mirror
+/datum/scrying_component/vampire
+	name = "Night's Eye"
+	needs_to_know = FALSE
+	needs_to_live = FALSE
 
 /datum/scrying_component/telescope
+	name = "NOC Device"
 	text_cooldown_fail = "I peer into the sky but cannot focus the lens on the face of Noc. Maybe I should wait."
 
 /datum/scrying_component/telescope/pass_extra_checks(mob/living/user)
@@ -136,6 +145,106 @@
 		to_chat(human_user, span_notice("Noc looks angry with me..."))
 		return FALSE
 	return TRUE
+
+/datum/scrying_component/mirror
+	name = "Black Mirror"
+	vision_duration = 4 SECONDS
+	needs_to_know = FALSE
+	needs_to_live = FALSE
+	var/obj/item/inqarticles/bmirror/parent_mirror
+	var/mob/stored_target
+
+/datum/scrying_component/mirror/New(obj/item/scrying/parent)
+	. = ..()
+	parent_mirror = parent
+	if(!istype(parent_mirror))
+		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+		qdel(src)
+
+/datum/scrying_component/mirror/activate(mob/living/user)
+	if(!pass_extra_checks())
+		return FALSE
+
+	if(!COOLDOWN_FINISHED(src, scry_cooldown))
+		to_chat(user, span_warning(text_cooldown_fail))
+		return FALSE
+
+	var/search_name = stripped_input(user, "Who are you looking for?", name)
+	if(!search_name)
+		return FALSE
+
+	if(!user.mind)
+		to_chat(user, span_warning("I don't know of anyone by that name."))
+		return FALSE
+
+	//check is applied twice to prevent someone from bypassing the cooldown
+	if(!COOLDOWN_FINISHED(src, scry_cooldown))
+		to_chat(user, span_warning(text_cooldown_fail))
+		return FALSE
+
+	for(var/mob/living/carbon/human/human_target in GLOB.human_list)
+		if(human_target.real_name == search_name)
+			var/turf/target_turf = get_turf(human_target)
+			if(!target_turf)
+				message_admins("SCRY DEBUG: NO TURF")
+				continue
+			stored_target = human_target
+			break
+
+	held_user = user
+	if(HAS_TRAIT(stored_target, TRAIT_ANTISCRYING))
+		to_chat(user, span_warning("I peer into \the [name], but an impenetrable fog shrouds [search_name]."))
+		to_chat(stored_target, span_warning("My magical shrouding reacted to something."))
+		held_user = null
+		return
+
+	create_eye()
+	if(!scrying_eye)
+		remove_eye(TRUE)
+		message_admins("SCRY DEBUG: NO EYE")
+		return
+
+	log_game("SCRYING: [user.real_name] ([user.ckey]) has used the [name] to leer at [stored_target.real_name] ([stored_target.ckey])")
+
+	var/real_cooldown = cooldown_duration + vision_duration
+	COOLDOWN_START(src, scry_cooldown, real_cooldown)
+	user.visible_message(span_danger("[user] stares into \the [name], [user.p_their()] eyes rolling back into [user.p_their()] head."), span_warning("My eyes roll into the back of my head as I'm lost in the depths of the orb."))
+	apply_black_eye()
+	return TRUE
+
+/datum/scrying_component/mirror/create_eye()
+	if(!held_user)
+		return FALSE
+	scrying_eye = new
+	scrying_eye.component = src
+	held_user.reset_perspective(scrying_eye)
+	held_user.Immobilize(vision_duration)
+	held_user.overlay_fullscreen("scrying", /atom/movable/screen/backhudl/obs)
+	playsound(held_user, 'sound/items/blackmirror_use.ogg', 100, FALSE)
+	addtimer(CALLBACK(src, PROC_REF(remove_eye)), vision_duration)
+
+/datum/scrying_component/mirror/remove_eye(early = FALSE)
+	message_admins("SCRY DEBUG: REMOVE CALL")
+	if(!held_user)
+		return FALSE
+	held_user.reset_perspective(held_user)
+	held_user.clear_fullscreen("scrying")
+	playsound(held_user, 'sound/items/blackeye.ogg', 100, FALSE)
+	if(early)
+		held_user.SetImmobilized(2 SECONDS)
+	QDEL_NULL(scrying_eye)
+	held_user = null
+	if(stored_target)
+		stored_target.clear_alert("blackmirror", TRUE)
+		stored_target.playsound_local(src, 'sound/items/blackeye.ogg', 40, FALSE)
+		stored_target = null
+	parent_mirror.donefixating()
+
+/datum/scrying_component/mirror/proc/apply_black_eye()
+	scrying_eye.orbit(stored_target)
+	parent_mirror.effect = stored_target.throw_alert("blackmirror", /atom/movable/screen/alert/blackmirror, override = TRUE)
+	playsound(stored_target, 'sound/items/blackeye_warn.ogg', 100, FALSE)
+
 
 /////////////////////////////////////////Scrying///////////////////
 
@@ -171,7 +280,6 @@
 
 	scry_comp_path = /datum/scrying_component/eye
 
-
 /obj/item/scrying/attack_self(mob/user, list/modifiers)
 	. = ..()
 	scry_comp.activate(user)
@@ -196,9 +304,6 @@
 /obj/structure/nocdevice/attack_hand(mob/user)
 	. = ..()
 	scry_comp.activate(user)
-
-
-
 
 /*	..................   THE EYE   ................... */
 /mob/scry_eye

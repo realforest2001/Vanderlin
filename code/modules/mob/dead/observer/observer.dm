@@ -96,41 +96,6 @@ GLOBAL_LIST_INIT(ghost_verbs, list(
 	draw_icon = FALSE
 	alpha = 100
 
-/mob/dead/observer/rogue/Move(n, direct)
-	if(world.time < next_gmove)
-		return
-	next_gmove = world.time + 2
-	var/turf/T = n
-
-	setDir(direct)
-
-	if(!loc.Exit(src, T))
-		return
-
-	if(istype(T))
-		if(T.density)
-			return
-		for(var/obj/item/reagent_containers/powder/salt/S in T)
-//			go2hell()
-//			next_gmove = world.time + 30
-			return
-	. = ..()
-
-/mob/dead/observer/screye
-	sight = 0
-	see_in_dark = 0
-	hud_type = /datum/hud/obs
-	can_reenter_corpse = FALSE
-	invisibility = INVISIBILITY_GHOST
-	see_invisible = SEE_INVISIBLE_GHOST
-
-/mob/dead/observer/screye/blackmirror
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	see_in_dark = 100
-
-/mob/dead/observer/screye/Move(n, direct)
-	return
-
 /mob/dead/observer/profane // Ghost type for souls trapped by the profane dagger. They can't move, but can talk to the dagger's wielder and other trapped souls.
 	sight = 0
 	invisibility = INVISIBILITY_GHOST

@@ -31,12 +31,6 @@
 
 	. = say_dead(message)
 
-/mob/dead/observer/rogue/arcaneeye/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	return
-
-/mob/dead/observer/rogue/arcaneeye/say_dead(message)
-	return
-
 /mob/dead/observer/profane/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if (!message)
 		return

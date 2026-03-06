@@ -136,7 +136,9 @@
 	var/mob/living/carbon/human/human_user = user
 	if(!ishuman(human_user) || !human_user.virginity)
 		to_chat(human_user, span_notice("Noc looks angry with me..."))
+		message_admins("SCRY DEBUG: NOC EXTRA CHECKS FAIL")
 		return FALSE
+	message_admins("SCRY DEBUG: NOC EXTRA CHECKS PASS")
 	return TRUE
 
 /datum/scrying_component/mirror
@@ -156,6 +158,7 @@
 
 /datum/scrying_component/mirror/activate(mob/living/user)
 	if(!pass_extra_checks())
+		message_admins("SCRY DEBUG: EXTRA CHECKS FAIL")
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, scry_cooldown))

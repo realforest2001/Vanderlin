@@ -24,4 +24,6 @@
 	SStgui.on_transfer(src, eye) // Transfer NanoUIs.
 	eye.vampirelord = src
 	eye.key = key
+	qdel(eye.language_holder)
+	eye.language_holder = language_holder.copy(eye)
 	return eye

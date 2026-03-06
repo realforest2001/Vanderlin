@@ -55,20 +55,11 @@
 
 /atom/movable/screen/ghost/after_life/Click(location, control, params)
 	var/mob/dead/observer/ghost = usr
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
-		if(ghost.client?.holder)
-			ghost.follow()
-	else
-		if(ghost.isinhell)
-			return
-		if(ghost.client)
-			if(ghost.client.holder)
-				if(istype(ghost, /mob/dead/observer/profane)) // Souls trapped by a dagger can return to lobby if they want
-					if(alert("Return to the lobby?", "", "Yes", "No") == "Yes")
-						ghost.returntolobby()
-				ghost.descend_to_underworld()
-				return
+	if(!istype(ghost))
+		return
+
+	if(istype(ghost, /mob/dead/observer/rogue/arcaneeye))
+		return
 
 	if(ghost.isinhell)
 		return

@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(console_commands, init_possible_commands())
 	return
 
 /datum/console_command/proc/can_execute(mob/anchor, list/arg_list, obj/abstract/visual_ui_element/scrollable/console_output/output, fake = FALSE)
-	if(!anchor.client.holder)
+	if(!anchor.client.check_rights(R_DEBUG))
 		if(!fake)
 			output.add_line("ERROR: Missing Permissions")
 		return FALSE

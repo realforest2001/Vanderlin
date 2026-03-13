@@ -710,7 +710,12 @@
 		eyet.update_appearance(UPDATE_ICON)
 
 /mob/proc/ShiftRightClickOn(atom/clicked_atom, list/modifiers)
-	return
+	if(mind && mind.active_uis["quake_console"])
+		if(client.holder)
+			client.holder.marked_datum = clicked_atom
+			var/datum/visual_ui/console/console =  mind.active_uis["quake_console"]
+			var/obj/abstract/visual_ui_element/scrollable/console_output/output = locate(/obj/abstract/visual_ui_element/scrollable/console_output) in console.elements
+			output.add_line("MARKED: [clicked_atom]")
 
 /mob/living/ShiftRightClickOn(atom/clicked_atom, list/modifiers)
 	var/turf/T = get_turf(clicked_atom)

@@ -4,6 +4,10 @@
 	set instant = TRUE
 	set hidden = TRUE
 
+	if(mob.focus && istype(mob.focus, /obj/abstract/visual_ui_element/console_input))
+		var/obj/abstract/visual_ui_element/console_input/console_input = mob.focus
+		if(console_input.handle_keydown(_key))
+			return
 	if(istype(click_intercept, /datum/buildmode) && (_key == "Shift"))
 		var/datum/buildmode/B = click_intercept
 		B.toggle_pixel_positioning_mode(TRUE)
@@ -82,6 +86,12 @@
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
 	set hidden = TRUE
+
+	// Check if the mob's focus is a console input
+	if(mob.focus && istype(mob.focus, /obj/abstract/visual_ui_element/console_input))
+		var/obj/abstract/visual_ui_element/console_input/console_input = mob.focus
+		if(console_input.handle_keyup(_key))
+			return
 
 	if(istype(click_intercept, /datum/buildmode) && (_key == "Shift"))
 		var/datum/buildmode/B = click_intercept

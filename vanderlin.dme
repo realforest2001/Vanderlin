@@ -3898,7 +3898,6 @@
 #include "code\modules\visual_ui\quake_console\commands\help.dm"
 #include "code\modules\visual_ui\quake_console\commands\listen.dm"
 #include "code\modules\visual_ui\quake_console\commands\ponytown.dm"
-#include "code\modules\visual_ui\quake_console\commands\save_world.dm"
 #include "code\modules\visual_ui\quake_console\commands\spawn.dm"
 #include "code\modules\visual_ui\quake_console\commands\time.dm"
 #include "code\modules\visual_ui\quake_console\commands\update.dm"

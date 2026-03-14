@@ -1753,6 +1753,7 @@
 #include "code\game\objects\items\needle.dm"
 #include "code\game\objects\items\ore.dm"
 #include "code\game\objects\items\ore_dust.dm"
+#include "code\game\objects\items\orphan_toys.dm"
 #include "code\game\objects\items\painting.dm"
 #include "code\game\objects\items\perfume.dm"
 #include "code\game\objects\items\phantom_ear.dm"

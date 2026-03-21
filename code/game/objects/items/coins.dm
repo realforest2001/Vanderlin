@@ -74,6 +74,8 @@
 						spawned_type = /obj/item/coin/inqcoin
 					if(CTYPE_ANCI)
 						spawned_type = /obj/item/coin/copper
+					if(CTYPE_WOOD)
+						spawned_type = /obj/item/coin/wood
 					else
 						return // Don't destroy coins into copper
 

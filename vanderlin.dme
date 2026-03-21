@@ -3980,5 +3980,4 @@
 #include "interface\fonts\datums\vaticanus.dm"
 #include "interface\fonts\datums\wernicke.dm"
 #include "interface\fonts\datums\yataghan.dm"
-
 // END_INCLUDE

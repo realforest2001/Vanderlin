@@ -47,8 +47,7 @@
 	reset_limb_fingerprints()
 	O.updateappearance(icon_update=0)
 
-	if(suiciding)
-		O.set_suicide(suiciding)
+	O.set_suicide(HAS_TRAIT(src, TRAIT_SUICIDED))
 	if(hellbound)
 		O.hellbound = hellbound
 	O.a_intent = INTENT_HARM
@@ -180,8 +179,7 @@
 		O.real_name = O.dna.real_name
 	O.name = O.real_name
 
-	if(suiciding)
-		O.set_suicide(suiciding)
+	O.set_suicide(HAS_TRAIT(src, TRAIT_SUICIDED))
 	if(hellbound)
 		O.hellbound = hellbound
 

@@ -25,6 +25,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Disables the floating animation. See above.
 #define TRAIT_NO_FLOATING_ANIM "no-floating-animation"
 
+///generic atom traits
+/// If this movable is currently considered to be treading in a turf with the immerse element.
+#define TRAIT_IMMERSED "immersed"
+///The effects of the immerse element will be halted while this trait is present.
+#define TRAIT_IMMERSE_STOPPED "immerse_stopped"
+/// Indicates the movable is in water without a bottom or underwater
+#define TRAIT_SUBMERGED	"submerged"
+/// Prevents floating in water and swimming up. Will move downward if in open water.
+#define TRAIT_SINKING "sinking"
+
 // ************* mob traits
 
 /// Prevents voluntary movement.
@@ -196,6 +206,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// Unused
 #define TRAIT_QUICK_CARRY "quick-carry"
+#define TRAIT_PASSTABLE "passtable"
 /// Unused
 #define TRAIT_QUICKER_CARRY "quicker-carry"
 /// Prevents the overlay from nearsighted
@@ -245,11 +256,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can't move diagonally
 #define TRAIT_BLOCKED_DIAGONAL "blocked_diagonals"
 /// Can swim ignoring water flow and slowdown
-#define TRAIT_GOOD_SWIM "Good Swim"
-/// Indicates the mob is in water without a bottom or underwater
-#define TRAIT_SUBMERGED	"submerged"
-/// Prevents floating in water and swimming up. Will move downward if in open water.
-#define TRAIT_SINKING "sinking"
+#define TRAIT_SWIMMER "Good Swimmer"
 /// trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
 /// can't be perceived in any way, likely due to invisibility
@@ -314,6 +321,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
+/// Prevents a mob from being unbuckled, currently only used to prevent people from falling over on the tram
+#define TRAIT_CANNOT_BE_UNBUCKLED "cannot_be_unbuckled"
+
+/// Trait given to a living mob and any observer mobs that stem from them if they suicide.
+/// For clarity, this trait should always be associated/tied to a reference to the mob that suicided- not anything else.
+#define TRAIT_SUICIDED "committed_suicide"
+
 /// Hides the SSD indicator. Used with scrying.
 #define TRAIT_NOSSDINDICATOR "nossdindicator"
 /// Instant grabs on someone else.
@@ -348,7 +362,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EMPATH "Empath"
 #define TRAIT_BREADY "Battleready"
 #define TRAIT_BLINDFIGHTING "Sixth-Sense"
-#define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
 #define TRAIT_MEDIUMARMOR "Mail Training"
 #define TRAIT_HEAVYARMOR "Plate Training"
 #define TRAIT_DODGEEXPERT "Fast Reflexes"
@@ -396,7 +409,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HOLLOWBONES "Hollow Bones"
 #define TRAIT_AMAZING_BACK "Light Load"
 #define TRAIT_KITTEN_MOM "Loved By Kittens"
-#define TRAIT_WATER_BREATHING "Waterbreathing"
+#define TRAIT_NODROWN "Waterbreathing"
 #define TRAIT_MOONWATER_ELIXIR "Moonwater Elixir"
 #define TRAIT_FLOWERFIELD_IMMUNITY "Flower Strider"
 #define TRAIT_SECRET_OFFICIANT "Secret Officiant"
@@ -519,6 +532,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The limb has no fingies
 #define TRAIT_FINGERLESS "fingerless"
 
+///Turf slowdown will be ignored when this trait is added to a turf.
+#define TRAIT_TURF_IGNORE_SLOWDOWN "turf_ignore_slowdown"
+
+///every hearing sensitive atom has this trait
+#define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
+
 // **** item traits
 /// Can't drop
 #define TRAIT_NODROP "nodrop"
@@ -534,9 +553,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This item can't be pickpocketed
 #define TRAIT_HARD_TO_STEAL "hard_to_steal"
 
-// ************* turf traits
-/// Turf trait for when a turf is transparent
-#define TRAIT_Z_TRANSPARENT "turf_z_transparent"
+/// Turf is one that ai mobs will generally avoid pathing through
+/// Doesn't need to be applied to any turfs that override can_cross_safely
+#define TRAIT_AI_AVOID_TURF "warning_turf"
 
 // ************* Debug traits
 /// This object has sound debugging tools attached to it

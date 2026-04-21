@@ -201,7 +201,7 @@
 		return
 
 	if(responsey == CONFESS_SINS)
-		var/confirm = tgui_alert(src, "Are you certain you wish to confess?", "CONFIRM CONFESSION", DEFAULT_INPUT_CHOICES), 10 SECONDS)
+		var/confirm = tgui_alert(src, "Are you certain you wish to confess?", "CONFIRM CONFESSION", DEFAULT_INPUT_CHOICES, 10 SECONDS)
 		if(confirm != CHOICE_YES)
 			responsey = RESIST_TORTURE
 

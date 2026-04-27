@@ -19,6 +19,7 @@
 		/datum/language/celestial,
 		/datum/language/hellspeak,
 		/datum/language/beast,
+		/datum/language/kobold,
 		/datum/language/rousman,
 		/datum/language/thievescant,
 		/datum/language/orcish,

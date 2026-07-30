@@ -281,7 +281,7 @@
 		add_pain(pain_amount)
 
 /obj/item/bodypart/proc/on_arthritis_life()
-	if(prob(2) && pain_dam < 20)
+	if(prob(2))
 		add_pain(rand(7, 14))
 		var/pain_msg = pick("Your [name] throbs with arthritic pain!",
 							"A sharp ache shoots through your [name]!",
@@ -294,7 +294,7 @@
 			to_chat(owner, span_warning("The weather makes your arthritis act up."))
 
 /obj/item/bodypart/proc/on_migraine_life()
-	if(prob(2) && pain_dam < 35)
+	if(prob(2))
 		add_pain(rand(5, 15))
 
 		if(prob(30))

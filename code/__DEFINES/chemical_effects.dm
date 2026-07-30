@@ -65,6 +65,3 @@
 #define CE_SHRINKING "shrink"
 ///one makes you bigger
 #define CE_ENLARGING "enlarging"
-
-///negative because of how it works ie 10 stimulant is a -1 action speed or everything multiplied by 0.01 so faster
-#define STIMULANT_ACTIONSPEED_INCREASE -0.1

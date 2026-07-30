@@ -92,8 +92,7 @@
 			heart.forceMove(H.drop_location())
 
 			H.add_splatter_floor()
-			var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-			chest.bodypart_attacked_by(BCLASS_PIERCE, 50, incoming_germ = germ_level)
+			H.adjustBruteLoss(20)
 			to_chat(user, span_notice("I finish pulling the heart from [H]!"))
 	. = ..()
 
@@ -160,10 +159,7 @@
 			return
 		playsound(user, 'sound/surgery/scalpel2.ogg', 70)
 		if(do_after(user, 0.5 SECONDS, target))
-			var/datum/injury/ouchie = C.create_injury(WOUND_SLASH, C.max_damage * 0.3, TRUE)
-			if(!ouchie)
-				return
-			ouchie.injury_flags |= INJURY_SURGICAL
+			C.add_wound(/datum/wound/slash/incision)
 
 		playsound(user, 'sound/surgery/organ2.ogg', 70)
 		if(do_after(user, 0.5 SECONDS, target))
@@ -177,8 +173,7 @@
 		record_round_statistic(STATS_LUX_HARVESTED)
 
 		H.add_splatter_floor()
-		var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-		chest.bodypart_attacked_by(BCLASS_PIERCE, 50, incoming_germ = germ_level)
+		H.adjustBruteLoss(20)
 		visible_message(user, span_notice("Neant's blade draws the lux from [target]!"))
 
 /obj/item/weapon/polearm/neant/proc/handle_magick(mob/living/user, atom/target)

@@ -217,8 +217,8 @@
 				should_update = TRUE
 	else if(amount > 12 MINUTES)
 		for(var/obj/item/bodypart/B in C.bodyparts)
-			if(!HAS_TRAIT(B, TRAIT_ROTTEN))
-				B.kill_limb()
+			if(!B.rotted)
+				B.rotted = TRUE
 				should_update = TRUE
 			if(HAS_TRAIT(B, TRAIT_ROTTEN) && amount < 16 MINUTES && !C.has_faction(FACTION_MATTHIOS))
 				var/turf/open/T = C.loc

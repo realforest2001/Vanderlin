@@ -68,7 +68,7 @@
 					MOBTIMER_SET(src, MT_LEPERBLEED)
 					var/obj/item/bodypart/part = pick(bodyparts)
 					if(part)
-						part.create_injury(WOUND_SLASH, 5, TRUE)
+						part.add_wound(/datum/wound/slash/small)
 					adjustToxLoss(10)
 		update_stamina()
 		update_energy()
@@ -242,10 +242,6 @@
 
 /mob/living/carbon/human/SoakMob(locations, dirty_water = FALSE, rain = FALSE)
 	var/coverhead
-	if(dirty_water)
-		var/list/bodyzones = bodyparts_from_coverage(locations)
-		adjust_germ_level_directed(10, body_zone = bodyzones)
-
 	//add belt slots to this for rusting
 	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, wear_ring)
 	for(var/bp in body_parts)

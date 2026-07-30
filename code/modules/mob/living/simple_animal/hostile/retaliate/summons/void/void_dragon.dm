@@ -262,7 +262,7 @@
 			visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
 			L.gib()
 		else
-			L.adjustBruteLoss(75, damage_type = BCLASS_BLUNT)
+			L.adjustBruteLoss(75)
 			if(L && !QDELETED(L)) // Some mobs are deleted on death
 				var/throw_dir = get_dir(src, L)
 				if(L.loc == loc)

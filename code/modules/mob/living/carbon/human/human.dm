@@ -1129,8 +1129,6 @@
 		used_damage = total_oxy
 	set_health(maxHealth - GETBRAINLOSS(src))
 	update_stat()
-	update_pain()
-	update_shock()
 
 	if(stat == SOFT_CRIT)
 		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)

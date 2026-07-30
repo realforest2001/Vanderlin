@@ -276,8 +276,7 @@
 	if(H.reagents)
 		H.reagents.add_reagent(/datum/reagent/drug/space_drugs, 15)
 
-	for(var/i = 1 to 4)
-		H.adjustBruteLoss(rand(9, 14), damage_type = BCLASS_BLUNT)
+	H.adjustBruteLoss(40)
 	var/obj/item/bodypart/l_leg/left = H.get_bodypart(BODY_ZONE_L_LEG)
 	var/obj/item/bodypart/r_leg/right = H.get_bodypart(BODY_ZONE_R_LEG)
 

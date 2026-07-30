@@ -185,7 +185,8 @@
 	var/obj/item/bodypart/part = victim.get_bodypart(prob(50) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 	if(isnull(part))
 		part = victim.get_bodypart(BODY_ZONE_CHEST)
-	part?.create_injury(WOUND_PIERCE, 30, TRUE)
+	part?.receive_damage(30)
+	part?.add_wound(/datum/wound/puncture)
 	victim.emote("scream")
 	post_triggered()
 
@@ -246,7 +247,8 @@
 		var/obj/item/bodypart/part = victim.get_bodypart(prob(50) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		if(isnull(part))
 			part = victim.get_bodypart(BODY_ZONE_CHEST)
-		part?.create_injury(WOUND_SLASH, part?.max_damage * 0.4, TRUE)
+		part?.receive_damage(40)
+		part?.add_wound(/datum/wound/slash/large)
 		victim.emote("scream")
 
 /obj/structure/trap/wall_projectile

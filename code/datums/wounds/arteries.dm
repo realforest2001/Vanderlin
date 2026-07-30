@@ -23,18 +23,11 @@
 	)
 	var/artery_type_override
 
-/datum/wound/artery/get_crit_prob(bclass, dam, damage_dividend, mob/living/user, obj/item/bodypart/affected, zone_precise, list/modifiers)
-	if(affected.limb_flags & BODYPART_BONE_ENCASED && !affected.has_wound(/datum/wound/fracture))
-		return 0
-	return ..()
-
 /datum/wound/artery/can_apply_to_bodypart(obj/item/bodypart/affected)
 	. = ..()
 	if(affected.status == BODYPART_ROBOTIC)
 		return FALSE
 	if(!affected.get_incision())
-		return FALSE
-	if(affected.limb_flags & BODYPART_BONE_ENCASED && !affected.has_wound(/datum/wound/fracture))
 		return FALSE
 
 /datum/wound/artery/can_stack_with(datum/wound/other)
@@ -70,16 +63,12 @@
 
 /datum/wound/artery/neck
 	artery_type_override = /obj/item/organ/artery/neck
-	can_roll = FALSE //snowflake used for neck slit
 
 /datum/wound/artery/chest
 	artery_type_override = /obj/item/organ/artery/chest
-	associated_bclasses = ARTERY_HEART_BCLASSES
-	viable_zones = list(BODY_ZONE_CHEST)
 
 /datum/wound/artery/dissect
 	severity = WOUND_SEVERITY_CRITICAL
 
 /datum/wound/artery/dissect/neck
 	artery_type_override = /obj/item/organ/artery/neck
-	can_roll = FALSE //snowflake used for neck slit

@@ -29,7 +29,7 @@
 	standard 0 if fail
 */
 
-/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE, damage_type, skip_dtype, can_crit = TRUE)
+/mob/living/proc/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, forced = FALSE, spread_damage = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = 1
 	damage = max(damage-blocked,0)
@@ -48,10 +48,6 @@
 			adjustOxyLoss(damage_amount, forced = forced)
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
-		if(PAIN, SHOCK_PAIN)
-			adjustPainLoss(damage_amount, forced = forced)
-		if(SHOCK_STAGE)
-			adjustShockStage(damage_amount, forced = forced)
 	update_damage_overlays()
 	return 1
 
@@ -67,10 +63,6 @@
 			return adjustOxyLoss(damage)
 		if(CLONE)
 			return adjustCloneLoss(damage)
-		if(PAIN, SHOCK_PAIN)
-			return adjustPainLoss(damage)
-		if(SHOCK_STAGE)
-			return adjustShockStage(damage)
 
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
@@ -85,8 +77,7 @@
 		if(CLONE)
 			return getCloneLoss()
 
-/mob/living/proc/custom_pain(message, power, forced, obj/item/bodypart/affecting, nopainloss)
-	return
+
 
 /mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
@@ -141,7 +132,7 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status, damage_type, can_crit = FALSE, true_heal = FALSE)
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -316,7 +307,7 @@
 		updatehealth(brute + burn)
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute = 0, burn = 0, updating_health = TRUE, required_status = null, damage_type)
+/mob/living/proc/take_overall_damage(brute = 0, burn = 0, updating_health = TRUE, required_status = null)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	if(updating_health)

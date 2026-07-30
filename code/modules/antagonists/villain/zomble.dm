@@ -117,8 +117,7 @@
 	zombie.ai_controller = new /datum/ai_controller/zombie(zombie)
 	zombie.AddComponent(/datum/component/ai_aggro_system)
 	zombie.status_flags &= ~BLEEDOUT
-	for(var/obj/item/organ/organ as anything in zombie.internal_organs)
-		organ.setOrganDamage(0)
+	zombie.adjustOrganLoss(ORGAN_SLOT_BRAIN, -200)
 	return ..()
 
 /datum/antagonist/zombie/on_removal()
@@ -164,8 +163,7 @@
 		if(has_turned)
 			to_chat(zombie, span_green("I no longer crave flesh..."))
 	for(var/obj/item/bodypart/zombie_part as anything in zombie.bodyparts)
-		zombie_part.revive_limb()
-		zombie_part.germ_level = 0
+		zombie_part.rotted = FALSE
 		if(zombie_part.can_be_disabled)
 			zombie_part.update_disabled()
 		zombie_part.update_limb()
@@ -219,8 +217,8 @@
 	zombie.remove_faction(list(FACTION_TOWN, FACTION_NEUTRAL))
 	add_verb(zombie, /mob/living/carbon/human/proc/zombie_seek)
 	for(var/obj/item/bodypart/zombie_part as anything in zombie.bodyparts)
-		if(!HAS_TRAIT(zombie_part, TRAIT_ROTTEN) && !zombie_part.skeletonized)
-			zombie_part.kill_limb()
+		if(!zombie_part.rotted && !zombie_part.skeletonized)
+			zombie_part.rotted = TRUE
 		if(zombie_part.can_be_disabled)
 			zombie_part.update_disabled()
 	zombie.update_body()

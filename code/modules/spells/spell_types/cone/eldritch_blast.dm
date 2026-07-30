@@ -12,6 +12,7 @@
 	drinker.adjustToxLoss(2 * REM, FALSE)
 	drinker.adjustFireLoss(2 * REM, FALSE)
 	drinker.adjustOxyLoss(2 * REM, FALSE)
+	drinker.adjustBruteLoss(2 * REM, FALSE)
 	..()
 	return TRUE
 

@@ -51,7 +51,7 @@
 	var/has_rot = FALSE
 	if(!was_zombie)
 		for(var/obj/item/bodypart/bodypart as anything in cast_on.bodyparts)
-			if(HAS_TRAIT(bodypart, TRAIT_ROTTEN))
+			if(bodypart.rotted)
 				has_rot = TRUE
 				break
 		for(var/obj/item/organ/organs as anything in cast_on.internal_organs)

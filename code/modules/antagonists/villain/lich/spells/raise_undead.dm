@@ -104,7 +104,6 @@
 	candodge = FALSE
 
 	skeletonize(FALSE)
-
 	skele_look()
 	grant_undead_eyes()
 

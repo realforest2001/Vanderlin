@@ -74,7 +74,7 @@
 	L.forceMove(drop_location())
 	L.emote("scream")
 	L.add_splatter_floor()
-	L.adjustBruteLoss(30, damage_type = BCLASS_PIERCE)
+	L.adjustBruteLoss(30)
 	L.setDir(SOUTH)
 	ADD_TRAIT(L, TRAIT_EASYDISMEMBER, "[type]")
 	buckle_mob(L, force=1)
@@ -99,7 +99,7 @@
 			M.visible_message(span_warning("[M] struggles to break free from [src]!"),\
 				span_notice("I struggle to break free from [src], tearing my legs! (Stay still for two minutes.)"),\
 				span_hear("I hear the sound of torn flesh and whimpering..."))
-			M.adjustBruteLoss(30, damage_type = BCLASS_PIERCE)
+			M.adjustBruteLoss(30)
 			if(!do_after(M, 30 SECONDS, src))
 				if(M && M.buckled)
 					to_chat(M, span_warning("I fail to free myself!"))
@@ -142,7 +142,7 @@
 
 /obj/structure/meathook/proc/release_mob(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_EASYDISMEMBER, "[type]")
-	M.adjustBruteLoss(30, damage_type = BCLASS_PIERCE)
+	M.adjustBruteLoss(30)
 	src.visible_message(span_danger("[M] falls free of [src]!"))
 	unbuckle_mob(M,force=1)
 	M.set_lying_angle(pick(90,270))

@@ -68,8 +68,7 @@
 	var/mob/living/L = owner
 
 	L.adjustToxLoss(2)
-	if(prob(20))
-		L.adjustBruteLoss(5, damage_type = BCLASS_BITE)
+	L.adjustBruteLoss(1)
 
 	if(prob(33) && iscarbon(L))
 		var/mob/living/carbon/C = L

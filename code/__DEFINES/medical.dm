@@ -106,25 +106,6 @@
 // ~flags for the limb_flags var on /obj/item/bodypart
 /// Can suffer artery wounds
 #define	BODYPART_HAS_ARTERY	(1<<0)
-#define BODYPART_CHRONIC_ARTHRITIS (1<<1)
-#define BODYPART_CHRONIC_FRACTURE (1<<2)
-#define BODYPART_CHRONIC_SCAR (1<<3)
-#define BODYPART_CHRONIC_NERVE_DAMAGE (1<<4)
-#define BODYPART_CHRONIC_MIGRAINE (1<<5)
-/// Removal or destruction of this limb kills the owner
-#define	BODYPART_VITAL (1<<6)
-/// Bodypart will never spoil nor get infected
-#define BODYPART_NO_INFECTION (1<<7)
-/// Completely septic and unusable limb
-#define BODYPART_DEAD (1<<8)
-/// Bodypart is genetically damaged and not functioning good
-#define BODYPART_DEFORMED (1<<9)
-/// Frozen limb, doesn't rot
-#define BODYPART_FROZEN	(1<<10)
-/// Autoheals severe injuries that normally require medical treatment
-#define	BODYPART_GOOD_HEALER (1<<11)
-///this is for bodyparts that are bone covered
-#define BODYPART_BONE_ENCASED (1<<12)
 
 //flags for the organ_flags var on /obj/item/organ
 /// Synthetic organs, or cybernetic organs. Reacts to EMPs and don't deteriorate or heal
@@ -149,27 +130,6 @@
 #define ORGAN_NO_VIOLENT_DAMAGE (1<<9)
 /// Organ cannot ever become destroyed beyond repair
 #define ORGAN_INDESTRUCTIBLE (1<<10)
-
-DEFINE_BITFIELD(organ_flags, list(
-	"ORGAN_DESTROYED" = ORGAN_DESTROYED,
-	"ORGAN_DEAD" = ORGAN_DEAD,
-	"ORGAN_CUT_AWAY" = ORGAN_CUT_AWAY,
-	"ORGAN_FROZEN" = ORGAN_FROZEN,
-	"ORGAN_INDESTRUCTIBLE" = ORGAN_INDESTRUCTIBLE,
-	"ORGAN_NO_VIOLENT_DAMAGE" = ORGAN_NO_VIOLENT_DAMAGE,
-	"ORGAN_LIMB_SUPPORTER" = ORGAN_LIMB_SUPPORTER,
-	"ORGAN_DESTROYED" = ORGAN_DESTROYED,
-	"ORGAN_VITAL" = ORGAN_VITAL,
-	"ORGAN_EXTERNAL" = ORGAN_EXTERNAL,
-	"ORGAN_FAILING" = ORGAN_FAILING,
-))
-
-/// set wound_bonus on an item or attack to this to disable organ damage for the attack
-#define CANT_ORGAN -100
-/// Max damage we consider for damage_organs()
-#define MAX_CONSIDERED_ORGAN_DAMAGE_ROLL 75
-/// ditto but for internal organ damage
-#define ORGAN_MINIMUM_DAMAGE 12.5
 
 //wound severities for /datum/wound
 /// Wounds that are either surgically induced or too minor to matter
@@ -218,12 +178,6 @@ DEFINE_BITFIELD(organ_flags, list(
 	BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT, \
 )
 
-#define GENERIC_FRACTURE_BODYPARTS list(\
-	BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, \
-	BODY_ZONE_R_LEG, BODY_ZONE_L_LEG, \
-	BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND, \
-	BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT, \
-)
 // ~should take around 20 minutes for a body to fully rot
 #define MIN_ORGAN_DECAY_INFECTION 0.25
 #define MAX_ORGAN_DECAY_INFECTION 0.5
@@ -261,10 +215,6 @@ DEFINE_BITFIELD(organ_flags, list(
 #define INFECTION_LEVEL_TWO 500
 /// infections grow from two to three in ~15 minutes
 #define INFECTION_LEVEL_THREE 1000
-
-/// Maximum amount of germs surgery can cause
-#define SURGERY_GERM_MAXIMUM 800
-
 
 // ~germ defines
 /// Medical equipment should start out as this

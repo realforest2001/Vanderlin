@@ -68,6 +68,8 @@
 	// Transfer afflictions from the target to the caster
 
 	// Transfer damage
+	var/brute_transfer = H.getBruteLoss()
+	var/burn_transfer = H.getFireLoss()
 	var/tox_transfer = H.getToxLoss()
 	var/oxy_transfer = H.getOxyLoss()
 	var/clone_transfer = H.getCloneLoss()

@@ -10,12 +10,6 @@
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
-/// Pain damage type
-#define PAIN "pain"
-/// Shock (technically just pain but might be useful i guess?)
-#define SHOCK_PAIN "shock"
-/// Shock stage damage type
-#define SHOCK_STAGE "shock_stage"
 
 //Damage flag defines //
 // STRING HERE NEEDS TO EXACTLY MATCH VAR NAME IN /datum/armor
@@ -33,8 +27,6 @@
 #define ACID "acid"
 /// protection against magical attacks (make this adjustable via rune enchantments or something)
 #define MAGIC "magic"
-///protection from internal damage to the organs
-#define WOUND "wound"
 
 #define ARMOR_ALL "all_damage_types"
 

@@ -61,7 +61,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, damage_type, skip_dtype, can_crit)
+/mob/living/simple_animal/hostile/retaliate/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
 	. = ..()
 	if(!.)
 		return

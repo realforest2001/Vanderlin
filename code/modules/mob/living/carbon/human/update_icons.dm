@@ -1624,7 +1624,7 @@ generate/load female uniform sprites matching all previously decided variables
 			. += "organic"
 		else
 			. += "robotic"
-		if(HAS_TRAIT(BP, TRAIT_ROTTEN))
+		if(BP.rotted)
 			. += "rotted"
 		if(BP.skeletonized)
 			. += "skeletonized"

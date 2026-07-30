@@ -428,7 +428,7 @@
 	for(var/mob/living/M in src)
 		if(M==U)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
-		M.adjustBruteLoss(damage, damage_type = BCLASS_BLUNT)
+		M.adjustBruteLoss(damage)
 		M.Unconscious(damage * 4)
 
 /turf/proc/Bless()

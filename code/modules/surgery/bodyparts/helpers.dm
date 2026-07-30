@@ -63,13 +63,6 @@
 				return TRUE
 	return FALSE
 
-/// Get the bodypart for whatever hand we have active, Only relevant for carbons
-/mob/proc/get_active_hand()
-	return FALSE
-
-/mob/living/carbon/get_active_hand()
-	return LAZYACCESS(hand_bodyparts, active_hand_index)
-
 /mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
 	var/list/full = list(

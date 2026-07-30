@@ -147,7 +147,7 @@
 
 /datum/reagent/water/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	L.remove_chem_effect(CE_BLOODRESTORE, "[type]")
+	L.remove_chem_effect("[type]")
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, efficiency)
 	if(ishuman(M))
@@ -160,11 +160,6 @@
 	taste_description = "lead"
 	color = "#98934bc6"
 	sanitization = -SANITIZATION_PER_UNIT_WATER
-
-/datum/reagent/water/gross/on_bodypart_absorb(obj/item/bodypart/BP, mob/living/carbon/M, amount_to_transfer)
-	BP.undisinfect_limb()
-	for(var/datum/injury/injury in BP.injuries)
-		injury.adjust_germ_level(SANITIZATION_PER_UNIT_WATER)
 
 /datum/reagent/water/gross/on_aeration(volume, turf/turf)
 	turf.pollute_turf(/datum/pollutant/rot/sewage, volume * 3)

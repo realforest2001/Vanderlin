@@ -36,9 +36,9 @@
 	/// Total damage this organ has sustained
 	var/damage = 0
 	/// How much pain this causes in relation to damage (pain_multiplier * damage)
-	var/pain_multiplier = 0.45
+	var/pain_multiplier = 0.75
 	/// Modifier for when the parent limb gets damaged, and fucks up the organs inside
-	var/internal_damage_modifier = 0.5
+	var/internal_damage_modifier = 1
 	/// Flat reduction of the damage when the limb gets damaged and fucks us up
 	var/internal_damage_reduction = 0
 	/// When severe organ damage (broken) occurs

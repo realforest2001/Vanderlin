@@ -75,6 +75,8 @@ SUBSYSTEM_DEF(ai_controllers)
 			. += ai_controller
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
+	var/timer = TICK_USAGE_REAL
+
 	if(!resumed)
 		src.currentrun = build_currentrun()
 

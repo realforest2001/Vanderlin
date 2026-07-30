@@ -17,7 +17,6 @@
 	item_weight = 4.5 KILOGRAMS
 
 	possible_item_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, POLEARM_BASH)
-	gripped_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, POLEARM_BASH)
 	force = 10
 	can_parry = TRUE
 	wdefense = AVERAGE_PARRY
@@ -37,10 +36,7 @@
 
 /obj/item/gun/ballistic/powder/musket/Initialize(mapload)
 	bayonet = new(src)
-	possible_item_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, SPEAR_THRUST)
-	gripped_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, POLEARM_THRUST)
-	. = ..()
-	AddElement(/datum/element/gun_launches_little_guys, throwing_force = 1, throwing_range = 1)
+	return ..()
 
 /obj/item/gun/ballistic/powder/musket/Destroy(force)
 	if(!QDELETED(bayonet))
@@ -82,9 +78,6 @@
 
 	balloon_alert(user, "removed!")
 	user.put_in_hands(bayonet)
-	possible_item_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, POLEARM_BASH)
-	gripped_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, POLEARM_BASH)
-	user.update_a_intents()
 	update_appearance(UPDATE_ICON_STATE)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

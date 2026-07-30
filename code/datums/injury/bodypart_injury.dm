@@ -16,7 +16,7 @@
 						return /datum/injury/slash/deep
 					if(0 to 15)
 						return /datum/injury/slash/small
-			if(WOUND_PUNCTURE)
+			if(WOUND_PIERCE)
 				switch(damage)
 					if(60 to INFINITY)
 						return /datum/injury/puncture/massive
@@ -119,7 +119,7 @@
 						return /datum/injury/slash/deep/mechanical
 					if(0 to 15)
 						return /datum/injury/slash/small/mechanical
-			if(WOUND_PUNCTURE)
+			if(WOUND_PIERCE)
 				switch(damage)
 					if(60 to INFINITY)
 						return /datum/injury/puncture/massive/mechanical

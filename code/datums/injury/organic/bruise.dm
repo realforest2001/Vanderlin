@@ -1,9 +1,8 @@
 /** BRUISES **/
 /datum/injury/bruise
 	bleed_threshold = 20
-	autoheal_cutoff = 50
+	autoheal_cutoff = 30
 	damage_type = WOUND_BLUNT
-	bleed_rate = 0.8
 
 /datum/injury/bruise/small
 	stages = list(
@@ -22,6 +21,7 @@
 		"small healing bruise" = 5,
 		"small hematoma" = 0
 		)
+	max_bleeding_stage = 2
 
 /datum/injury/bruise/large
 	stages = list(
@@ -33,6 +33,7 @@
 		"small healing bruise" = 5,
 		"small hematoma" = 0
 		)
+	max_bleeding_stage = 3
 	fade_away_time = INFINITY
 
 /datum/injury/bruise/huge
@@ -46,6 +47,7 @@
 		"mild healing bruise" = 5,
 		"mild hematoma" = 0
 		)
+	max_bleeding_stage = 4
 	fade_away_time = INFINITY
 
 /datum/injury/bruise/monumental
@@ -59,4 +61,5 @@
 		"moderate healing bruise" = 5,
 		"moderate hematoma" = 0
 		)
+	max_bleeding_stage = 4
 	fade_away_time = INFINITY

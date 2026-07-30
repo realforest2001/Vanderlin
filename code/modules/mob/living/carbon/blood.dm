@@ -1,12 +1,12 @@
 
 // bleedout checks
 /mob/living/carbon/proc/in_bleedout()
-	return (CHECK_BITFIELD(status_flags, BLEEDOUT)) || undergoing_cardiac_arrest()
+	return (CHECK_BITFIELD(status_flags, BLEEDOUT))
 
 /// Blood volume, affected by the heart
 /mob/living/carbon/proc/get_blood_circulation()
 	if(!needs_heart())
-		return BLOOD_VOLUME_NORMAL
+		return blood_volume
 
 	var/heart_efficiency = getorganslotefficiency(ORGAN_SLOT_HEART)
 	var/apparent_blood_volume = get_blood_volume()
@@ -62,7 +62,7 @@
 	if(!needs_lungs())
 		return apparent_blood_volume
 
-	var/apparent_blood_volume_mod = max(0, 1 - (getOxyLoss() / max(maxHealth, 1)))
+	var/apparent_blood_volume_mod = max(0, 1 - (getOxyLoss() * 0.1) /max(maxHealth, 1))
 	var/oxygenated = get_chem_effect(CE_OXYGENATED)
 	if(oxygenated == 1) // Tirimol
 		apparent_blood_volume_mod += 0.5

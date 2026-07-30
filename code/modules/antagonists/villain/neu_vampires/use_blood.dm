@@ -140,12 +140,12 @@
 			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_GRAB]
 			if (ishuman(data[BLOODCOST_TARGET_GRAB]))
 				var/mob/living/carbon/human/H = data[BLOODCOST_TARGET_GRAB]
-				H.adjust_blood_volume(-data[BLOODCOST_AMOUNT_GRAB])
+				H.adjust_bloodvolume(-data[BLOODCOST_AMOUNT_GRAB])
 				H.adjust_bloodpool(-data[BLOODCOST_AMOUNT_GRAB])
 		if (data[BLOODCOST_TARGET_BLEEDER])
 			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_BLEEDER]
 			var/mob/living/carbon/human/H = data[BLOODCOST_TARGET_BLEEDER]
-			H.adjust_blood_volume(-data[BLOODCOST_AMOUNT_BLEEDER])
+			H.adjust_bloodvolume(-data[BLOODCOST_AMOUNT_BLEEDER])
 			H.adjust_bloodpool(-data[BLOODCOST_AMOUNT_BLEEDER])
 		if (data[BLOODCOST_TARGET_HELD])
 			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_HELD]
@@ -163,8 +163,8 @@
 			data[BLOODCOST_TOTAL] += data[BLOODCOST_AMOUNT_USER]
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
-				var/blood_before = H.get_blood_volume()
-				H.adjust_blood_volume(-data[BLOODCOST_AMOUNT_USER])
+				var/blood_before = H.blood_volume
+				H.adjust_bloodvolume(-data[BLOODCOST_AMOUNT_USER])
 				H.adjust_bloodpool(-data[BLOODCOST_AMOUNT_USER])
 				var/blood_after = H.get_blood_volume()
 				if(CAN_HAVE_BLOOD(H))
@@ -234,8 +234,9 @@
 	if (user.pulling)
 		if(ishuman(user.pulling))
 			var/mob/living/carbon/human/H = user.pulling
-			if(CAN_HAVE_BLOOD(H))
-				var/blood_gathered = min(amount_needed-amount_gathered, H.get_blood_volume())
+			if(!(NOBLOOD in H.dna.species.species_traits))
+				var/blood_volume = H.blood_volume
+				var/blood_gathered = min(amount_needed-amount_gathered, blood_volume)
 				data[BLOODCOST_TARGET_GRAB] = H
 				data[BLOODCOST_AMOUNT_GRAB] = blood_gathered
 				amount_gathered += blood_gathered
@@ -246,11 +247,12 @@
 
 	//Is there a bleeding mob/corpse on the turf that still has blood in it?
 	for (var/mob/living/carbon/human/H in T)
-		if(!CAN_HAVE_BLOOD(H))
+		if((NOBLOOD in H.dna.species.species_traits))
 			continue
 		if(user != H)
 			if(H.get_bleed_rate() > 0)
-				var/blood_gathered = min(amount_needed-amount_gathered, H.get_blood_volume())
+				var/blood_volume = H.blood_volume
+				var/blood_gathered = min(amount_needed-amount_gathered, blood_volume)
 				data[BLOODCOST_TARGET_BLEEDER] = H
 				data[BLOODCOST_AMOUNT_BLEEDER] = blood_gathered
 				amount_gathered += blood_gathered
@@ -300,8 +302,9 @@
 		return data
 
 	//Does the user have blood? (the user can pay in blood without having to bleed first)
-	if(CAN_HAVE_BLOOD(H_user) && istype(H_user))
-		var/blood_gathered = min(amount_needed-amount_gathered, H_user.get_blood_volume())
+	if(istype(H_user))
+		var/blood_volume = H_user.blood_volume
+		var/blood_gathered = min(amount_needed-amount_gathered, blood_volume)
 		data[BLOODCOST_TARGET_USER] = H_user
 		data[BLOODCOST_AMOUNT_USER] = blood_gathered
 		amount_gathered += blood_gathered

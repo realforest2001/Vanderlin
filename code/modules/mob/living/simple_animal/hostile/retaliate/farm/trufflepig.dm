@@ -216,7 +216,7 @@
 	icon = 'icons/roguetown/mob/monster/cow.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/trufflepig/tamed(mob/user)
-	. = ..()
+	..()
 	deaggroprob = 20
 	if(.) // was already tamed
 		return

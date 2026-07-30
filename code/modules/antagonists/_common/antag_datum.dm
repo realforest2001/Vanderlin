@@ -114,13 +114,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/create_team(datum/team/team)
 	return
 
-///Called by the add_antag_datum() mind proc after the instanced datum is added to the mind's antag_datums list.
+//Proc called when the datum is given to a mind.
 /datum/antagonist/proc/on_gain()
-	SHOULD_CALL_PARENT(TRUE)
-	if(!owner)
-		CRASH("[src] ran on_gain() without a mind")
-	if(!owner.current)
-		CRASH("[src] ran on_gain() on a mind without a mob")
+	if(!owner?.current)
+		return
 	if(!silent)
 		greet()
 	apply_innate_effects()
@@ -158,10 +155,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.key = C.key
 
 /datum/antagonist/proc/on_removal()
-	SHOULD_CALL_PARENT(TRUE)
-	if(!owner)
-		CRASH("Antag datum with no owner.")
-
 	remove_innate_effects()
 	clear_antag_stress()
 	remove_antag_hud(antag_hud_type, antag_hud_name)

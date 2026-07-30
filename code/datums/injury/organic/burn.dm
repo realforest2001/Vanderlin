@@ -1,14 +1,13 @@
 /** BURNS **/
 /datum/injury/burn
 	damage_type = WOUND_BURN
-	autoheal_cutoff = 6
-	infection_rate = 1.25
-	bleed_rate = BLEED_DAMAGE_RATIO / 100 // burns generally don't bleed much
+	autoheal_cutoff = 3
+	max_bleeding_stage = 0
+	infection_rate = 2.5
 
 /datum/injury/burn/infection_check()
 	//anything less than a FUCK burn isn't infectable if treated properly
-	var/normalized_damage = damage_per_injury()
-	if(is_treated() && normalized_damage < 25)
+	if(is_treated() && damage < 25)
 		return FALSE
 	if(is_disinfected())
 		return FALSE
@@ -18,29 +17,31 @@
 
 	switch(damage_type)
 		if(WOUND_BLUNT)
-			return prob(normalized_damage/2)
+			return prob(damage/2)
 		if(WOUND_BURN)
-			return prob(normalized_damage*2)
+			return prob(damage*2)
 		if(WOUND_SLASH)
-			return prob(normalized_damage)
-		if(WOUND_PUNCTURE)
-			return prob(normalized_damage*1.25)
+			return prob(damage)
+		if(WOUND_PIERCE)
+			return prob(damage*1.25)
 
 	return FALSE
 
-/datum/injury/burn/can_merge(datum/injury/other)
-	return FALSE // don't merge burns so we can calculate fluid loss correctly
+/datum/injury/burn/is_bleeding()
+	return FALSE //burns cannot bleed
 
-/datum/injury/burn/apply_to_bodypart(obj/item/bodypart/limb)
+/*
+/datum/injury/burn/apply_injury(our_damage, obj/item/bodypart/limb)
 	. = ..()
 	//Burn damage can cause fluid loss due to blistering and cook-off
-	if(limb.owner && (limb.burn_dam/limb.max_damage) >= 0.25) // medium burn damage
-		limb.owner.adjust_blood_volume(-CEILING(BLOOD_VOLUME_BLEEDOUT * damage/100, 1))
+	if(limb.owner && (damage_per_injury() >= 5 || damage + limb.burn_dam >= 20))
+		limb.owner.adjust_bloodvolume(-CEILING(BLOOD_VOLUME_SURVIVE * damage/100, 1))
+*/
 
 /*
 /datum/injury/burn/receive_damage(damage_received = 0, pain_received = 0, wounding_type = WOUND_BLUNT)
 	. = ..()
-	if((wounding_type & WOUND_BURN) && (damage + damage_received >= 50) && parent_bodypart)
+	if((wounding_type == WOUND_BURN) && (damage + damage_received >= 50) && parent_bodypart)
 		if(!parent_bodypart.is_dead())
 			if(parent_bodypart.is_organic_limb())
 				parent_bodypart.kill_limb()
@@ -52,7 +53,6 @@
 */
 
 /datum/injury/burn/moderate
-	bleed_threshold = 10
 	stages = list(
 		"ripped burn" = 10,
 		"moderate burn" = 5,
@@ -61,7 +61,6 @@
 		)
 
 /datum/injury/burn/large
-	bleed_threshold = 20
 	stages = list(
 		"ripped large burn" = 20,
 		"large burn" = 15,
@@ -71,7 +70,6 @@
 	fade_away_time = INFINITY
 
 /datum/injury/burn/severe
-	bleed_threshold = 35
 	stages = list(
 		"ripped severe burn" = 35,
 		"severe burn" = 30,
@@ -81,7 +79,6 @@
 	fade_away_time = INFINITY
 
 /datum/injury/burn/deep
-	bleed_threshold = 45
 	stages = list(
 		"ripped deep burn" = 45,
 		"deep burn" = 40,
@@ -91,7 +88,6 @@
 	fade_away_time = INFINITY
 
 /datum/injury/burn/carbonised
-	bleed_threshold = 50
 	stages = list(
 		"carbonised area" = 50,
 		"healing carbonised area" = 20,

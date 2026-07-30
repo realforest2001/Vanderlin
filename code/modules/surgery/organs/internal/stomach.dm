@@ -8,13 +8,15 @@
 	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = ""
 
+	healing_factor = STANDARD_ORGAN_HEALING
+
 	organ_volume = 1
 	max_blood_storage = 20
 	current_blood = 20
-	blood_req = 2
+	blood_req = 4
 	oxygen_req = 4
-	nutriment_req = 1.5
-	hydration_req = 1.2
+	nutriment_req = 2
+	hydration_req = 1.5
 
 	low_threshold_passed = "<span class='info'>My stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
 	high_threshold_passed = "<span class='warning'>My stomach flares up with constant pain. I can hardly stomach the idea of food right now!</span>"
@@ -83,7 +85,8 @@
 	slot = ORGAN_SLOT_GUTS
 	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = ""
-	organ_efficiency = list(ORGAN_SLOT_GUTS = 100)
+
+	healing_factor = STANDARD_ORGAN_HEALING
 	low_threshold_passed = "<span class='info'>My guts flashes with pain before subsiding.</span>"
 	high_threshold_passed = "<span class='warning'>My guts flares up with constant pain.</span>"
 	high_threshold_cleared = "<span class='info'>The pain in my guts die down for now.</span>"

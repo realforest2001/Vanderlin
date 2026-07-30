@@ -4,34 +4,34 @@
 	icon_state = "artery"
 	base_icon_state = "artery"
 	sellprice = 1
-	dropshrink = 0.5
 
 	organ_flags = ORGAN_LIMB_SUPPORTER|ORGAN_INDESTRUCTIBLE|ORGAN_NO_VIOLENT_DAMAGE
 	organ_efficiency = list(ORGAN_SLOT_ARTERY = 100)
 	needs_processing = TRUE
 
+	maxHealth = ARTERY_MAX_HEALTH
+	high_threshold = ARTERY_MAX_HEALTH * 0.8
+	low_threshold = ARTERY_MAX_HEALTH * 0.2
 	pain_multiplier = 0.05
 
 	organ_volume = 0.5
 	max_blood_storage = 100
 	current_blood = 100
 	oxygen_req = 0.25
-	nutriment_req = 0.09
-	hydration_req = 0.03
+	nutriment_req = 0.1
+	hydration_req = 0.05
 
-	/// How much blood we gush when torn. Multiplied by damage/maxHealth
+	/// How much blood we gush when torn
 	var/blood_flow = ARTERIAL_BLOOD_FLOW
 	var/tear_damage_multiplier = 0.5
 	/// If torn, this is basically the time until we gush again
 	COOLDOWN_DECLARE(next_squirt)
 	/// Minimum time until we squirt again
-	var/squirt_delay_min_seconds = 4 SECONDS
+	var/squirt_delay_min_seconds = 4
 	/// Maximum time until we squirt again
-	var/squirt_delay_max_seconds = 10 SECONDS
+	var/squirt_delay_max_seconds = 10
 	///squirting sound
 	var/squirt_sound = list('sound/gore/artery1.ogg', 'sound/gore/artery2.ogg', 'sound/gore/artery3.ogg')
-	/// Kill the owner if they have TRAIT_CRITICAL_WEAKNESS and the artery is dissected
-	var/crit_weakness_lethal = FALSE
 
 /obj/item/organ/artery/can_self_heal(delta_time, times_fired, in_bleedout)
 	return FALSE
@@ -44,7 +44,7 @@
 /obj/item/organ/artery/on_life(delta_time, times_fired)
 	. = ..()
 	// Dead, pulseless or cryosleep people do not pump blood
-	if(!is_bruised() || !owner.pulse || (owner.bodytemperature <= -15))
+	if(!(is_bruised() || is_failing()) || !owner.pulse || (owner.bodytemperature <= -15))
 		return
 	var/bleed_mod = 1 * (damage/maxHealth)
 	var/obj/item/bodypart/limb = owner.get_bodypart(current_zone)
@@ -52,10 +52,6 @@
 		bleed_mod *= grab.bleed_suppressing
 	if(limb.bandage)
 		bleed_mod *= limb.bandage.bandage_effectiveness
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		if(human_owner.physiology)
-			bleed_mod *= human_owner.physiology.bleed_mod
 	switch(owner.pulse)
 		if(PULSE_NONE)
 			bleed_mod *= 0
@@ -65,8 +61,12 @@
 			bleed_mod *= 1.25
 		if(PULSE_FASTER, PULSE_THREADY)
 			bleed_mod *= 1.5
-	var/final_bleed_rate = CEILING(blood_flow * bleed_mod * delta_time, 0.1)
-	if(final_bleed_rate <= 0)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		if(human_owner.physiology)
+			bleed_mod *= human_owner.physiology.bleed_mod
+	var/final_bleed_rate = CEILING(blood_flow * bleed_mod, 0.1)
+	if(!final_bleed_rate)
 		return
 	if(COOLDOWN_FINISHED(src, next_squirt))
 		squirt(final_bleed_rate)
@@ -85,6 +85,7 @@
 		return
 	if(owner.stat < UNCONSCIOUS)
 		owner.emote("scream")
+	owner.bleed(blood_flow)
 	current_blood = 0
 	applyOrganDamage(maxHealth * tear_damage_multiplier)
 	owner.bleed(blood_flow)
@@ -95,16 +96,15 @@
 		return
 	if(owner.stat < UNCONSCIOUS)
 		owner.emote("scream")
+	owner.bleed(blood_flow)
 	current_blood = 0
 	applyOrganDamage(maxHealth)
-	owner.bleed(blood_flow)
-	COOLDOWN_START(src, next_squirt, rand(squirt_delay_min_seconds, squirt_delay_max_seconds))
-	if(crit_weakness_lethal && HAS_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS))
-		owner.death()
+	var/cd_time = rand(squirt_delay_min_seconds, squirt_delay_max_seconds) SECONDS
+	COOLDOWN_START(src, next_squirt, cd_time)
 
 /obj/item/organ/artery/applyOrganDamage(amount, maximum = maxHealth, silent = FALSE)
 	. = ..()
-	if(. < 0 && damage <= 0)
+	if(damage <= 0)
 		mend()
 
 /obj/item/organ/artery/proc/squirt(amount = 1, force = FALSE)
@@ -128,9 +128,9 @@
 			playsound(owner, squirt_sound, 75, 0)
 			owner.bleed(amount)
 			//owner.do_arterygush()
-			COOLDOWN_START(src, next_squirt, rand(squirt_delay_min_seconds, squirt_delay_max_seconds))
+			COOLDOWN_START(src, next_squirt, rand(squirt_delay_min_seconds, squirt_delay_max_seconds) SECONDS)
 		else
-			COOLDOWN_START(src, next_squirt, rand(squirt_delay_min_seconds, squirt_delay_max_seconds))
+			COOLDOWN_START(src, next_squirt, rand(squirt_delay_min_seconds, squirt_delay_max_seconds) SECONDS)
 			return squirt_less(amount, open_wound)
 	else
 		return squirt_less(amount, open_wound)

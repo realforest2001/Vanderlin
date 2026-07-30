@@ -2,41 +2,19 @@
 	slot = ORGAN_SLOT_LUNGS
 
 /datum/organ_process/lungs/needs_process(mob/living/carbon/owner)
-	if(!owner.needs_lungs())
-		if(owner.getOxyLoss())
-			owner.setOxyLoss(0)
-		owner.losebreath = 0
+	var/needlung = owner.needs_lungs()
+	if(!needlung || (owner.stat >= DEAD))
 		owner.failed_last_breath = FALSE
 		return FALSE
 	return ..()
 
 /datum/organ_process/lungs/handle_process(mob/living/carbon/owner, delta_time, times_fired)
-	handle_breathing(owner, delta_time, times_fired)
-	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
-	lungs?.cough_blood(delta_time)
+	handle_oxygenation(owner, delta_time, times_fired)
 	return TRUE
 
-/datum/organ_process/lungs/proc/handle_breathing(mob/living/carbon/owner, delta_time, times_fired)
-	var/next_breath = 4
-	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
-	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
-	if(lungs && lungs.get_slot_efficiency(ORGAN_SLOT_LUNGS) <= failing_threshold)
-		next_breath--
-	if(heart && heart.get_slot_efficiency(ORGAN_SLOT_HEART) <= failing_threshold)
-		next_breath--
-
-	var/owner_failed_breath = owner.failed_last_breath
-	if((times_fired % next_breath) == 0 || owner_failed_breath)
-		// Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
-		breathe(owner, delta_time, times_fired, owner_failed_breath ? 1 : next_breath)
-	else if(isobj(owner.loc))
-		var/obj/location_as_object = owner.loc
-		location_as_object.handle_internal_lifeform(owner, 0)
-
-/*
+/datum/organ_process/lungs/proc/handle_oxygenation(mob/living/carbon/owner, delta_time, times_fired)
 	var/lung_efficiency = owner.getorganslotefficiency(ORGAN_SLOT_LUNGS)
 	var/effective_oxygenation = ((100 - owner.getOxyLoss()) * (lung_efficiency/optimal_threshold))
-
 	if(effective_oxygenation < owner.total_oxygen_req)
 		if(DT_PROB(0.5, delta_time))
 			if(owner.body_position != LYING_DOWN)
@@ -70,7 +48,6 @@
 		else
 			victim.emote("choke")
 		sleep(1 SECONDS)
-*/
 
 /datum/organ_process/lungs/proc/breathe(mob/living/carbon/owner, delta_time, times_fired, next_breath = 4)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)

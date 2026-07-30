@@ -40,6 +40,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 /mob/living/carbon/human/species/rousman/npc
 	ai_controller = /datum/ai_controller/human_npc
 	dodgetime = 13
+	canparry = TRUE
 	flee_in_pain = TRUE
 	wander = FALSE
 
@@ -55,8 +56,11 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 	job = "Ambusher Rousman"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/rousman/ambush)
 	dodgetime = 13
+	canparry = TRUE
 	flee_in_pain = TRUE
 	wander = TRUE
 
@@ -337,7 +341,6 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	if(!randomize_rous_name)
 		name = "rousman"
 		real_name = "rousman"
-	add_traits(list(TRAIT_NOMOOD, TRAIT_NOHUNGER), SPECIES_TRAIT)
 
 /datum/component/rot/corpse/rousman/process()
 	if(HAS_TRAIT(parent, TRAIT_STASIS) || HAS_TRAIT(parent, TRAIT_NO_ROT)) // No rot
@@ -532,7 +535,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	. = ..()
 	if(istype(AM, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if(H.ambushable() && hole.already_ambushed == FALSE)
+		if(H.ambushable == TRUE && hole.already_ambushed == FALSE)
 			hole.ambush(H)
 
 ////////////////////////////////
@@ -548,9 +551,11 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 	job = "Assassin Rousman"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/rousman/assassin)
 	dodgetime = 13
-	REMOVE_TRAIT(src, TRAIT_UNPARRYING, INNATE_TRAIT)
+	canparry = TRUE
 	flee_in_pain = TRUE
 	wander = TRUE
 
@@ -583,6 +588,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_ZJUMP, TRAIT_GENERIC)
 
+
 /mob/living/carbon/human/species/rousman/seer/with_ai
 	ai_controller = /datum/ai_controller/human_npc
 
@@ -590,9 +596,11 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 	job = "Seer Rousman"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/rousman/seer)
 	dodgetime = 13
-	REMOVE_TRAIT(src, TRAIT_UNPARRYING, INNATE_TRAIT)
+	canparry = TRUE
 	flee_in_pain = TRUE
 	wander = TRUE
 
@@ -603,9 +611,11 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 	job = "Seer Rousman"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/rousman/seer_stronger)
 	dodgetime = 13
-	REMOVE_TRAIT(src, TRAIT_UNPARRYING, INNATE_TRAIT)
+	canparry = TRUE
 	flee_in_pain = TRUE
 	wander = TRUE
 

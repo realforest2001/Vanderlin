@@ -54,7 +54,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 
-		H.adjust_blood_volume(-45)
+		H.blood_volume = max(H.blood_volume - 45, 0)
 
 		H.visible_message(
 			span_danger("[H] has their blood ripped from their body!"),

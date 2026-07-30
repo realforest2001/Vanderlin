@@ -69,7 +69,6 @@
 	base_strength = 66
 	base_speed = 66
 	base_endurance = 66
-	move_resist = MOVE_FORCE_OVERPOWERING
 
 /mob/living/simple_animal/hostile/retaliate/blood/ascended/examine(mob/user)
 	. = ..()
@@ -78,10 +77,8 @@
 /mob/living/simple_animal/hostile/retaliate/blood/ascended/Initialize()
 	. = ..()
 	set_light(5,5,5, l_color =  LIGHT_COLOR_RED)
-	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOPAIN, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOPAINSTUN, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOBREATH, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
 
 /mob/living/simple_animal/hostile/retaliate/blood/ascended/get_sound(input)
 	switch(input)

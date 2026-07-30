@@ -133,11 +133,13 @@
 
 /datum/emote/spin/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
 	. = ..()
-	if(isliving(user) && user.IsImmobilized())
+	if(user.IsImmobilized())
 		return FALSE
 
 /datum/emote/spin/run_emote(mob/living/carbon/user, params, type_override, intentional, targeted)
 	. = ..()
+	if(!.)
+		return
 	user.spin(4, 1)
 	user.Immobilize(5)
 

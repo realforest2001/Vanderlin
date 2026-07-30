@@ -2,7 +2,7 @@
 	name = "slash"
 	whp = 30
 	sewn_whp = 10
-	bleed_rate = 0.4
+	bleed_rate = 0.8
 	sewn_bleed_rate = 0.02
 	clotting_rate = 0.02
 	sewn_clotting_rate = 0.02
@@ -16,13 +16,17 @@
 	can_cauterize = TRUE
 	can_roll = FALSE
 	associated_bclasses = list(BCLASS_CUT, BCLASS_CHOP)
-	required_bodypart_status = BODYPART_ORGANIC
+
+/datum/wound/slash/can_apply_to_bodypart(obj/item/bodypart/affected)
+	. = ..()
+	if(affected.status == BODYPART_ROBOTIC)
+		return FALSE
 
 /datum/wound/slash/small
 	name = "small slash"
 	whp = 15
 	sewn_whp = 5
-	bleed_rate = 0.2
+	bleed_rate = 0.4
 	sewn_bleed_rate = 0.01
 	clotting_rate = 0.02
 	sewn_clotting_rate = 0.02
@@ -36,7 +40,7 @@
 	name = "gruesome slash"
 	whp = 40
 	sewn_whp = 12
-	bleed_rate = 1
+	bleed_rate = 2
 	sewn_bleed_rate = 0.05
 	clotting_rate = 0.02
 	sewn_clotting_rate = 0.02
@@ -50,7 +54,7 @@
 	name = "lashing"
 	whp = 30
 	sewn_whp = 12
-	bleed_rate = 0.3
+	bleed_rate = 0.6
 	sewn_bleed_rate = 0.02
 	clotting_rate = 0.02
 	sewn_clotting_rate = 0.02
@@ -68,7 +72,7 @@
 	name = "superficial lashing"
 	whp = 15
 	sewn_whp = 5
-	bleed_rate = 0.1
+	bleed_rate = 0.2
 	sewn_bleed_rate = 0.01
 	clotting_rate = 0.02
 	sewn_clotting_rate = 0.02
@@ -82,7 +86,7 @@
 	name = "excruciating lashing"
 	whp = 45
 	sewn_whp = 15
-	bleed_rate = 0.6 //Intended for combat, might kill if used for punishment. Force can be controlled by not charging the whip lash fully.
+	bleed_rate = 1.2 //Intended for combat, might kill if used for punishment. Force can be controlled by not charging the whip lash fully.
 	sewn_bleed_rate = 0.05
 	clotting_rate = 0.02
 	sewn_clotting_rate = 0.02

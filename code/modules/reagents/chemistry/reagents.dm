@@ -34,8 +34,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/random_reagent_color = FALSE
 	var/alpha = 255
 	var/can_synth = TRUE // can this reagent be synthesized? (for example: odysseus syringe gun)
-	/// How fast the reagent is metabolized by the mob
-	var/metabolization_rate = REAGENTS_METABOLISM
+	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0
@@ -106,9 +105,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/reaction_turf(turf/T, volume)
 	return
 
-/// Return TRUE if reagent should be transfered to affected_mob when absorbed through a bodypart
-/datum/reagent/proc/on_bodypart_absorb(mob/living/carbon/affected_mob, obj/item/bodypart/affected_bodypart, amount_to_transfer)
-	return TRUE
+/datum/reagent/proc/on_bodypart_absorb(obj/item/bodypart, mob/living/carbon/M, amount_to_transfer)
+	SHOULD_CALL_PARENT(FALSE)
+	on_mob_life(M)
 
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M, efficiency)
 	SHOULD_CALL_PARENT(TRUE)
@@ -141,27 +140,23 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	return recipe_quality ? recipe_quality : base_recipe_quality
 
 // Called when this reagent is first added to a mob
-/datum/reagent/proc/on_mob_add(mob/living/affected_mob)
-	if(added_traits)
-		affected_mob.add_traits(added_traits, "base:[type]")
+/datum/reagent/proc/on_mob_add(mob/living/L)
+	return
 
 // Called when this reagent is removed while inside a mob
-/datum/reagent/proc/on_mob_delete(mob/living/affected_mob)
-	REMOVE_TRAITS_IN(affected_mob, "base:[type]")
+/datum/reagent/proc/on_mob_delete(mob/living/L)
+	return
 
 // Called when this reagent first starts being metabolized by a liver
-/datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
-	SHOULD_CALL_PARENT(TRUE)
-	if(metabolized_traits)
-		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
-
-// Called when this reagent stops being metabolized by a liver
-/datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob)
-	SHOULD_CALL_PARENT(TRUE)
-	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
+/datum/reagent/proc/on_mob_metabolize(mob/living/L)
+	return
 
 /// Called when this liquid is aerated (sprinklers vents and pumps for now)
 /datum/reagent/proc/on_aeration(volume, turf/turf)
+	return
+
+// Called when this reagent stops being metabolized by a liver
+/datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return
 
 /// Called when a reagent is inside of a mob when they are dead

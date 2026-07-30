@@ -228,7 +228,7 @@
 	icon_state = "ingotgold"
 	smeltresult = /obj/item/ingot/gold
 	melting_material = /datum/material/gold
-	sellprice = M_GOLD
+	sellprice = 100
 	item_weight = 12.25 KILOGRAMS
 
 /obj/item/ingot/iron
@@ -237,7 +237,7 @@
 	icon_state = "ingotiron"
 	smeltresult = /obj/item/ingot/iron
 	melting_material = /datum/material/iron
-	sellprice = M_IRON
+	sellprice = 25
 	item_weight = 5 KILOGRAMS
 
 /obj/item/ingot/thaumic
@@ -247,7 +247,7 @@
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	smeltresult = /obj/item/ingot/thaumic
 	melting_material = /datum/material/thaumic_iron
-	sellprice = M_IRON
+	sellprice = 25
 	item_weight = 5 KILOGRAMS
 
 /obj/item/ingot/copper
@@ -256,7 +256,7 @@
 	icon_state = "ingotcop"
 	smeltresult = /obj/item/ingot/copper
 	melting_material = /datum/material/copper
-	sellprice = M_IRON * 0.5
+	sellprice = 10
 	item_weight = 5.7 KILOGRAMS
 
 /obj/item/ingot/tin
@@ -265,7 +265,7 @@
 	icon_state = "ingottin"
 	smeltresult = /obj/item/ingot/tin
 	melting_material = /datum/material/tin
-	sellprice = M_IRON * 0.75
+	sellprice = 15
 	item_weight = 4.6 KILOGRAMS
 
 /obj/item/ingot/bronze
@@ -274,7 +274,7 @@
 	icon_state = "ingotbronze"
 	smeltresult = /obj/item/ingot/bronze
 	melting_material = /datum/material/bronze
-	sellprice = M_IRON * 2
+	sellprice = 30
 	item_weight = 5.55 KILOGRAMS
 
 /obj/item/ingot/silver
@@ -283,7 +283,7 @@
 	icon_state = "ingotsilv"
 	smeltresult = /obj/item/ingot/silver
 	melting_material = /datum/material/silver
-	sellprice = M_SILVER
+	sellprice = 60
 	item_weight = 6.65 KILOGRAMS
 
 /obj/item/ingot/silver/Initialize(mapload)
@@ -296,7 +296,7 @@
 	icon_state = "ingotsteel"
 	smeltresult = /obj/item/ingot/steel
 	melting_material = /datum/material/steel
-	sellprice = M_STEEL
+	sellprice = 40
 	item_weight = 5 KILOGRAMS
 
 /obj/item/ingot/steelholy
@@ -305,7 +305,7 @@
 	icon_state = "ingotsteelholy"
 	smeltresult = /obj/item/ingot/steel
 	melting_material = /datum/material/steel //Smelting it removes the blessing
-	sellprice = M_STEEL * 1.5
+	sellprice = 60
 	item_weight = 5 KILOGRAMS
 
 /obj/item/ingot/silverblessed
@@ -314,14 +314,14 @@
 	icon_state = "ingotsilvblessed"
 	smeltresult = /obj/item/ingot/silver
 	melting_material = /datum/material/silver //Smelting it removes the blessing
-	sellprice = M_SILVER * 1.5
+	sellprice = 100
 	item_weight = 6.65 KILOGRAMS
 
 /obj/item/ingot/blacksteel
 	name = "blacksteel bar"
 	desc = "Sacrificing the holy elements of silver for raw strength, this strange and powerful ingot's origin carries dark rumors..."
 	icon_state = "ingotblacksteel"
-	sellprice = M_BLACKSTEEL
+	sellprice = 90
 	smeltresult = /obj/item/ingot/blacksteel
 	melting_material = /datum/material/blacksteel
 	item_weight = 5.2 KILOGRAMS
@@ -332,7 +332,7 @@
 	icon_state = "steel_slag"
 	smeltresult = /obj/item/ingot/steel
 	melting_material = /datum/material/steel
-	sellprice = M_STEEL - 5
+	sellprice = 40
 	item_weight = 5.5 KILOGRAMS
 
 /obj/item/ingot/aalloy

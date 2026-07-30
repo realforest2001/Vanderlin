@@ -73,20 +73,19 @@
 		healed_any = TRUE
 	return healed_any
 
-/// Adds a wound to this bodypart, applying any necessary effects. IS NOT SAFE FOR CHECKING LIMB ZONES.
+/// Adds a wound to this bodypart, applying any necessary effects
 /obj/item/bodypart/proc/add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE, forced = FALSE)
 	if(!wound || !owner)
 		return
 	if(!forced && (owner.status_flags & GODMODE))
 		return
-	if(!ispath(wound) && !istype(wound))
-		return
-
 	if(ispath(wound, /datum/wound))
 		var/datum/wound/primordial_wound = GLOB.primordial_wounds[wound]
 		if(!primordial_wound.can_apply_to_bodypart(src))
 			return
 		wound = new wound()
+	else if(!istype(wound))
+		return
 	else if(!wound.can_apply_to_bodypart(src))
 		qdel(wound)
 		return
@@ -114,13 +113,13 @@
 		return FALSE
 	if(!is_organic_limb())
 		return FALSE
-	if(!CAN_HAVE_BLOOD(owner))
+	if(NOBLOOD in owner?.dna?.species?.species_traits)
 		return FALSE
 	return TRUE
 
 /// Returns the total bleed rate on this bodypart
-/obj/item/bodypart/proc/get_bleed_rate(ignore_is_bleeding = FALSE)
-	if(!CAN_HAVE_BLOOD(owner))
+/obj/item/bodypart/proc/get_bleed_rate(artifical = FALSE)
+	if(NOBLOOD in owner?.dna?.species?.species_traits)
 		return 0
 
 	if(!bleeds)
@@ -128,10 +127,14 @@
 
 	var/bleed_rate = 0
 	for(var/datum/wound/wound as anything in wounds)
-		bleed_rate += wound.bleed_rate
+		bleed_rate += (wound.bleed_rate * owner.dna.species.bleed_mod)
 
 	for(var/datum/injury/injury as anything in injuries)
-		bleed_rate += injury.get_bleed_rate(ignore_is_bleeding)
+		if(!artifical)
+			if(injury.is_bleeding())
+				bleed_rate += injury.get_bleed_rate()
+		else
+			bleed_rate += injury.get_artifical_bleed_rate()
 
 	for(var/obj/item/embedded as anything in embedded_objects)
 		if(!embedded.embedding.embedded_bloodloss)
@@ -166,7 +169,7 @@
 			return 0.7
 		if(WOUND_BITE)
 			return 1.1
-		if(WOUND_PUNCTURE)
+		if(WOUND_PIERCE)
 			return 0.8
 		else
 			return 1
@@ -177,6 +180,8 @@
 		return
 	dam *= damage_multiplier
 	if(dam < 5 && bclass != WOUND_INTERNAL_BRUISE)
+		if(CEILING(dam, 1) < 5)
+			return
 		dam = CEILING(dam, 1)
 
 	var/do_crit = (modifiers[CRIT_MOD_CHANCE] <= -100) ? FALSE : TRUE
@@ -199,11 +204,11 @@
 			if(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PUNCH)
 				wounding_type = WOUND_BLUNT
 			if(BCLASS_DRILL, BCLASS_PICK, BCLASS_PIERCE, BCLASS_SHOT)
-				wounding_type = WOUND_PUNCTURE
+				wounding_type = WOUND_PIERCE
 			if(BCLASS_CUT, BCLASS_CHOP)
 				wounding_type = WOUND_SLASH
 			if(BCLASS_STAB)
-				wounding_type = WOUND_PUNCTURE
+				wounding_type = WOUND_PIERCE
 			if(BCLASS_TWIST)
 				wounding_type = WOUND_BLUNT
 			if(BCLASS_BITE)
@@ -215,10 +220,10 @@
 
 	dam *= skeletonized_mod(wounding_type)
 
-	if(wounding_type & WOUND_NONE)
+	if(wounding_type == WOUND_NONE)
 		return
 
-	if((zone_precise in list(BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_R_EYE)) && (wounding_type & WOUND_PUNCTURE))
+	if((zone_precise in list(BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_R_EYE)) && wounding_type == WOUND_PIERCE)
 		organ_bonus = CANT_ORGAN
 
 	if(organ_bonus != CANT_ORGAN)
@@ -268,11 +273,15 @@
 	var/list/candidates = list()
 	for(var/wound_type in GLOB.primordial_wounds)
 		var/datum/wound/primordial = GLOB.primordial_wounds[wound_type]
+		if(IS_ABSTRACT(primordial))
+			continue
 		if(!primordial.can_roll)
 			continue
-		if(!primordial.can_apply_to_bodypart(src, zone_precise, bclass))
+		var/chance = primordial.get_crit_prob(bclass, dam, damage_dividend, user, src, zone_precise, modifiers)
+		if(chance <= 0)
 			continue
-		var/chance = primordial.get_crit_prob(bclass, dam, damage_dividend, user, src, modifiers)
+		if(!primordial.can_apply_to_bodypart(src))
+			continue
 		if(prob(chance))
 			candidates += wound_type
 
@@ -393,20 +402,18 @@
 			update_disabled()
 	return TRUE
 
-/obj/item/bodypart/proc/try_bandage(obj/item/natural/cloth/new_bandage)
-	if(!istype(new_bandage))
+/obj/item/bodypart/proc/try_bandage(obj/item/new_bandage)
+	if(!new_bandage)
 		return FALSE
-	. = TRUE
 	bandage = new_bandage
-	new_bandage.forceMove(src)
-	if(!new_bandage.bandage_health)
-		return
 	bandage_limb()
+	new_bandage.forceMove(src)
+	return TRUE
 
 /obj/item/bodypart/proc/try_bandage_expire()
+	var/bleed_rate = get_bleed_rate(TRUE)
 	if(!bandage)
 		return FALSE
-	var/bleed_rate = get_bleed_rate(TRUE)
 	if(!bleed_rate)
 		return FALSE
 
@@ -416,18 +423,15 @@
 
 		if(cloth.reagents && cloth.reagents.total_volume > 0)
 			if(owner && owner.reagents)
-				for(var/datum/reagent/reagent in cloth.reagents.reagent_list)
-					if(istype(reagent, /datum/reagent/blood))
-						continue
-					var/amount_to_transfer = min(reagent.volume, reagent.metabolization_rate)
+				for(var/datum/reagent/R in cloth.reagents.reagent_list)
+					var/amount_to_transfer = min(R.volume, R.metabolization_rate)
 					if(amount_to_transfer > 0)
-						if(reagent.on_bodypart_absorb(owner, src, amount_to_transfer))
-							cloth.reagents.trans_id_to(owner, reagent.type, amount_to_transfer)
-						else
-							cloth.reagents.remove_reagent(reagent.type, amount_to_transfer)
+
+						R.on_bodypart_absorb(src, owner, amount_to_transfer)
+						cloth.reagents.remove_reagent(R.type, amount_to_transfer)
 
 		if(owner)
-			owner.transfer_blood_to(cloth, bleed_rate * 0.1)
+			owner.transfer_blood_to(cloth, bleed_rate * 0.25)
 
 		cloth.bandage_health -= bleed_rate
 		bandage_health = cloth.bandage_health
@@ -441,11 +445,9 @@
 		return FALSE
 	if(!bandage)
 		return FALSE
-	bandage.bandage_health = 0
-	bandage.bandage_effectiveness = 1
-	unbandage_limb()
-	if(owner.stat < UNCONSCIOUS)
+	if(owner.stat != DEAD)
 		to_chat(owner, span_warning("Blood soaks through the bandage on my [name]."))
+		bandage.bandage_effectiveness = 1
 	return bandage.add_mob_blood(owner)
 
 /obj/item/bodypart/proc/remove_bandage()

@@ -14,7 +14,11 @@
 	werewolf_infection_probability = 15
 	associated_bclasses = list(BCLASS_BITE)
 	can_roll = FALSE
-	required_bodypart_status = BODYPART_ORGANIC
+
+/datum/wound/bite/can_apply_to_bodypart(obj/item/bodypart/affected)
+	. = ..()
+	if(affected.status == BODYPART_ROBOTIC)
+		return FALSE
 
 /datum/wound/bite/small
 	name = "nip"
@@ -26,7 +30,7 @@
 	name = "gnarly bite"
 	whp = 40
 	sewn_whp = 15
-	bleed_rate = 1
+	bleed_rate = 2
 	sewn_bleed_rate = 0.2
 	clotting_rate = 0.01
 	sewn_clotting_rate = 0.01

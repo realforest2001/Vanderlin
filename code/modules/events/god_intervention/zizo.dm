@@ -20,9 +20,12 @@
 		for(var/mob/living/carbon/human/potential_zombie as anything in GLOB.human_list)
 			if(potential_zombie.stat != DEAD)
 				continue
-			if(IS_DEADITE(potential_zombie))
+			if(potential_zombie.mind?.has_antag_datum(/datum/antagonist/zombie))
 				continue
-			potential_zombie.zombie_check()
+			var/datum/antagonist/zombie/zombie_datum = potential_zombie.zombie_check()
+			if(!zombie_datum)
+				continue
+			zombie_datum.wake_zombie()
 
 			bordered_message(potential_zombie, list(
 				span_danger("An overwhelming power of Zizo commands you! RISE AND RAVAGE!")

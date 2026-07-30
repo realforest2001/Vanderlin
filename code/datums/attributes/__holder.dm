@@ -65,8 +65,6 @@
  * Returns the raw value of a skill, taking into account the raw value of the governing attribute and defaulting
  */
 /datum/attribute_holder/proc/return_raw_effective_skill(skill_type)
-	if(parent && HAS_TRAIT(parent, TRAIT_NO_SKILLS))
-		return 0
 	var/skill_value = raw_attribute_list[skill_type]
 	var/datum/attribute/skill/skill = GET_ATTRIBUTE_DATUM(skill_type)
 	if(istype(skill))
@@ -90,8 +88,6 @@
  * Returns the effective value of a skill, taking into account the raw value of the governing attribute and defaulting
  */
 /datum/attribute_holder/proc/return_effective_skill(skill_type)
-	if(parent && HAS_TRAIT(parent, TRAIT_NO_SKILLS))
-		return 0
 	var/skill_value = attribute_list[skill_type]
 	var/datum/attribute/skill/skill = GET_ATTRIBUTE_DATUM(skill_type)
 	if(istype(skill))
@@ -119,8 +115,6 @@
  * Returns the raw value of a skill, only taking the governing attribute into account
  */
 /datum/attribute_holder/proc/return_raw_calculated_skill(skill_type)
-	if(parent && HAS_TRAIT(parent, TRAIT_NO_SKILLS))
-		return 0
 	var/skill_value = raw_attribute_list[skill_type]
 	var/datum/attribute/skill/skill = GET_ATTRIBUTE_DATUM(skill_type)
 	if(istype(skill) && !isnull(skill_value) && skill.governing_attribute)
@@ -134,8 +128,6 @@
  * Returns the effective value of a skill, only taking the governing attribute into account
  */
 /datum/attribute_holder/proc/return_calculated_skill(skill_type)
-	if(parent && HAS_TRAIT(parent, TRAIT_NO_SKILLS))
-		return 0
 	var/skill_value = attribute_list[skill_type]
 	var/datum/attribute/skill/skill = GET_ATTRIBUTE_DATUM(skill_type)
 	if(istype(skill) && !isnull(skill_value) && skill.governing_attribute)

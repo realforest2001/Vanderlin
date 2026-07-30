@@ -167,7 +167,7 @@
 	if (!L.buckled && prob(35))
 		L.visible_message(span_warning("The euphorbia vines entwine [L]!"))
 		if (buckle_mob(L, TRUE, check_loc = FALSE))
-			if(L.can_feel_pain())
+			if (!HAS_TRAIT(L, TRAIT_NOPAIN))
 				L.emote("agony")
 			L.Stun(2 SECONDS)
 	if (!HAS_TRAIT(L, TRAIT_PIERCEIMMUNE))

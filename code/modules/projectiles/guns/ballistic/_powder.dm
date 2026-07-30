@@ -67,7 +67,7 @@
 	if(exited == ramrod)
 		ramrod = null
 
-/obj/item/gun/ballistic/powder/after_firing(atom/target, mob/living/user, empty_chamber, from_firing, chamber_next_round)
+/obj/item/gun/ballistic/powder/clear_chambered(datum/source)
 	. = ..()
 	bullet_rammed = FALSE
 
@@ -102,13 +102,13 @@
 		. += span_warning("Whatever is in the barrel, it's not powder.")
 		return
 
-	var/extra_string = ""
+	var/extra_string = "loaded"
 	if(powder_amount > powder_required)
-		extra_string += span_boldwarning("over-")
+		extra_string += span_boldwarning("over-loaded")
 	else if (powder_amount < powder_required)
-		extra_string += span_warning("under-")
+		extra_string += span_warning("under-loaded")
 
-	. += span_notice("The barrel is [extra_string]loaded with powder.")
+	. += span_notice("The barrel is [extra_string] with powder.")
 
 /obj/item/gun/ballistic/powder/update_icon_state()
 	. = ..()

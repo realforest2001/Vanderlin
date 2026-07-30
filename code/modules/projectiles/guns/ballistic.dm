@@ -178,7 +178,7 @@
 
 	var/boon = user.get_learning_boon(associated_skill)
 	var/amt2raise = GET_MOB_ATTRIBUTE_VALUE(user, STAT_INTELLIGENCE) / 2
-	user.add_sleep_experience(associated_skill, amt2raise * boon)
+	user.adjust_experience(associated_skill, amt2raise * boon, FALSE)
 
 	// Rechambering cycle
 	if(!semi_auto)
@@ -220,7 +220,6 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
 	chambered = null
-	update_appearance()
 
 ///updates a bunch of racking related stuff and also handles the sound effects and the like
 /obj/item/gun/ballistic/proc/rack(mob/living/user)

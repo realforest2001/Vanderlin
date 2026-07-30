@@ -78,7 +78,7 @@
 /obj/item/organ/proc/handle_healing_item(obj/item/tool, mob/living/user, list/modifiers)
 
 	/*
-	if(organ_flags & (ORGAN_DESTROYED|ORGAN_NECROTIC))
+	if(organ_flags & (ORGAN_DESTROYED|ORGAN_DEAD))
 		to_chat(user, span_warning("\The [src] is damaged beyond the point of no return."))
 		return
 	*/

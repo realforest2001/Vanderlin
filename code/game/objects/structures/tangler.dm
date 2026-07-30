@@ -126,7 +126,7 @@
 		update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 		buckle_mob(L, TRUE, check_loc = FALSE)
 		START_PROCESSING(SSobj, src)
-		if(L.can_feel_pain())
+		if(!HAS_TRAIT(L, TRAIT_NOPAIN))
 			L.emote("painscream", forced = FALSE)
 		src.visible_message("<span class='danger'>[src] snatches [L]!</span>")
 		playsound(src, "plantcross", 100, FALSE, -1)

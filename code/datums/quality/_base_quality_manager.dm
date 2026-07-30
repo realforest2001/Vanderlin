@@ -64,7 +64,7 @@
 
 	// Apply sellprice modifier
 	var/modifier = quality_data["price_modifier"]
-	if(modifier && target.sellprice)
+	if(target.sellprice)
 		target.sellprice *= modifier
 
 	if(track_creation)

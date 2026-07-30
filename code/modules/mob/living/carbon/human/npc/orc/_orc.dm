@@ -14,6 +14,7 @@
 /mob/living/carbon/human/species/orc/slaved
 	ai_controller = /datum/ai_controller/human_npc
 	dodgetime = 15
+	canparry = TRUE
 	wander = FALSE
 
 /mob/living/carbon/human/species/orc/slaved/Initialize()
@@ -32,6 +33,7 @@
 /mob/living/carbon/human/species/orc/npc
 	ai_controller = /datum/ai_controller/human_npc
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	var/orc_outfit
 	wander = FALSE
@@ -56,8 +58,11 @@
 /mob/living/carbon/human/species/orc/ambush/after_creation()
 	..()
 	job = "Ambush Orc"
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/orc/ambush)
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = TRUE
 
@@ -169,7 +174,10 @@
 		faction |= "islander"
 	name = "orc"
 	real_name = "orc"
-	add_traits(list(TRAIT_HEAVYARMOR, TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_CRITICAL_WEAKNESS), SPECIES_TRAIT)
+	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
 
 /datum/species/orc
 	name = "orc"
@@ -335,8 +343,11 @@
 
 /mob/living/carbon/human/species/orc/tribal/after_creation()
 	..()
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/orc/tribal)
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = TRUE
 
@@ -386,8 +397,11 @@
 /mob/living/carbon/human/species/orc/warrior/after_creation()
 	..()
 	AddComponent(/datum/component/ai_aggro_system)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/orc/warrior)
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = TRUE
 
@@ -456,8 +470,11 @@
 /mob/living/carbon/human/species/orc/marauder/after_creation()
 	..()
 	AddComponent(/datum/component/ai_aggro_system)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/orc/marauder)
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = TRUE
 
@@ -512,8 +529,11 @@
 /mob/living/carbon/human/species/orc/warlord/after_creation()
 	..()
 	AddComponent(/datum/component/ai_aggro_system)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/orc/warlord)
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = TRUE
 
@@ -556,8 +576,11 @@
 
 /mob/living/carbon/human/species/orc/warlord/skilled/after_creation()
 	..()
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/npc/orc/warlord)
 	dodgetime = 15
+	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = TRUE
 	configure_mind()

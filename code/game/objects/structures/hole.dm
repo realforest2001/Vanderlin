@@ -691,7 +691,7 @@
 /obj/structure/closet/dirthole/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))
 		return
-	if(!IS_DEADITE(user))
+	if(!user.mind?.has_antag_datum(/datum/antagonist/zombie))
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
 			to_chat(user, "<span class='warning'>I'm trapped!</span>")

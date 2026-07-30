@@ -228,7 +228,7 @@
 							return
 						thrown_thing = throwable_mob
 						thrown_speed = 1
-						thrown_range = round(( max(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH), 1) / max(GET_MOB_ATTRIBUTE_VALUE(throwable_mob, STAT_CONSTITUTION), 1) ) * 2)
+						thrown_range = round((GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)/GET_MOB_ATTRIBUTE_VALUE(throwable_mob, STAT_CONSTITUTION))*2)
 						if(body_position == LYING_DOWN || (!HAS_TRAIT(thrown_thing, TRAIT_TINY) && throwable_mob.cmode && (throwable_mob.body_position != LYING_DOWN || GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) < 15)))
 							while(end_T.z > start_T.z)
 								end_T = GET_TURF_BELOW(end_T)
@@ -398,7 +398,7 @@
 	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 10)
 		cuff_break = FAST_CUFFBREAK
 		breakouttime = I.breakouttime
-	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 15 || IS_DEADITE(src))
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 15 || (mind && mind.has_antag_datum(/datum/antagonist/zombie)) )
 		cuff_break = INSTANT_CUFFBREAK
 
 	if(instant)
@@ -602,7 +602,7 @@
 					var/mob/living/carbon/C = src
 					C.add_stress(/datum/stress_event/vomit)
 	else
-		if(!CAN_HAVE_BLOOD(src))
+		if(NOBLOOD in dna?.species?.species_traits)
 			return TRUE
 		if(message)
 			visible_message("<span class='danger'>[src] coughs up blood!</span>", "<span class='danger'>I cough up blood!</span>")
@@ -825,43 +825,43 @@
 	else
 		clear_fullscreen("CMODE")
 
-	if(HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(src, TRAIT_NOCRITOVERLAY))
+	if(health <= crit_threshold || ((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE)))
 		var/severity = 0
 		switch(health)
-			if(80 to 90)
+			if(-20 to -10)
 				severity = 1
-			if(70 to 80)
+			if(-30 to -20)
 				severity = 2
-			if(60 to 70)
+			if(-40 to -30)
 				severity = 3
-			if(50 to 60)
+			if(-50 to -40)
 				severity = 4
-			if(50 to 60)
+			if(-50 to -40)
 				severity = 5
-			if(40 to 50)
+			if(-60 to -50)
 				severity = 6
-			if(30 to 40)
+			if(-70 to -60)
 				severity = 7
-			if(10 to 30)
+			if(-90 to -70)
 				severity = 8
-			if(5 to 10)
+			if(-95 to -90)
 				severity = 9
-			if(-INFINITY to 5)
+			if(-INFINITY to -95)
 				severity = 10
-		if(stat != HARD_CRIT)
+		if(!InFullCritical())
 			var/visionseverity = 4
 			switch(health)
-				if(92 to 96)
+				if(-8 to -4)
 					visionseverity = 5
-				if(88 to 92)
+				if(-12 to -8)
 					visionseverity = 6
-				if(84 to 88)
+				if(-16 to -12)
 					visionseverity = 7
-				if(80 to 84)
+				if(-20 to -16)
 					visionseverity = 8
-				if(76 to 80)
+				if(-24 to -20)
 					visionseverity = 9
-				if(-INFINITY to 76)
+				if(-INFINITY to -24)
 					visionseverity = 10
 			overlay_fullscreen("critvision", /atom/movable/screen/fullscreen/crit/vision, visionseverity)
 		else
@@ -1007,8 +1007,8 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(CAN_HAVE_BLOOD(src))
-			adjust_blood_volume(excess_healing * 2)
+		if(dna && !(NOBLOOD in dna.species.species_traits))
+			adjust_bloodvolume(excess_healing * 2)
 
 		for(var/obj/item/organ/organ as anything in internal_organs)
 			organ.applyOrganDamage(excess_healing * -1)
@@ -1431,16 +1431,14 @@
 	var/datum/organ_dna/eyes/eye_dna = dna?.organ_dna[ORGAN_SLOT_EYES]
 	if(!eye_dna)
 		return
-	for(var/obj/item/organ/old_eye in getorganslotlist(ORGAN_SLOT_EYES))
-		old_eye.Remove(src, TRUE)
-	var/old_eye_type = eye_dna.organ_type
 	eye_dna.organ_type = /obj/item/organ/eyes/night_vision/zombie
 	var/obj/item/organ/eyes/eyes = eye_dna.create_organ(species = dna.species)
 	eyes.Insert(src, TRUE)
-	var/obj/item/organ/eyes/eyes_two = eye_dna.create_organ(species = dna.species)
-	eyes_two.switch_side(eyes_two.side == RIGHT_SIDE ? LEFT_SIDE : RIGHT_SIDE)
-	eyes_two.Insert(src, TRUE)
-	eye_dna.organ_type = old_eye_type
+	update_eyes()
+
+	for(var/obj/item/organ/organs as anything in getorganslotlist(ORGAN_SLOT_EARS))
+		organs.setOrganDamage(0)
+		organs.set_germ_level(0) // this ensures we are good to hear
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()

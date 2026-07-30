@@ -67,8 +67,7 @@
 
 	while(do_after(owner, tickspeed, cast_on))
 		cast_on.adjustOxyLoss(-10)
-		if(cast_on.get_blood_volume() < BLOOD_VOLUME_SURVIVE * 1.5)
-			cast_on.set_blood_volume(BLOOD_VOLUME_SURVIVE * 1.5)
+		cast_on.blood_volume = max((BLOOD_VOLUME_SURVIVE * 1.5), cast_on.blood_volume)
 
 		if(prob(5) && cast_on.health <= 5)
 			to_chat(cast_on, span_small(pick(near_death_lines)))

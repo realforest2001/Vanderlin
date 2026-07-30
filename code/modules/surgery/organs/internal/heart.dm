@@ -12,10 +12,10 @@
 	organ_volume = 0.5
 	max_blood_storage = 100
 	current_blood = 100
-	blood_req = 5
+	blood_req = 10
 	oxygen_req = 5
-	nutriment_req = 3
-	hydration_req = 1.5
+	nutriment_req = 3.5
+	hydration_req = 2
 	/// Have we been bypassed to avoid nasty blockages?
 	var/open = FALSE
 	/// If we're not beating that is not a good sign
@@ -94,6 +94,11 @@
 			loose_names += node.name
 		. += span_warning("You can see a few humors loosely pressed against [src], [english_list(loose_names)].")
 
+/obj/item/organ/heart/is_working()
+	if(owner)
+		return (..() && beating)
+	return ..()
+
 /obj/item/organ/heart/is_failing()
 	if(owner)
 		return (..() || !beating)
@@ -113,12 +118,12 @@
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 8 SECONDS)
 
 /obj/item/organ/heart/proc/can_stop()
-	return beating
+	if(beating)
+		return TRUE
+	return FALSE
 
 /obj/item/organ/heart/proc/stop_if_unowned()
-	if(QDELETED(src))
-		return
-	if(isnull(owner))
+	if(!owner)
 		Stop()
 
 /obj/item/organ/heart/proc/Stop()
@@ -145,8 +150,8 @@
 	consider_processing()
 	return TRUE
 
-/obj/item/organ/heart/get_availability(datum/species/S, mob/living/carbon/owner_mob)
-	return (!(TRAIT_NOBLOOD in S.inherent_traits) && !(TRAIT_STABLEHEART in S.inherent_traits))
+/obj/item/organ/heart/get_availability(datum/species/S)
+	return (!(NOBLOOD in S.species_traits) && !(TRAIT_STABLEHEART in S.inherent_traits))
 
 /obj/item/organ/heart/get_mechanics_examine(mob/user)
 	. = ..()
@@ -454,7 +459,3 @@
 	else
 		to_chat(target, span_notice("You feel your [src] stabilize and resume functioning."))
 	return TRUE
-
-/obj/item/organ/heart/regenerate_organ()
-	. = ..()
-	Restart()

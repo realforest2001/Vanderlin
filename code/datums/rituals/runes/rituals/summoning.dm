@@ -20,7 +20,7 @@
 	summoned.status_flags += GODMODE
 	summoned.binded = TRUE
 	summoned.SetParalyzed(90 SECONDS)
-	REMOVE_TRAIT(summoned, TRAIT_UNDODGING, MAGIC_TRAIT)
+	summoned.candodge = FALSE
 	animate(summoned, color = "#ff0000", time = 5)
 	return summoned
 

@@ -626,7 +626,7 @@
 		var/used_neworgan = FALSE
 		var/should_have
 		if(neworgan)
-			should_have = neworgan.get_availability(src, C)
+			should_have = neworgan.get_availability(src)
 		else
 			should_have = TRUE
 
@@ -1018,7 +1018,7 @@
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
-	else if(HAS_TRAIT(H, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+	else if((H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
 		H.adjustOxyLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
@@ -1251,7 +1251,7 @@
 
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.type == exotic_bloodtype)
-		H.adjust_blood_volume(round(chem.volume, 0.1), maximum = BLOOD_VOLUME_SAFE_MAXIMUM)
+		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
 		return TRUE
 	if(chem.overdose_threshold && chem.volume >= chem.overdose_threshold)
@@ -1735,20 +1735,20 @@
 							directional_blocked = TRUE
 							break
 			if((!target_table && !target_collateral_mob) || directional_blocked)
-				target.Knockdown(SHOVE_KNOCKDOWN_SOLID, prevent_drop = TRUE)
+				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				target.visible_message("<span class='danger'>[user.name] kicks [target.name], knocking them down!</span>",
 								"<span class='danger'>I'm knocked down from a kick by [user.name]!</span>", "<span class='hear'>I hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, "<span class='danger'>I kick [target.name], knocking them down!</span>")
 				log_combat(user, target, "kicked", "knocking them down")
 			else if(target_table)
-				target.Knockdown(SHOVE_KNOCKDOWN_TABLE, prevent_drop = TRUE)
+				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				target.visible_message("<span class='danger'>[user.name] kicked [target.name] onto \the [target_table]!</span>",
 								"<span class='danger'>I'm kicked onto \the [target_table] by [user.name]!</span>", "<span class='hear'>I hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, "<span class='danger'>I kick [target.name] onto \the [target_table]!</span>")
 				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 				log_combat(user, target, "kicked", "onto [target_table] (table)")
 			else if(target_collateral_mob)
-				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN, prevent_drop = TRUE)
+				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target_collateral_mob.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				target.visible_message("<span class='danger'>[user.name] kicks [target.name] into [target_collateral_mob.name]!</span>",
 					"<span class='danger'>I'm kicked into [target_collateral_mob.name] by [user.name]!</span>", "<span class='hear'>I hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
@@ -1848,7 +1848,6 @@
 		selzone = accuracy_check(selzone, user, H, I.associated_skill, user.used_intent, I)
 		if(selzone != user.zone_selected)
 			H.balloon_alert(user, "miss! [selzone]!", DISABLE_BALLOON_COMBAT)
-			affecting = H.get_bodypart(check_zone(selzone))
 
 	var/item_force = get_complex_damage(I, user) //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
@@ -1998,7 +1997,7 @@
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			damage_amount = forced ? damage : damage * hit_percent * H.physiology.brute_mod
-			if(H.can_feel_pain())
+			if(!HAS_TRAIT(H, TRAIT_NOPAIN))
 				if(damage_amount > 5)
 					H.AdjustSleeping(-50)
 					if(prob(damage_amount * 3))

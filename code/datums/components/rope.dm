@@ -57,8 +57,6 @@
 	. = ..()
 	if(!QDELETED(rope_beam))
 		UnregisterSignal(rope_beam, COMSIG_QDELETING)
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-	UnregisterSignal(roped, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 
 /datum/component/rope/process(delta_time)
 	var/atom/beam_origin = rope_beam.origin
@@ -69,9 +67,6 @@
 
 /datum/component/rope/proc/parent_moved(atom/movable/source, oldloc, dir, forced)
 	SIGNAL_HANDLER
-	if(QDELETED(src))
-		return
-
 	var/atom/movable/sourceloc = source.loc
 	if(istype(sourceloc))
 		if(!connect_loc)
@@ -82,16 +77,17 @@
 			qdel(rope_beam)
 			return
 		var/beam_target = rope_beam.target
+		UnregisterSignal(rope_beam, COMSIG_QDELETING)
+		QDEL_NULL(rope_beam)
 		create_beam(sourceloc, beam_target)
 	else if(rope_beam.origin != source)
 		var/beam_target = rope_beam.target
+		UnregisterSignal(rope_beam, COMSIG_QDELETING)
+		QDEL_NULL(rope_beam)
 		create_beam(source, beam_target)
 
 /datum/component/rope/proc/roped_moved(atom/movable/source, oldloc, dir, forced)
 	SIGNAL_HANDLER
-	if(QDELETED(src))
-		return
-
 	var/atom/movable/sourceloc = source.loc
 	if(istype(sourceloc))
 		if(!connect_loc)
@@ -120,9 +116,6 @@
 	qdel(rope_beam)
 
 /datum/component/rope/proc/create_beam(atom/beam_owner, atom/beam_target)
-	if(rope_beam)
-		UnregisterSignal(rope_beam, COMSIG_QDELETING)
-		QDEL_NULL(rope_beam)
 	rope_beam = beam_owner.Beam(beam_target, icon_state, icon, INFINITY, maximum_rope_distance, beam_type, \
 		override_origin_pixel_x = override_origin_pixel_x, \
 		override_origin_pixel_y = override_origin_pixel_y, \

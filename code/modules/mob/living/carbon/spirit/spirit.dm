@@ -233,8 +233,7 @@
 						to_chat(spirit, span_rose("A coin falls from above into your hands!"))
 					return TRUE
 	else
-		corpse_mind.remove_antag_datum(/datum/antagonist/zombie)
-		ghost = corpse.ghostize()
+		ghost = corpse.ghostize(force_respawn = TRUE)
 
 	if(ghost)
 		var/user_acknowledgement = user ? user.real_name : "a mysterious force"

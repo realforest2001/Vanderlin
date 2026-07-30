@@ -8,7 +8,7 @@
 		/datum/attribute/skill/labor/farming = 20,
 		/datum/attribute/skill/misc/reading = 30,
 		/datum/attribute/skill/craft/alchemy = 20,
-		/datum/attribute/skill/misc/medicine = 30
+		/datum/attribute/skill/misc/medicine = 20
 	)
 
 /datum/attribute_holder/sheet/job/clinicapprentice
@@ -21,7 +21,7 @@
 		/datum/attribute/skill/labor/farming = 20,
 		/datum/attribute/skill/misc/reading = 30,
 		/datum/attribute/skill/craft/alchemy = 20,
-		/datum/attribute/skill/misc/medicine = 35
+		/datum/attribute/skill/misc/medicine = 20
 	)
 
 /datum/job/clinicapprentice
@@ -85,4 +85,3 @@
 	neck = /obj/item/storage/belt/pouch/cloth
 	wrists = /obj/item/storage/keyring/clinicapprentice
 	belt = /obj/item/storage/belt/leather/rope
-	beltl = /obj/item/storage/fancy/ifak

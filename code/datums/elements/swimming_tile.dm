@@ -165,18 +165,22 @@
 		return
 
 	// You might not be swimming but you can breathe
-	if(HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_NOBREATH) || (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP && !drowning_process_ignore_standing))
+	if(HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_NOBREATH))
 		return
 
-	if(prob(50))
-		owner.emote("drown")
+	var/is_drowning = prob(drowning_process_probability)
+
+	if(owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP)
+		if(drowning_process_ignore_standing && is_drowning)
+			owner.losebreath += floor(oxygen_per_interval / 2)
+		return
 
 	var/drowning_multiplier = has_world_trait(/datum/world_trait/abyssor_rage) ? (is_ascendant(ABYSSOR) ? 3 : 2) : 1
-	owner.apply_damage(oxygen_per_interval * drowning_multiplier * seconds_between_ticks, OXY)
 
-	var/is_drowning = prob(drowning_process_probability)
+	owner.emote("drown")
+	owner.apply_damage(oxygen_per_interval * drowning_multiplier * seconds_between_ticks, OXY)
 	if(is_drowning)
-		owner.losebreath += oxygen_per_interval
+		owner.losebreath += floor(oxygen_per_interval / 2)
 
 	if(iswaterturf(owner_turf))
 		var/turf/open/water/water_turf = owner_turf
@@ -188,9 +192,6 @@
 
 /datum/status_effect/swimming/proc/on_stat_change(mob/living/source, new_stat, old_stat)
 	if(!owner.client)
-		return
-
-	if(HAS_TRAIT(owner, TRAIT_NOBREATH))
 		return
 
 	if(old_stat == DEAD || new_stat != DEAD) // If you die while this status effect is active, we're going to assume you drowned

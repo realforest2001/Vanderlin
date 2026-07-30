@@ -10,8 +10,7 @@
 		/datum/attribute/skill/misc/stealing = 60,
 		/datum/attribute/skill/misc/lockpicking = 20,
 		/datum/attribute/skill/misc/riding = 10,
-		/datum/attribute/skill/labor/mathematics = 50,
-		/datum/attribute/skill/combat/firearms = 20,
+		/datum/attribute/skill/labor/mathematics = 50
 	)
 
 /datum/job/merchant

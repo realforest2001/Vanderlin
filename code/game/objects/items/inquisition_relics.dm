@@ -605,18 +605,19 @@
 	if(active && working && !full)
 		if(do_after(user, 20, M))
 			M.flash_fullscreen("redflash3")
-			if(M.can_feel_pain())
+			if(!HAS_TRAIT(M, TRAIT_NOPAIN) || !HAS_TRAIT(M, TRAIT_NOPAINSTUN))
 				if(prob(15))
-					M.emote("whimper")
+					M.emote("whimper", forced = TRUE)
 				else if(prob(15))
-					M.emote("painmoan")
+					M.emote("painmoan", forced = TRUE)
 			desc = initial(desc)
 			subject = WEAKREF(M)
 			desc += span_notice(" It contains the blood of [M.real_name]!")
 			visible_message(span_warning("[src] draws from [M]!"))
 			playsound(M, 'sound/combat/hits/bladed/genstab (1).ogg', 30, FALSE, -1)
 			timestaken++
-			M.adjust_blood_volume(-30)
+			M.adjust_bloodvolume(-30)
+			M.handle_blood()
 			if(M.mind)
 				if(M.mind.has_antag_datum(/datum/antagonist/werewolf, FALSE))
 					cursedblood = 3
@@ -852,10 +853,6 @@
 	desc = "Used to wrap around the target."
 	no_attack = TRUE
 
-/obj/item/inqarticles/garrote/Destroy()
-	reset_garrote()
-	. = ..()
-
 /obj/item/inqarticles/garrote/atom_break(damage_flag, silent)
 	. = ..()
 	if(!ismob(loc))
@@ -902,7 +899,7 @@
 	var/mob/living/garrote_victim = victim?.resolve()
 	if(garrote_victim)
 		REMOVE_TRAIT(garrote_victim, TRAIT_MUTE, "garroteCordage")
-	UnregisterSignal(garrote_victim, list(COMSIG_LIVING_RESIST_GRAB, COMSIG_QDELETING, COMSIG_CARBON_ATTEMPT_BREATHE))
+	UnregisterSignal(garrote_victim, list(COMSIG_LIVING_RESIST_GRAB, COMSIG_QDELETING))
 	victim = null
 
 	var/mob/living/last_garrote_user = lastuser?.resolve()
@@ -1000,7 +997,6 @@
 	ADD_TRAIT(target, TRAIT_MUTE, "garroteCordage")
 	RegisterSignal(target, COMSIG_LIVING_RESIST_GRAB, PROC_REF(on_victim_resist))
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(reset_garrote))
-	RegisterSignal(target, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 	RegisterSignal(user, COMSIG_ATOM_NO_LONGER_PULLING, PROC_REF(reset_garrote))
 	victim = WEAKREF(target)
 	lastuser = WEAKREF(user)
@@ -1017,9 +1013,6 @@
 			take_damage(max_integrity * 0.05)
 		else
 			take_damage(max_integrity * 0.1)
-
-/obj/item/inqarticles/garrote/proc/block_breath(datum/source)
-	return BREATHE_SKIP_BREATH
 
 /obj/item/inqarticles/garrote/razor // To yische, who said not to give this out constantly, I respectfully disagree when it comes to assassin
 	name = "profane razor" // It's very not non lethal now.  Strangle your prey with glee

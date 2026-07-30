@@ -46,6 +46,7 @@
 
 		handle_wounds()
 		handle_embedded_objects()
+		handle_roguebreath()
 		update_stress()
 		handle_nausea()
 
@@ -72,9 +73,115 @@
 /mob/living/carbon/handle_random_events() //BP/WOUND BASED PAIN
 	return
 
+
+/mob/living/carbon/proc/handle_roguebreath()
+	return
+
+/mob/living/carbon/human/handle_roguebreath()
+	..()
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
+		return TRUE
+	if(istype(loc, /obj/structure/closet/dirthole))
+		adjustOxyLoss(5)
+	if(istype(loc, /obj/structure/closet/burial_shroud))
+		var/obj/O = loc
+		if(istype(O.loc, /obj/structure/closet/dirthole))
+			adjustOxyLoss(5)
+	if(isopenturf(loc))
+		var/turf/open/T = loc
+		if(reagents && T.pollution)
+			T.pollution.breathe_act(src)
+			if(HAS_TRAIT(src, TRAIT_DEADNOSE))
+				return
+			if(next_smell <= world.time)
+				next_smell = world.time + 30 SECONDS
+				T.pollution.smell_act(src)
+
 ///////////////
 // BREATHING //
 ///////////////
+
+/mob/living/carbon/handle_temperature()
+	var/turf/open/turf = get_turf(src)
+	if(!istype(turf))
+		return
+	var/temp = turf.return_temperature()
+
+	if(temp < 0 )
+		snow_shiver = world.time + 3 SECONDS + abs(temp)
+
+//Start of a breath chain, calls breathe()
+/mob/living/carbon/handle_breathing(times_fired)
+	var/breath_effect_prob = 0
+	var/turf/turf = get_turf(src)
+	var/turf_temp = turf ? turf.return_temperature() : BODYTEMP_NORMAL
+
+	// Breath visibility based on ambient temperature
+	// Only visible when it's actually cold enough for condensation
+	if(turf_temp <= -10)
+		breath_effect_prob = 100    // Always visible in extreme cold
+	else if(turf_temp <= -5)
+		breath_effect_prob = 90     // Very likely in freezing temps
+	else if(turf_temp <= 0)
+		breath_effect_prob = 40     // Common at freezing point
+	else if(turf_temp <= 5)
+		breath_effect_prob = 15     // Sometimes visible in cold
+
+	// Body temperature effects
+	if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+		var/cold_severity = (BODYTEMP_COLD_DAMAGE_LIMIT - bodytemperature)
+		breath_effect_prob += min(cold_severity * 15, 40)
+
+	// Environmental modifiers
+	var/turf/snow_turf = get_turf(src)
+	if(snow_shiver > world.time || snow_turf?.snow)
+		breath_effect_prob = min(breath_effect_prob + 30, 100)
+
+	// Heavy breathing from exertion or cold body
+	if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT - 3)
+		breath_effect_prob = min(breath_effect_prob + 50, 100)
+		if(prob(15) && !is_mouth_covered())
+			to_chat(src, span_warning("Your breath comes out in heavy puffs of vapor."))
+
+	if(prob(breath_effect_prob) && !is_mouth_covered())
+		emit_breath_particle(/particles/fog/breath)
+
+	return
+
+/mob/living/proc/emit_breath_particle(particle_type)
+	ASSERT(ispath(particle_type, /particles))
+
+	var/obj/effect/abstract/particle_holder/holder = new(src, particle_type)
+	var/particles/breath_particle = holder.particles
+	var/breath_dir = dir
+
+	var/list/particle_grav = list(0, 0.1, 0)
+	var/list/particle_pos = list(0, 6, 0)
+	if(breath_dir & NORTH)
+		particle_grav[2] = 0.2
+		breath_particle.rotation = pick(-45, 45)
+		// Layer it behind the mob since we're facing away from the camera
+		holder.pixel_w -= 4
+		holder.pixel_y += 4
+	if(breath_dir & WEST)
+		particle_grav[1] = -0.2
+		particle_pos[1] = -5
+		breath_particle.rotation = -45
+	if(breath_dir & EAST)
+		particle_grav[1] = 0.2
+		particle_pos[1] = 5
+		breath_particle.rotation = 45
+	if(breath_dir & SOUTH)
+		particle_grav[2] = 0.2
+		breath_particle.rotation = pick(-45, 45)
+		// Shouldn't be necessary but just for parity
+		holder.pixel_w += 4
+		holder.pixel_y -= 4
+
+	breath_particle.gravity = particle_grav
+	breath_particle.position = particle_pos
+
+	QDEL_IN(holder, breath_particle.lifespan)
 
 /mob/living/carbon/proc/has_smoke_protection()
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
@@ -110,11 +217,13 @@
 		for(var/thing in GLOB.organ_process_datum_order)
 			if(QDELETED(src))
 				break
-			var/datum/organ_process/organ_process = GLOB.organ_processes_by_slot[thing]
+			organ_process = GLOB.organ_processes_by_slot[thing]
 			if(organ_process.needs_process(src))
 				. |= organ_process.handle_process(src, delta_time, times_fired)
 	else
-		for(var/obj/item/organ/organ as anything in internal_organs)
+		var/obj/item/organ/organ
+		for(var/thing in internal_organs)
+			organ = thing
 			//Needed so organs decay while inside the body
 			. |= organ.on_death(delta_time, times_fired, passed_temp)
 
@@ -278,8 +387,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(limb && !limb.skeletonized)
 			if(limb.get_damage() >= (limb.max_damage - 5))
 				limb.cremation_progress += rand(2,5)
-				if(CAN_HAVE_BLOOD(src))
-					adjust_blood_volume(-10)
+				if(dna && dna.species && !(NOBLOOD in dna.species.species_traits))
+					blood_volume = max(blood_volume - 10, 0)
 				if(limb.cremation_progress >= 50)
 					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
 						limb.skeletonize()
@@ -320,9 +429,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					H.underwear = "Nude"
 				should_update_body = TRUE
 				if(dna && dna.species)
-					if(CAN_HAVE_BLOOD(src))
-						set_blood_volume(0)
-					ADD_TRAIT(src, TRAIT_NOBLOOD, TRAIT_GENERIC)
+					if(dna && dna.species && !(NOBLOOD in dna.species.species_traits))
+						blood_volume = 0
+					dna.species.species_traits |= NOBLOOD
 
 	if(should_update_body)
 		update_body()
@@ -350,10 +459,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /mob/living/carbon/proc/needs_heart()
 	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
-	if(!CAN_HAVE_BLOOD(src))
+	if(NOBLOOD in dna?.species?.species_traits) //not all carbons have species!
 		return FALSE
-	// if(dna && dna.species && isnull(dna.species.mutantheart)) //not all carbons have species!
-	// 	return FALSE
 	return TRUE
 
 /*
@@ -364,39 +471,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
  * related situations (i.e not just cardiac arrest)
  */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
-	if(!needs_heart())
-		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
+	else if(!needs_heart())
+		return FALSE
 	return TRUE
 
-/**
- * Causes the mob to either start or stop having a heart attack.
- *
- * status - Pass TRUE to start a heart attack, or FALSE to stop one.
- *
- * Returns TRUE if heart status was changed (heart attack -> no heart attack, or visa versa)
- */
-/mob/living/carbon/proc/set_heartattack(status)
-	if(status && !can_heartattack())
+/mob/living/proc/set_heartattack(status)
+	return
+
+/mob/living/carbon/set_heartattack(status)
+	if(!can_heartattack())
 		return FALSE
 
 	var/list/hearts = getorganslotlist(ORGAN_SLOT_HEART)
-	if(!length(hearts))
-		return FALSE
-
 	if(status)
 		pulse = PULSE_NONE
-		ADD_TRAIT(src, TRAIT_DEATHS_DOOR, ASYSTOLE_TRAIT)
 		for(var/obj/item/organ/heart/heart in hearts)
 			heart.Stop()
 	else
 		pulse = PULSE_NORM
-		REMOVE_TRAIT(src, TRAIT_DEATHS_DOOR, ASYSTOLE_TRAIT)
 		for(var/obj/item/organ/heart/heart in hearts)
 			heart.Restart()
-	return TRUE
 
 /// Brain is poopy (hardcrit)
 /mob/living/proc/undergoing_nervous_system_failure()
@@ -448,13 +545,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			adjust_energy(sleepy_mod * (max_energy * 0.004))
 		if(hydration > 0 || yess)
 			if(!bleed_rate)
-				adjust_blood_volume(4 * sleepy_mod, maximum = BLOOD_VOLUME_NORMAL)
+				adjust_bloodvolume(4 * sleepy_mod, BLOOD_VOLUME_NORMAL)
 			for(var/obj/item/bodypart/affecting as anything in bodyparts)
 				//for context, it takes 5 small cuts (0.4 x 5) or 3 normal cuts (0.8 x 3) for a bodypart to not be able to heal itself
 				if(affecting.get_bleed_rate() >= 2)
 					continue
-				// if(affecting.heal_damage(sleepy_mod * 1.5, sleepy_mod * 1.5, required_status = BODYPART_ORGANIC, updating_health = FALSE)) // multiplier due to removing healing from sleep effect
-				// 	src.update_damage_overlays()
+				if(affecting.heal_damage(sleepy_mod * 1.5, sleepy_mod * 1.5, required_status = BODYPART_ORGANIC, updating_health = FALSE)) // multiplier due to removing healing from sleep effect
+					src.update_damage_overlays()
 				for(var/datum/wound/wound as anything in affecting.wounds)
 					if(!wound.sleep_healing)
 						continue

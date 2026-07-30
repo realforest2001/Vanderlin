@@ -19,7 +19,8 @@
 
 	if(is_ascendant(NECRA))
 		for(var/mob/living/carbon/human/potential_zombie as anything in GLOB.human_list)
-			if(!IS_DEADITE(potential_zombie))
+			var/is_zombie = potential_zombie.mind?.has_antag_datum(/datum/antagonist/zombie)
+			if(!is_zombie)
 				continue
 			bordered_message(potential_zombie, list(
 				span_danger("An overwhelming power of Necra purifies your body and puts you to an eternal rest!")

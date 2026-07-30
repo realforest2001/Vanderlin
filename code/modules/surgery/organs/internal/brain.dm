@@ -34,8 +34,6 @@
 	nutriment_req = 3.5
 	hydration_req = 2
 
-	COOLDOWN_DECLARE(trauma_cooldown)
-
 	/// This is stuff
 	var/damage_threshold_value = BRAIN_DAMAGE_DEATH/10
 
@@ -369,7 +367,7 @@
 		return
 	var/damage_delta = damage - prev_damage
 	// Safeguard to prevent traumas from low damage
-	if((damage_delta >= TRAUMA_ROLL_THRESHOLD) && (damage >= BRAIN_DAMAGE_MILD) && COOLDOWN_FINISHED(src, trauma_cooldown))
+	if((damage_delta >= TRAUMA_ROLL_THRESHOLD) && (damage >= BRAIN_DAMAGE_MILD))
 		var/is_boosted = FALSE
 		var/intelligence_modifier = (owner ? -(GET_MOB_ATTRIBUTE_VALUE(owner, STAT_INTELLIGENCE)-ATTRIBUTE_MIDDLING) : 0)
 		if(damage >= BRAIN_DAMAGE_SEVERE)
@@ -377,15 +375,12 @@
 			if(prob((damage_delta+intelligence_modifier) * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100))))
 				if(prob(20 + (is_boosted * 30) - (intelligence_modifier * 2)))
 					gain_trauma_type(BRAIN_TRAUMA_SPECIAL, is_boosted ? TRAUMA_RESILIENCE_SURGERY : null, natural_gain = TRUE)
-					COOLDOWN_START(src, trauma_cooldown, 5 MINUTES)
 				else
 					gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
-					COOLDOWN_START(src, trauma_cooldown, 5 MINUTES)
 		else
 			// Base chance is the hit damage, plus intelligence mod; for every point of damage past the threshold the chance is increased by 1%
 			if(prob((damage_delta+intelligence_modifier) * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100))))
 				gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
-				COOLDOWN_START(src, trauma_cooldown, 5 MINUTES)
 	if(owner)
 		if(damage >= BRAIN_DAMAGE_DEATH && prev_damage < BRAIN_DAMAGE_DEATH && (organ_flags & ORGAN_VITAL))
 			owner.death()

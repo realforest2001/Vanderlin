@@ -235,9 +235,9 @@
 	for(var/obj/item/organ/possible_artery in shuffle(getorganslotlist(ORGAN_SLOT_ARTERY)))
 		if(possible_artery.is_bruised())
 			if(get_cut())
-				status += span_bloody("[possible_artery.name]'s been cut")
+				status += "<span class='bloody'>[possible_artery.name]'s been cut.</span>"
 			else
-				status += span_bloody("internal bleeding")
+				status += span_bloody("bruised [parse_zone(possible_artery.zone)]</span>")
 
 	if(skeletonized)
 		status += "<span class='dead'>SKELETON</span>"

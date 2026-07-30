@@ -109,9 +109,7 @@
 	flags_inv = HIDEEARS
 	sellprice = VALUE_CHEAP_STEEL_HELMET
 	max_integrity = INTEGRITY_STRONGEST
-	smeltresult = null
-	melting_material = /datum/material/steel
-	melt_amount = 50
+	smeltresult = /obj/item/ingot/steel_slag
 	body_parts_covered = COVERAGE_HEAD
 	item_weight = 1.5 KILOGRAMS
 
@@ -757,7 +755,7 @@
 			user.dropItemToGround(src)
 			user.put_in_hands(P)
 		var/obj/item/bodypart/arm = user.get_active_hand()
-		arm?.bodypart_attacked_by(BCLASS_CUT, 25, modifiers = list(CRIT_MOD_CHANCE = CANT_CRIT))
+		arm?.bodypart_attacked_by(BCLASS_CUT, 25, modifiers = list(CRIT_MOD_CHANCE = -100))
 		qdel(src)
 	else
 		user.visible_message(span_warning("[user] stops reshaping [src]."))

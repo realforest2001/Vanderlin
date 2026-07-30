@@ -377,7 +377,6 @@
 /datum/anvil_recipe/armor/iron/helmetkettle
 	name = "Iron Kettle Helmet"
 	created_item = /obj/item/clothing/head/helmet/kettle/iron
-	output_amount = 2
 
 /datum/anvil_recipe/armor/iron/helmetslitkettle
 	name = "Slitted Iron Kettle Helmet"
@@ -688,7 +687,7 @@
 
 // STEEL HELMETS
 /datum/anvil_recipe/armor/steel/nasal_helmet
-	name = "Nasal helmet"
+	name = "x2 Nasal helmet"
 	created_item = /obj/item/clothing/head/helmet/nasal
 	craftdiff = 1
 	output_amount = 2
@@ -708,7 +707,7 @@
 	created_item = (/obj/item/clothing/head/helmet/heavy/bucket)
 
 /datum/anvil_recipe/armor/steel/helmetkettle
-	name = "Kettle Helmet"
+	name = "x2 Kettle Helmet"
 	created_item = /obj/item/clothing/head/helmet/kettle
 	output_amount = 2
 

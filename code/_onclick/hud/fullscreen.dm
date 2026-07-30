@@ -200,8 +200,10 @@
 	plane = FULLSCREEN_PLANE
 
 // Static full black screen
-/atom/movable/screen/fullscreen/blackimageoverlay/noflicker
+/atom/movable/screen/fullscreen/sleeper
 	icon_state = "blind"
+	layer = BLIND_LAYER
+	plane = FULLSCREEN_PLANE
 
 // Tg-style blindnesss
 /atom/movable/screen/fullscreen/blind

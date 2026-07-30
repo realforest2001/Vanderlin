@@ -222,7 +222,7 @@
 		to_chat(doctor, span_warning("There is a bandage in the way."))
 		return FALSE
 
-	if(affecting.get_cut())
+	if(affecting.get_incision())
 		if(affecting.is_artery_torn())
 			var/time = 5 SECONDS
 			time *= (ATTRIBUTE_MIDDLING/max(GET_MOB_ATTRIBUTE_VALUE(doctor, STAT_PERCEPTION), 1))
@@ -264,6 +264,10 @@
 		if(!use(1))
 			to_chat(user, span_warning("All used up..."))
 			return
+		//pretty easy
+		if(user.diceroll(GET_MOB_SKILL_VALUE(user, /datum/attribute/skill/misc/medicine)+3, context = DICE_CONTEXT_PHYSICAL) <= DICE_FAILURE)
+			//to_chat(user, span_warning(fail_msg()))
+			continue
 		injury.suture_injury()
 		if((injury.damage_per_injury() <= injury.autoheal_cutoff))
 			continue

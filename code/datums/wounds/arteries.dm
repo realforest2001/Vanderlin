@@ -32,7 +32,7 @@
 	. = ..()
 	if(affected.status == BODYPART_ROBOTIC)
 		return FALSE
-	if(!affected.get_cut())
+	if(!affected.get_incision())
 		return FALSE
 	if(affected.limb_flags & BODYPART_BONE_ENCASED && !affected.has_wound(/datum/wound/fracture))
 		return FALSE

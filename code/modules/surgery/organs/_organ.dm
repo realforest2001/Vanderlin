@@ -528,6 +528,10 @@
 		failure_time = max(0, failure_time - delta_time)
 	consider_processing(in_bleedout)
 
+	// Damage decrements by a percent of maxhealth
+	if(can_self_heal(delta_time, times_fired))
+		handle_self_healing(delta_time, times_fired)
+
 ///Organs don't die instantly, and neither should you when you get fucked up
 /obj/item/organ/proc/handle_failing_organ(delta_time, times_fired)
 	if(!owner || owner.stat >= DEAD)

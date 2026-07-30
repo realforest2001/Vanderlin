@@ -1015,6 +1015,12 @@
 	if(H.stat == DEAD)
 		return
 
+	if(HAS_TRAIT(H, TRAIT_NOBREATH))
+		H.setOxyLoss(0)
+		H.losebreath = 0
+	else if(HAS_TRAIT(H, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+		H.adjustOxyLoss(1)
+
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 

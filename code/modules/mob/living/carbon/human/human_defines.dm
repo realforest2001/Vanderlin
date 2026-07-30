@@ -14,7 +14,6 @@
 
 	ambushable = TRUE
 	maxHealth = BRAIN_DAMAGE_DEATH
-	health = BRAIN_DAMAGE_DEATH
 
 	voice_pitch = 1
 

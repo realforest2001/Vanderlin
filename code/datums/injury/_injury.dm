@@ -13,7 +13,7 @@
 	var/current_stage = 0
 	/// Amount of damage this injury is currently causing
 	var/damage = 0
-	/// How much we bleed on each tick per 10 damage
+	/// How much we bleed on each tick per 40 damage
 	var/bleed_rate = 1
 	/// Ticks of bleeding left
 	var/bleed_timer = 0

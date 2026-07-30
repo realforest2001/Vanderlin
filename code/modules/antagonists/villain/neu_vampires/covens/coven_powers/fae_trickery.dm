@@ -121,7 +121,7 @@
 /obj/item/clothing/face/goblin_mask/examine(mob/user)
 	. = ..()
 	switch(stat)
-		if(DEAD,UNCONSCIOUS,HARD_CRIT)
+		if(DEAD,UNCONSCIOUS)
 			. += "<span class='boldannounce'>[src] is not moving.</span>"
 		if(CONSCIOUS)
 			. += "<span class='boldannounce'>[src] seems to be active!</span>"

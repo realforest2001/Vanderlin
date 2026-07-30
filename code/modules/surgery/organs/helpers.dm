@@ -16,16 +16,6 @@
 /mob/proc/getorganslot(slot)
 	return
 
-
-/**
- * Get a list of organ objects from the mob matching the passed in typepath
- *
- * Arguments:
- * * typepath The typepath of the organ to get
- */
-/mob/proc/getorganlist(typepath)
-	return
-
 /**
  * Get organ objects by zone
  *
@@ -37,56 +27,8 @@
 /mob/proc/getorganszone(zone, subzones = FALSE)
 	return
 
-/**
- * Returns a list of all organs in the specified slot, if there are any
- *
- * Arguments:
- * * slot Slot to get the list
- */
-/mob/proc/getorganslotlist(slot)
-	return
-
-/**
- * Returns a list of all organs in the specified slot, in the specified zone, if there are any
- *
- * Arguments:
- * * slot Slot to get the list
- */
-/mob/proc/getorganslotlistzone(slot, zone)
-	return
-
-/**
- * Returns an integer referring to the efficiency of a certain organ slot
- *
- * Arguments:
- * * slot Slot to get the efficiency from
- */
-/mob/proc/getorganslotefficiency(slot)
-	return
-
-/**
- * Returns an integer referring to the efficiency of a certain organ slot within a specific body zone
- *
- * Arguments:
- * * slot Slot to get the efficiency from
- * * zone Body zone that the organ needs to be from
- */
-/mob/proc/getorganslotefficiencyzone(slot)
-	return
-
-/**
- * Updates organ blood, oxygen and nutriment requirements
- */
-/mob/proc/update_organ_requirements()
-	return
-
 /mob/living/carbon/getorgan(typepath)
-	var/list/organs = list()
-	for(var/thing in internal_organs)
-		if(istype(thing, typepath))
-			organs |= thing
-	if(length(organs))
-		return pick(organs)
+	return (locate(typepath) in internal_organs)
 
 /mob/living/carbon/getorganslot(slot)
 	RETURN_TYPE(/obj/item/organ)

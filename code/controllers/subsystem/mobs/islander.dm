@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(island_mobs)
 			continue
 
 		if(L.stat == DEAD)
-			L.DeadLife(seconds, times_fired)
+			L.DeadLife()
 		else
 			L.Life(seconds, times_fired)
 

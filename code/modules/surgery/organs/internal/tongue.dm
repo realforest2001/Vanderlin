@@ -4,7 +4,6 @@
 	icon_state = "tongue"
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
-	organ_efficiency = list(ORGAN_SLOT_TONGUE = 100)
 	attack_verb = list("licked", "slobbered", "slapped", "frenched", "tongued")
 
 	organ_volume = 0.5
@@ -45,7 +44,7 @@
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 
-/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE, new_zone = null)
+/obj/item/organ/tongue/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod

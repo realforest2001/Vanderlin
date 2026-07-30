@@ -419,19 +419,13 @@
 	name = "soup"
 	var/hydration = 5
 
-/datum/reagent/consumable/soup/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.add_chem_effect(CE_BLOODRESTORE, 1, "[type]")
-
-/datum/reagent/consumable/soup/on_mob_end_metabolize(mob/living/L)
-	. = ..()
-	L.remove_chem_effect(CE_BLOODRESTORE, "[type]")
-
-/datum/reagent/consumable/soup/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/consumable/soup/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_hydration(hydration * efficiency)
+			H.adjust_hydration(hydration)
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+6, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/reagent/consumable/soup/oatmeal
@@ -564,23 +558,23 @@
 	taste_description = "something gross"
 	metabolization_rate = 0.3
 
-/datum/reagent/consumable/soup/stew/gross/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/consumable/soup/stew/gross/on_mob_life(mob/living/carbon/M)
 	if(is_vagrant_job(M.mind.assigned_role)) // beggars gets revitalized, a little
-		M.adjustBruteLoss(-0.1 * efficiency)
-		M.adjustFireLoss(-0.1 * efficiency)
-		M.adjust_energy(2 * efficiency)
+		M.adjustBruteLoss(-0.1)
+		M.adjustFireLoss(-0.1)
+		M.adjust_energy(2)
 		return
 	if(HAS_TRAIT(M, TRAIT_NASTY_EATER))
 		return
-	if(prob(8 * efficiency))
+	if(prob(8))
 		to_chat(M, span_danger(pick(
 			"I feel bile rising...", \
 			"I feel nauseous...", \
 			"My breath smells terrible...", \
 			"My stomach churns...")))
-	if(prob(8 * efficiency))
+	if(prob(8))
 		M.emote("gag")
-		M.add_nausea(9 * efficiency)
+		M.add_nausea(9)
 	..()
 	. = TRUE
 
@@ -591,20 +585,22 @@
 	taste_description = "something truly vile"
 	metabolization_rate = 0.2
 
-/datum/reagent/yuck/cursed_soup/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/yuck/cursed_soup/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_NASTY_EATER ))
-		M.adjustBruteLoss(-0.2 * efficiency, 0)
-		M.adjustFireLoss(-0.2 * efficiency, 0)
-		M.adjust_energy(5 * efficiency)
+		if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume = min(M.blood_volume+2, BLOOD_VOLUME_NORMAL)
+		M.adjustBruteLoss(-0.2, 0)
+		M.adjustFireLoss(-0.2, 0)
+		M.adjust_energy(5)
 		return
 	else
-		if(prob(12 * efficiency))
+		if(prob(12))
 			M.emote("gag")
-			M.add_nausea(9 * efficiency)
+			M.add_nausea(9)
 			if(HAS_TRAIT(M, TRAIT_POISON_RESILIENCE))
-				M.adjustToxLoss(2 * efficiency)
+				M.adjustToxLoss(2)
 			else
-				M.adjustToxLoss(5 * efficiency)
+				M.adjustToxLoss(5)
 	..()
 	. = TRUE
 
@@ -630,9 +626,9 @@
 	description = ""
 	color = "#FFFFFF" // rgb: 96, 165, 132
 
-/datum/reagent/flour/on_mob_life(mob/living/carbon/M, efficiency)
-	if(prob(30 * efficiency))
-		M.adjust_confusion(6 SECONDS * efficiency)
+/datum/reagent/flour/on_mob_life(mob/living/carbon/M)
+	if(prob(30))
+		M.adjust_confusion(6 SECONDS)
 	M.emote(pick("cough"))
 	..()
 

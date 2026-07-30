@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(matthios_mobs)
 			continue
 
 		if(L.stat == DEAD)
-			L.DeadLife(seconds, times_fired)
+			L.DeadLife()
 		else
 			L.Life(seconds, times_fired)
 		if(MC_TICK_CHECK)

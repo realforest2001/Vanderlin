@@ -68,9 +68,6 @@
 	//this is quadratic so expect it to scale like crazy
 	owner.heal_wounds((bashing_lethal_heal + aggravated_heal) * level * 0.6, source=src)
 
-	for(var/obj/item/organ/artery/artery in owner.getorganslotlist(ORGAN_SLOT_ARTERY))
-		artery.applyOrganDamage(-(bashing_lethal_heal + aggravated_heal) * level)
-
 	if(level >= 3)
 		if(prob(20)) // 20% chance per pulse to show visible healing
 			owner.visible_message(
@@ -88,8 +85,8 @@
 
 	// Eye damage healing (only at higher levels)
 	if(level >= 5)
-		var/list/eye_list = owner.getorganslotlist(ORGAN_SLOT_EYES)
-		for(var/obj/item/organ/eyes/eyes as anything in eye_list)
+		var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+		if(eyes)
 			eyes.applyOrganDamage(-HEAL_BASHING_LETHAL * (level * 0.5))
 			owner.adjust_temp_blindness(-HEAL_AGGRAVATED * (level) SECONDS)
 			owner.adjust_eye_blur(-HEAL_AGGRAVATED * (level) SECONDS)

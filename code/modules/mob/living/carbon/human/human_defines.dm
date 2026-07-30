@@ -13,7 +13,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	ambushable = TRUE //! DEPRECATED VAR, USE TRAIT_NOAMBUSH
-	maxHealth = BRAIN_DAMAGE_DEATH
 
 	voice_pitch = 1
 

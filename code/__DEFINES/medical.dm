@@ -72,9 +72,7 @@
 #define BODY_ZONE_FACING_R_LEG      "r_leg_face"
 
 //organ slots
-#define ORGAN_SLOT_ARTERY "artery"
 #define ORGAN_SLOT_BRAIN "brain"
-#define ORGAN_SLOT_SPLEEN "spleen"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_STOMACH "stomach"
 #define ORGAN_SLOT_GUTS "guts"
@@ -118,18 +116,6 @@
 #define ORGAN_EXTERNAL			(1<<3)
 /// Currently only the brain - Removal of this organ immediately kills you
 #define ORGAN_VITAL				(1<<4)
-/// Destroyed organs don't function and cannot be repaired, needs a transplant
-#define ORGAN_DESTROYED (1<<5)
-/// Not only is the organ failing, it is completely septic and spreading germs around
-#define ORGAN_DEAD (1<<6)
-/// Organ has been cut away from the owner and can be safely removed during surgery
-#define ORGAN_CUT_AWAY (1<<7)
-/// Organ should update limb efficiency when damaged or healed
-#define ORGAN_LIMB_SUPPORTER (1<<8)
-/// Organ shouldn't be counted in /obj/item/bodypart/proc/damage_internal_organs()
-#define ORGAN_NO_VIOLENT_DAMAGE (1<<9)
-/// Organ cannot ever become destroyed beyond repair
-#define ORGAN_INDESTRUCTIBLE (1<<10)
 
 //wound severities for /datum/wound
 /// Wounds that are either surgically induced or too minor to matter

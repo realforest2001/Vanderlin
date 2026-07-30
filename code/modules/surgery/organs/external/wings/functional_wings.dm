@@ -24,7 +24,7 @@
 	deltimer(flight_timer)
 	return ..()
 
-/obj/item/organ/wings/flight/Insert(mob/living/carbon/M, special, drop_if_replaced, new_zone = null)
+/obj/item/organ/wings/flight/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	if(length(flight_for_species) && !(M.dna?.species.id in flight_for_species))
 		return

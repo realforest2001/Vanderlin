@@ -1,11 +1,10 @@
 /obj/item/organ/horns
 	name = "horns"
 	desc = "A severed pair of horns. What did you cut this off of?"
-	icon_state = "horns" //placeholder
+	icon_state = "severedtail" //placeholder
 	visible_organ = TRUE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_HORNS
-	organ_efficiency = list(ORGAN_SLOT_HORNS = 100)
 	gender = PLURAL
 
 /obj/item/organ/horns/humanoid

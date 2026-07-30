@@ -1,6 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/meatvine
 	name = "Horrible creature"
-	abstract_type = /mob/living/simple_animal/hostile/retaliate/meatvine
 	desc = "What is that?!"
 	icon = 'icons/obj/cellular/meat.dmi'
 	icon_state = "bloodling_stage_1"
@@ -33,7 +32,6 @@
 	stat_attack = 1
 
 	ai_controller = /datum/ai_controller/meatvine_defender
-	animal_type = /datum/blood_type/putrid
 
 	pass_flags = PASSTABLE
 	can_buckle = TRUE

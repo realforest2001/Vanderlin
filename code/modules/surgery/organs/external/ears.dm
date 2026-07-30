@@ -5,11 +5,10 @@
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_EARS
 	slot = ORGAN_SLOT_EARS
-	organ_efficiency = list(ORGAN_SLOT_EARS = 100)
 	gender = PLURAL
-	side = RIGHT_SIDE
 
 	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
 
 	organ_volume = 0.25
 	max_blood_storage = 2.5
@@ -35,31 +34,31 @@
 	//Resistance against loud noises
 	var/bang_protect = 0
 	// Multiplier for both long term and short term ear damage
-	var/ear_damage_multiplier = 1
+	var/damage_multiplier = 1
 
-/obj/item/organ/ears/Insert(mob/living/carbon/M, special, drop_if_replaced, new_zone = null)
+/obj/item/organ/ears/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	for(var/datum/wound/facial/ears/ear_wound in M.get_wounds())
 		qdel(ear_wound)
 
-/obj/item/organ/ears/on_life(delta_time, times_fired)
-	. = ..()
-	if(!is_failing())
-		applyDeaf(-0.5 * delta_time)
-
-/obj/item/organ/ears/get_slot_efficiency(slot)
-	if((slot == ORGAN_SLOT_EARS) && deaf)
-		return 0
-	return ..()
-
-/obj/item/organ/ears/proc/adjustEarDamage(damage, deafness)
-	applyOrganDamage(damage * ear_damage_multiplier)
-	applyDeaf(deafness * ear_damage_multiplier)
-
-/obj/item/organ/ears/proc/applyDeaf(damage, maximum = maxHealth)
-	if(!damage) //Micro-optimization
+/obj/item/organ/ears/on_life()
+	if(!iscarbon(owner))
 		return
-	deaf = clamp(deaf + damage, 0, maximum)
+	..()
+	var/mob/living/carbon/C = owner
+	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
+		organ_flags &= ~ORGAN_FAILING
+	// genetic deafness prevents the body from using the ears, even if healthy
+	if(HAS_TRAIT(C, TRAIT_DEAF))
+		deaf = max(deaf, 1)
+	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
+		deaf = max(deaf - 1, 0)
+		if(prob(damage / 20) && (damage > low_threshold))
+			adjustEarDamage(0, 4)
+			SEND_SOUND(C, sound('sound/blank.ogg'))
+			to_chat(C, "<span class='warning'>The ringing in my ears grows louder, blocking out any external noises for a moment.</span>")
+	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
+		deaf = 1	//stop being not deaf you deaf idiot
 
 /obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
@@ -71,11 +70,15 @@
 	if(iscarbon(owner) && HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = 1
 
+/obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
+	damage = max(damage + (ddmg*damage_multiplier), 0)
+	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
+
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
 	deaf = max(deaf, value)
 
 /obj/item/organ/ears/invincible
-	ear_damage_multiplier = 0
+	damage_multiplier = 0
 
 
 /mob/proc/restoreEars()
@@ -103,7 +106,7 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
-	ear_damage_multiplier = 2
+	damage_multiplier = 2
 
 /obj/item/organ/ears/elf
 	name = "elf ears"
@@ -135,7 +138,7 @@
 /obj/item/organ/ears/rakshari
 	name = "rakshari ears"
 
-/obj/item/organ/ears/rakshari/Insert(mob/living/carbon/M, special, drop_if_replaced, new_zone = null)
+/obj/item/organ/ears/rakshari/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	ADD_TRAIT(M, TRAIT_KEENEARS, "[type]")
 

@@ -49,8 +49,6 @@
 	/// Auto label with proc [apply_initial_label] of course requires an override.
 	var/auto_label = FALSE
 
-	var/obj/item/soaking_item = null
-
 	COOLDOWN_DECLARE(weather_act_cooldown)
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
@@ -69,9 +67,6 @@
 /obj/item/reagent_containers/Destroy()
 	if(is_open_container())
 		GLOB.weather_act_upon_list -= src
-	if(soaking_item)
-		soaking_item.forceMove(drop_location())
-		soaking_item = null
 	return ..()
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)

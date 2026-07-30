@@ -662,8 +662,7 @@
 	user.mind.add_sleep_experience(/datum/attribute/skill/craft/cooking, (GET_MOB_ATTRIBUTE_VALUE(user, STAT_INTELLIGENCE)*0.2))
 	user.nobles_seen_servant_work()
 	S.reagents?.trans_to(src, S.reagents.total_volume)
-	LAZYADDASSOC(bonus_reagents, /datum/reagent/consumable/nutriment, S.nutrition * 0.75)
-	LAZYADDASSOC(bonus_reagents, /datum/reagent/consumable/nutriment/vitamin, S.nutrition * 0.25)
+	LAZYADDASSOC(bonus_reagents, /datum/reagent/consumable/nutriment, S.nutrition)
 	tastes |= S.tastes
 	desc = "[desc] Butter melts over the top."
 	name = "buttered [name]"
@@ -784,8 +783,7 @@
 	user.mind.add_sleep_experience(/datum/attribute/skill/craft/cooking, (GET_MOB_ATTRIBUTE_VALUE(user, STAT_INTELLIGENCE) * 0.5))
 	user.nobles_seen_servant_work()
 	S.reagents?.trans_to(src, S.reagents.total_volume)
-	LAZYADDASSOC(bonus_reagents, /datum/reagent/consumable/nutriment, S.nutrition * 0.75)
-	LAZYADDASSOC(bonus_reagents, /datum/reagent/consumable/nutriment/vitamin, S.nutrition * 0.25)
+	LAZYADDASSOC(bonus_reagents, /datum/reagent/consumable/nutriment, S.nutrition)
 	tastes |= S.tastes
 	foodtype |= S.foodtype
 	faretype++

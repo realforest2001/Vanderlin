@@ -21,15 +21,11 @@
 #define SUBMIT_INTENT 1
 
 //Blood levels
-#define BLOOD_VOLUME_MAX_LETHAL BLOOD_VOLUME_NORMAL * 3
-#define BLOOD_VOLUME_EXCESS BLOOD_VOLUME_NORMAL * 2.5
 #define BLOOD_VOLUME_MAXIMUM	BLOOD_VOLUME_NORMAL * 2
 #define BLOOD_VOLUME_NORMAL		1200
 #define BLOOD_VOLUME_SAFE		BLOOD_VOLUME_NORMAL * 0.8
 #define BLOOD_VOLUME_OKAY		BLOOD_VOLUME_NORMAL * 0.6
 #define BLOOD_VOLUME_BAD 		BLOOD_VOLUME_NORMAL * 0.4
-#define BLOOD_VOLUME_BLEEDOUT 	BLOOD_VOLUME_NORMAL * 0.35
-#define BLOOD_VOLUME_BLEEDOUT_PASSOUT BLOOD_VOLUME_NORMAL * 0.25
 #define BLOOD_VOLUME_SURVIVE	BLOOD_VOLUME_NORMAL * 0.2
 
 //Sizes of mobs, used by mob/living/var/mob_size
@@ -58,11 +54,6 @@
 #define MOB_EPIC		(1<<7) //megafauna
 #define MOB_REPTILE		(1<<8)
 #define MOB_SPIRIT		(1<<9)
-
-// ~organ sides
-#define NO_SIDE 0
-#define RIGHT_SIDE (1<<0)
-#define LEFT_SIDE (1<<1)
 
 //Organ defines for carbon mobs
 #define CHRONIC_ARTHRITIS 1
@@ -118,14 +109,12 @@
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
 #define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
-#define TRAUMA_RESILIENCE_WOUND 4    //Curable by healing the head wound
-#define TRAUMA_RESILIENCE_MAGIC 5      //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 6   //This is here to stay
+#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
 
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3
 #define TRAUMA_LIMIT_SURGERY 2
-#define TRAUMA_LIMIT_WOUND 2
 #define TRAUMA_LIMIT_LOBOTOMY 3
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY

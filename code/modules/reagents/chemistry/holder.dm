@@ -372,9 +372,7 @@
 						for(var/datum/reagent/A as anything in cached_addictions)
 							if(istype(R, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
-				if(!R.liver_chemical)
-					efficiency = 100
-				need_mob_update += R.on_mob_life(C, efficiency * 0.01)
+				need_mob_update += R.on_mob_life(C)
 
 	if(can_overdose)
 		if(addiction_tick == 6)

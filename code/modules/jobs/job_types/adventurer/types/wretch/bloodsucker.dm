@@ -58,8 +58,7 @@
 
 /datum/outfit/bloodsucker/post_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
-	var/list/eye_list = H.getorganslotlist(ORGAN_SLOT_EYES)
-	for(var/obj/item/organ/eyes/eyes as anything in eye_list)
-		eyes?.glows = TRUE
-		eyes?.update_appearance(UPDATE_OVERLAYS)
+	var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+	eyes?.glows = TRUE
+	eyes?.update_appearance(UPDATE_OVERLAYS)
 

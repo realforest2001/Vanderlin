@@ -53,9 +53,6 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
-
-	var/list/inventory_screens = list()
-
 	var/atom/movable/screen/button_palette/toggle_palette
 	var/atom/movable/screen/palette_scroll/down/palette_down
 	var/atom/movable/screen/palette_scroll/up/palette_up
@@ -132,7 +129,6 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
-	inventory_screens = null
 
 	QDEL_NULL(module_store_icon)
 	QDEL_LIST(static_inventory)
@@ -203,7 +199,6 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
-	screenmob.client.screen |= inventory_screens
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -283,7 +278,6 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 	if(fov_holder)
 		screenmob.client?.screen |= fov_holder
-
 
 	return TRUE
 

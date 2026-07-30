@@ -509,7 +509,6 @@
 	M.client.screen |= boxes
 	M.client.screen |= closer
 	M.client.screen |= real_location.contents
-	M.hud_used.inventory_screens = list(boxes, closer) + real_location.contents
 	M.active_storage = src
 	LAZYOR(is_using, M)
 	return TRUE
@@ -526,7 +525,6 @@
 	M.client.screen -= boxes
 	M.client.screen -= closer
 	M.client.screen -= real_location.contents
-	M.hud_used.inventory_screens = list()
 	if(M.active_storage == src)
 		M.active_storage = null
 	LAZYREMOVE(is_using, M)

@@ -11,9 +11,9 @@
 	var/toxpwr = 1.5
 	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
-/datum/reagent/toxin/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	if(toxpwr)
-		M.adjustToxLoss(toxpwr*REM * efficiency, 0)
+		M.adjustToxLoss(toxpwr*REM, 0)
 	return ..()
 
 /datum/reagent/toxin/amatoxin
@@ -64,15 +64,16 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	alpha = 225
 
-/datum/reagent/medicine/soporpot/on_mob_life(mob/living/carbon/M, efficiency)
-	M.adjust_confusion(2 SECONDS * efficiency)
-	M.adjust_dizzy(2 SECONDS * efficiency)
-	M.adjust_energy(-25 * efficiency)
+/datum/reagent/medicine/soporpot/on_mob_life(mob/living/carbon/M)
+	M.adjust_confusion(2 SECONDS)
+	M.adjust_dizzy(2 SECONDS)
+	M.adjust_energy(-25)
 	if(M.stamina > 75)
-		M.adjust_drowsiness(4 SECONDS * efficiency)
+		M.adjust_drowsiness(4 SECONDS)
 	else
-		M.adjust_stamina(15 * efficiency)
+		M.adjust_stamina(15)
 	..()
+	. = 1
 
 /datum/reagent/toxin/venom
 	name = "Venom"
@@ -82,8 +83,8 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M, efficiency)
-	toxpwr = 0.2*volume * efficiency
+/datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
+	toxpwr = 0.2*volume
 	. = 1
 	..()
 
@@ -96,14 +97,14 @@
 	toxpwr = 0
 	price_per_unit = 3
 
-/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M, efficiency)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM * efficiency, 150)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
 	if(M.toxloss <= 60)
-		M.adjustToxLoss(1*REM * efficiency, 0)
+		M.adjustToxLoss(1*REM, 0)
 	if(current_cycle >= 4)
 		M.add_stress(/datum/stress_event/narcotic_heavy)
 	if(current_cycle >= 18)
-		M.Sleeping(40 * efficiency, 0)
+		M.Sleeping(40, 0)
 	..()
 	return TRUE
 
@@ -115,10 +116,10 @@
 	metabolization_rate = 0.01
 	toxpwr = 0
 
-/datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M)
 	//testing("Someone was poisoned") // This is too gold to remove
 	if(volume > 0.95)
-		M.adjustToxLoss(10 * efficiency, 0)
+		M.adjustToxLoss(10, 0)
 	return ..()
 
 /datum/reagent/toxin/bad_food
@@ -202,11 +203,11 @@
 
 	L.mana_pool.halt_mana_disperse("manabloom")
 
-/datum/reagent/toxin/manabloom_juice/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/toxin/manabloom_juice/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	if(!M.mana_pool)
 		return
-	M.mana_pool.adjust_mana(volume * efficiency)
+	M.mana_pool.adjust_mana(volume)
 
 /datum/reagent/toxin/manabloom_juice/on_mob_end_metabolize(mob/living/L)
 	. = ..()
@@ -245,10 +246,10 @@
 /datum/reagent/toxin/spidervenom_paralytic/on_mob_end_metabolize(mob/living/L)
 	..()
 
-/datum/reagent/toxin/spidervenom_paralytic/on_mob_life(mob/living/carbon/M, efficiency)
+/datum/reagent/toxin/spidervenom_paralytic/on_mob_life(mob/living/carbon/M)
 	..()
 	if(!(current_cycle % 5) && !(prob(venom_resistance / 5)))
-		M.Paralyze(50 * efficiency)
+		M.Paralyze(50)
 	if(current_cycle >= 60 && !(current_cycle % 5) && prob(venom_resistance))
 		M.reagents.remove_reagent(/datum/reagent/toxin/spidervenom_paralytic, 100)
 

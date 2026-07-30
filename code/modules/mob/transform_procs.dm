@@ -16,10 +16,12 @@
 
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
+	var/obj/item/cavity_object
+
 	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
-	for(var/atom/movable/item as anything in CH.cavity_items)
-		item.forceMove(drop_location())
-		CH.cavity_items -= item
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -85,6 +87,12 @@
 
 		for(var/obj/item/organ/I as anything in int_organs)
 			I.Insert(O, 1)
+
+
+	var/obj/item/bodypart/chest/torso = get_bodypart(BODY_ZONE_CHEST)
+	if(cavity_object)
+		torso.cavity_item = cavity_object //cavity item is given to the new chest
+		cavity_object.forceMove(O)
 
 	for(var/missing_zone in missing_bodyparts_zones)
 		var/obj/item/bodypart/BP = O.get_bodypart(missing_zone)

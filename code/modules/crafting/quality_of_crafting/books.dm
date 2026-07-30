@@ -609,10 +609,6 @@ GLOBAL_LIST_EMPTY(linked_recipe_cache)
 
 	types = list(
 		/datum/book_entry/grims_guide,
-		/datum/book_entry/cavity_access,
-		/datum/book_entry/organ_surgery,
-		/datum/book_entry/lobotomy,
-		/datum/book_entry/pestran_chimeric,
 		/datum/chimeric_table,
 		/datum/chimeric_node,
 		/datum/wound,

@@ -64,10 +64,9 @@
 				zombie_check()
 
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	pulse = PULSE_NONE
-	for(var/thing in getorganslotlist(ORGAN_SLOT_HEART))
-		var/obj/item/organ/heart/heart = thing
-		heart.Stop()
+	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	if(H)
+		H.beat = BEAT_NONE
 
 	if(!MOBTIMER_EXISTS(src, MT_DEATHDIED))
 		MOBTIMER_SET(src, MT_DEATHDIED)
@@ -156,7 +155,6 @@
 	. = ..()
 	if(!.)
 		return
-	pump_heart(forced_pump = 1.3)
 	var/datum/job/human_job = SSjob.GetJob(job)
 	if(human_job)
 		switch(human_job.type)

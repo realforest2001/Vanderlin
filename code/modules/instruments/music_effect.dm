@@ -104,7 +104,9 @@
 	var/obj/effect/temp_visual/music_rogue/M = new /obj/effect/temp_visual/music_rogue(get_turf(owner))
 	M.color = effect_color
 	for (var/mob/living/carbon/human/H in hearers(7, owner))
-		if(!H.client || HAS_TRAIT(H, TRAIT_DEAF))
+		if (!H.client)
+			continue
+		if(!H.can_hear())
 			continue
 		H.add_stress(stress_to_apply)
 

@@ -368,8 +368,7 @@
 	attribute_sheet_old = /datum/attribute_holder/sheet/job/town_elder/hearth_acolyte/old
 
 	traits = list(
-		TRAIT_OLDPARTY,
-		TRAIT_VIRGIN,
+		TRAIT_OLDPARTY
 	)
 
 	languages = list(/datum/language/celestial)
@@ -377,6 +376,7 @@
 /datum/job/advclass/town_elder/hearth_acolyte/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
 
+	spawned.virginity = TRUE
 	switch(spawned.patron?.type)
 		if(/datum/patron/divine/astrata)
 			spawned.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
@@ -386,7 +386,7 @@
 		if(/datum/patron/divine/eora)
 			ADD_TRAIT(spawned, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 			ADD_TRAIT(spawned, TRAIT_EMPATH, TRAIT_GENERIC)
-			REMOVE_TRAIT(spawned, TRAIT_VIRGIN, JOB_TRAIT)
+			spawned.virginity = FALSE
 			spawned.attributes?.add_sheet(/datum/attribute_holder/sheet/job/town_elder/hearth_acolyte/patron/eora)
 			spawned.cmode_music = 'sound/music/cmode/church/CombatEora.ogg'
 		if(/datum/patron/divine/noc)

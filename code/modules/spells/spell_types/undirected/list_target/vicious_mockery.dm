@@ -54,7 +54,7 @@
 /obj/projectile/magic/mockery_note/on_hit(target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(HAS_TRAIT(M, TRAIT_DEAF))
+		if(!M.can_hear())
 			visible_message(span_warning("The insult falls on deaf ears!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK

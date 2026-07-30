@@ -17,7 +17,6 @@
 
 	H.put_in_hands(new /obj/item/clothing/face/spectacles())
 	H.become_nearsighted(type)
-	return ..()
 
 /datum/quirk/vice/bad_sight/on_remove()
 	if(owner)
@@ -35,29 +34,27 @@
 	name = "Cyclops (R)"
 	desc = "I lost my right eye long ago. But it made me great at noticing things."
 	point_value = 2
-	traits_to_add = list(TRAIT_CYCLOPS_RIGHT)
 
 /datum/quirk/vice/cyclops_right/on_spawn()
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/H = owner
 	H.put_in_hands(new /obj/item/clothing/face/eyepatch())
+	ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, QUIRK_TRAIT)
 	H.update_fov_angles()
-	return ..()
 
 /datum/quirk/vice/cyclops_left
 	name = "Cyclops (L)"
 	desc = "I lost my left eye long ago. But it made me great at noticing things."
 	point_value = 2
-	traits_to_add = list(TRAIT_CYCLOPS_LEFT)
 
 /datum/quirk/vice/cyclops_left/on_spawn()
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/H = owner
 	H.put_in_hands(new /obj/item/clothing/face/eyepatch/left())
+	ADD_TRAIT(H, TRAIT_CYCLOPS_LEFT, QUIRK_TRAIT)
 	H.update_fov_angles()
-	return ..()
 
 /datum/quirk/vice/tongueless
 	name = "Tongueless"
@@ -70,7 +67,6 @@
 	var/mob/living/carbon/human/H = owner
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	head?.add_wound(/datum/wound/facial/tongue/permanent)
-	return ..()
 
 /datum/quirk/vice/mute
 	name = "Mute"
@@ -79,7 +75,16 @@
 	incompatible_quirks = list(
 		/datum/quirk/vice/tongueless
 	)
-	traits_to_add = list(TRAIT_MUTE)
+
+/datum/quirk/vice/mute/on_spawn()
+	if(!owner)
+		return
+	ADD_TRAIT(owner, TRAIT_MUTE, QUIRK_TRAIT)
+
+/datum/quirk/vice/mute/on_remove()
+	if(!owner)
+		return
+	REMOVE_TRAIT(owner, TRAIT_MUTE, QUIRK_TRAIT)
 
 /datum/quirk/vice/wooden_arm_right
 	name = "Wooden Arm (R)"
@@ -96,7 +101,6 @@
 		qdel(O)
 	var/obj/item/bodypart/r_arm/prosthetic/wood/L = new()
 	L.attach_limb(H)
-	return ..()
 
 /datum/quirk/vice/wooden_arm_left
 	name = "Wooden Arm (L)"
@@ -113,19 +117,20 @@
 		qdel(O)
 	var/obj/item/bodypart/l_arm/prosthetic/wood/L = new()
 	L.attach_limb(H)
-	return ..()
 
 /datum/quirk/vice/leprosy
 	name = "Leprosy"
 	desc = "Become a leper. You will be hated, you will be shunned, you will bleed and you will be weak."
 	point_value = 8
-	traits_to_add = list(TRAIT_LEPROSY, TRAIT_NOPAIN)
 
 /datum/quirk/vice/leprosy/on_spawn()
 	if(!ishuman(owner))
 		return
 
 	var/mob/living/carbon/human/H = owner
+
+	ADD_TRAIT(H, TRAIT_LEPROSY, QUIRK_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOPAIN, QUIRK_TRAIT)
 
 	// Equip iron mask - remove existing mask if present
 	if(H.wear_mask)
@@ -134,12 +139,16 @@
 		H.put_in_hands(new type(get_turf(H)))
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/face/facemask(H), ITEM_SLOT_MASK)
-	return ..()
 
 /datum/quirk/vice/leprosy/on_remove()
 	if(!ishuman(owner))
 		return
-	return ..()
+
+	var/mob/living/carbon/human/H = owner
+
+	// Remove traits when quirk is removed
+	REMOVE_TRAIT(H, TRAIT_LEPROSY, QUIRK_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NOPAIN, QUIRK_TRAIT)
 
 /datum/quirk/vice/crippled_arm
 	name = "Missing Arm"
@@ -162,7 +171,6 @@
 		customization_value = BODY_ZONE_L_ARM
 
 	addtimer(CALLBACK(src, PROC_REF(remove_limb)), 0.5 SECONDS)
-	return ..()
 
 /datum/quirk/vice/crippled_arm/proc/remove_limb()
 	if(!ishuman(owner))
@@ -200,7 +208,6 @@
 		customization_value = BODY_ZONE_L_ARM
 
 	addtimer(CALLBACK(src, PROC_REF(remove_limb)), 0.5 SECONDS)
-	return ..()
 
 /datum/quirk/vice/crippled_leg/proc/remove_limb()
 	if(!ishuman(owner))
@@ -236,7 +243,16 @@
 	incompatible_quirks = list(
 		/datum/quirk/vice/luxless
 	)
-	traits_to_add = list(TRAIT_TAINTED_LUX)
+
+/datum/quirk/vice/tainted_soul/on_spawn()
+	if(!ishuman(owner))
+		return
+	ADD_TRAIT(owner, TRAIT_TAINTED_LUX, "[type]")
+
+/datum/quirk/vice/tainted_soul/on_remove()
+	if(!ishuman(owner))
+		return
+	REMOVE_TRAIT(owner, TRAIT_TAINTED_LUX, "[type]")
 
 /datum/quirk/vice/rough_start
 	name = "Rough Start"
@@ -288,7 +304,6 @@
 			H.forceMove(pick(spawn_points))
 
 	to_chat(H, span_danger("You awaken battered and broken in an unfamiliar place..."))
-	return ..()
 
 /datum/quirk/vice/lost_keys
 	name = "Lost Keys"
@@ -314,7 +329,6 @@
 		H.forceMove(pick(vagrant_spawns))
 
 	to_chat(H, span_warning("Where did I leave my keys?"))
-	return ..()
 
 /datum/quirk/vice/lost_keys/after_job_spawn(datum/job/job)
 	if(!owner || !ishuman(owner))
@@ -341,13 +355,12 @@
 		for(var/obj/item/key/K in found_keys)
 			var/turf/key_location = pick(nearby_turfs)
 			K.forceMove(key_location)
-	return ..()
 
 /datum/quirk/vice/nightmares
 	name = "Nitemares"
-	desc = "You suffer from terrible nitemares. You gain stress from sleep, scream in your sleep, and take longer to sleep."
+	desc = "You suffer from terrible nitemares. You scream in your sleep and take longer to rest."
 	point_value = 1
-	COOLDOWN_DECLARE(next_scream)
+	var/next_scream = 0
 	var/comforted = FALSE
 
 /datum/quirk/vice/nightmares/on_examined(mob/user, list/P, list/examine_contents)
@@ -358,7 +371,6 @@
 	if(!owner)
 		return
 	START_PROCESSING(SSobj, src)
-	return ..()
 
 /datum/quirk/vice/nightmares/process()
 	if(!owner)
@@ -367,8 +379,8 @@
 		if(owner.has_stress_type(/datum/stress_event/hug))
 			comforted = TRUE
 
-		if(COOLDOWN_FINISHED(src, next_scream))
-			COOLDOWN_START(src, next_scream, rand(30 SECONDS, 60 SECONDS))
+		if(world.time >= next_scream)
+			next_scream = world.time + rand(30 SECONDS, 60 SECONDS)
 			if(comforted)
 				to_chat(owner, span_green("I was comforted, so nitemares are not so vivid this time..."))
 			else
@@ -378,7 +390,6 @@
 
 /datum/quirk/vice/nightmares/on_remove()
 	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /datum/stress_event/darkness
 	stress_change = 2
@@ -445,7 +456,7 @@
 	var/to_remove = rand(6, 8)
 	jaw.remove_teeth(to_remove)
 	to_chat(H, span_warning("You run your tongue across the gaps where your teeth used to be."))
-	return ..()
+
 
 /datum/attribute_holder/sheet/job/weak_quirk
 	raw_attribute_list = list(
@@ -462,13 +473,11 @@
 	if(!ishuman(owner))
 		return
 	owner.attributes?.add_sheet(/datum/attribute_holder/sheet/job/weak_quirk)
-	return ..()
 
 /datum/quirk/vice/weak/on_remove()
 	if(!ishuman(owner))
 		return
 	owner.attributes?.subtract_sheet(/datum/attribute_holder/sheet/job/weak_quirk)
-	return ..()
 
 /datum/attribute_holder/sheet/job/frail_quirk
 	raw_attribute_list = list(
@@ -485,10 +494,9 @@
 	if(!ishuman(owner))
 		return
 	owner.attributes?.add_sheet(/datum/attribute_holder/sheet/job/frail_quirk)
-	return ..()
 
 /datum/quirk/vice/frail/on_remove()
 	if(!ishuman(owner))
 		return
 	owner.attributes?.subtract_sheet(/datum/attribute_holder/sheet/job/frail_quirk)
-	return ..()
+

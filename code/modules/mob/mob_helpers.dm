@@ -955,6 +955,11 @@
 
 	..()
 
+///Can the mob hear
+/mob/proc/can_hear()
+	. = TRUE
+
+
 /**
  * Get the list of keywords for policy config
  *

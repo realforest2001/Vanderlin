@@ -112,25 +112,29 @@
 
 /mob/living/carbon/getorganslotlist(slot)
 	. = list()
-	var/organ_list = internal_organs_slot[slot]
-	if(!length(organ_list))
-		return
-	. |= organ_list
+	if(length(internal_organs_slot[slot]))
+		. |= internal_organs_slot[slot]
 
 /mob/living/carbon/getorganslotlistzone(slot, zone)
 	. = list()
-	for(var/obj/item/organ/organ as anything in internal_organs_slot[slot])
+	var/obj/item/organ/organ
+	for(var/thing in internal_organs_slot[slot])
+		organ = thing
 		if(zone == check_zone(organ.current_zone))
 			. |= organ
 
 /mob/living/carbon/getorganslotefficiency(slot)
 	. = 0
-	for(var/obj/item/organ/organ as anything in internal_organs_slot[slot])
+	var/obj/item/organ/organ
+	for(var/thing in internal_organs_slot[slot])
+		organ = thing
 		. += organ.get_slot_efficiency(slot)
 
 /mob/living/carbon/getorganslotefficiencyzone(slot, zone)
 	. = 0
-	for(var/obj/item/organ/organ as anything in internal_organs_slot[slot])
+	var/obj/item/organ/organ
+	for(var/thing in internal_organs_slot[slot])
+		organ = thing
 		if(zone == check_zone(organ.current_zone))
 			. += organ.get_slot_efficiency(slot)
 

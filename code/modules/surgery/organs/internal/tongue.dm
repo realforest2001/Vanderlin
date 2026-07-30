@@ -161,7 +161,7 @@
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = ""
-	organ_flags = ORGAN_ROBOTIC
+	status = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")

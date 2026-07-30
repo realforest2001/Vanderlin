@@ -27,38 +27,17 @@ LINEN BINS
 	var/datum/weakref/signal_sleeper //this is our goldylocks
 	var/bed_tucked = FALSE
 
-/obj/item/bedsheet/Initialize(mapload)
+/obj/item/bedsheet/Initialize()
 	. = ..()
-	AddElement(/datum/element/bed_tuckable, mapload, 0, 0, 0)
-
-/obj/item/bedsheet/examine(mob/user)
-	. = ..()
-	if(bed_tucked)
-		. += span_info("[src] is tucked into the bed.")
-
-/obj/item/bedsheet/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isliving(interacting_with))
-		return NONE
-	var/mob/living/to_cover = interacting_with
-	if(to_cover.body_position != LYING_DOWN)
-		return ITEM_INTERACT_BLOCKING
-	if(!user.transferItemToLoc(src, get_turf(to_cover)))
-		return ITEM_INTERACT_BLOCKING
-
-	balloon_alert(user, "covered")
-	coverup(to_cover)
-	add_fingerprint(user)
-
-	return ITEM_INTERACT_SUCCESS
+	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 
 /obj/item/bedsheet/attack_self(mob/living/user, list/modifiers)
 	if(!user.CanReach(src))		//No telekenetic grabbing.
 		return
-	if(user.body_position != LYING_DOWN)
+	if(!user.resting)
 		return
-	if(!user.transferItemToLoc(src, get_turf(src)))
+	if(!user.dropItemToGround(src))
 		return
-
 	coverup(user)
 	add_fingerprint(user)
 
@@ -67,7 +46,7 @@ LINEN BINS
 	plane = GAME_PLANE_UPPER
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
-	balloon_alert(sleeper, "covered")
+	to_chat(sleeper, "<span class='notice'>I cover myself with [src].</span>")
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
 
@@ -84,10 +63,9 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_RESTING)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
-	balloon_alert(sleeper, "smoothed sheets")
+	to_chat(sleeper, "<span class='notice'>I smooth [src] out beneath you.</span>")
 	layer = initial(layer)
 	plane = initial(plane)
-	pixel_z = 0
 	signal_sleeper = null
 
 // We need to do this in case someone picks up a bedsheet while a mob is covered up
@@ -109,11 +87,11 @@ LINEN BINS
 	if(do_after(user, 2 SECONDS, src))
 		var/obj/structure/bed/bed = locate() in loc
 		if(bed)
-			to_chat(user, span_notice("You remove \the [src] from \the [bed]."))
+			to_chat(user, span_notice("You start to remove \the [src] from \the [bed]."))
 			bed.sheet_tucked = FALSE
+			bed.sheet_on = FALSE
 			bed_tucked = FALSE
 		return ..()
-
 /obj/item/bedsheet/cloth
 	desc = ""
 	icon = 'icons/roguetown/misc/structure.dmi'

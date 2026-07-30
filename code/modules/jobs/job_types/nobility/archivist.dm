@@ -52,9 +52,13 @@
 	)
 	traits = list(
 		TRAIT_NOBLE_BLOOD,
-		TRAIT_NOBLE_POWER,
-		TRAIT_VIRGIN,
+		TRAIT_NOBLE_POWER
 	)
+
+/datum/job/archivist/after_spawn(mob/living/carbon/human/spawned, client/player_client)
+	. = ..()
+
+	spawned.virginity = TRUE
 
 /datum/attribute_holder/sheet/job/chronicler
 	raw_attribute_list = list(

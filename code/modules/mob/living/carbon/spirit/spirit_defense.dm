@@ -125,14 +125,14 @@
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
 			damage_clothes(200, BRUTE, "blunt")
-			sound_damage(30, 12 SECONDS)
+			adjustEarDamage(30, 120)
 			if(prob(70))
 				Unconscious(200)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30, 0)
 			damage_clothes(50, BRUTE, "blunt")
-			sound_damage(15, 6 SECONDS)
+			adjustEarDamage(15,60)
 			if (prob(50))
 				Unconscious(160)
 

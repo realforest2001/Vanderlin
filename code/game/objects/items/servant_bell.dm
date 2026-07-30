@@ -151,7 +151,7 @@
 			continue
 		if(player.stat >= DEAD)
 			continue
-		if(HAS_TRAIT(player, TRAIT_DEAF))
+		if(!player.can_hear())
 			continue
 		if(player.can_block_magic(MAGIC_RESISTANCE_MIND, 0))
 			continue

@@ -247,8 +247,6 @@
 /mob/living/proc/getOrganLoss(slot)
 	return
 
-/mob/living/proc/get_stamina_loss()
-	return stamina
 
 /mob/living/proc/getPainLoss()
 	return painloss

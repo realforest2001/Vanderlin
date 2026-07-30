@@ -99,12 +99,11 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/good_music/tick()
-	if(HAS_TRAIT(owner, TRAIT_DEAF))
-		return
-	owner.adjust_dizzy(-4 SECONDS)
-	owner.adjust_jitter(-4 SECONDS)
-	owner.adjust_confusion(-1 SECONDS)
-	owner.add_stress(/datum/stress_event/goodmusic)
+	if(owner.can_hear())
+		owner.adjust_dizzy(-4 SECONDS)
+		owner.adjust_jitter(-4 SECONDS)
+		owner.adjust_confusion(-1 SECONDS)
+		owner.add_stress(/datum/stress_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"

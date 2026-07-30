@@ -137,9 +137,13 @@
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,
-		TRAIT_BEAUTIFUL,
-		TRAIT_VIRGIN,
+		TRAIT_BEAUTIFUL
 	)
+
+/datum/job/advclass/heir/aristocrat/after_spawn(mob/living/carbon/human/spawned, client/player_client)
+	. = ..()
+	if(spawned.gender == FEMALE)
+		spawned.virginity = TRUE
 
 /datum/outfit/heir/aristocrat
 	name = "Sheltered Aristocrat (Prince)"
@@ -197,9 +201,13 @@
 	traits = list(
 		TRAIT_CRITICAL_WEAKNESS,
 		TRAIT_MEDIUMARMOR,
-		TRAIT_UGLY,
-		TRAIT_VIRGIN,
+		TRAIT_UGLY
 	)
+
+/datum/job/advclass/heir/inbred/after_spawn(mob/living/carbon/human/spawned, client/player_client)
+	. = ..()
+	if(spawned.gender == FEMALE)
+		spawned.virginity = TRUE
 
 /datum/outfit/heir/inbred
 	name = "Inbred Wastrel (Prince)"

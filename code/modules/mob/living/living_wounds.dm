@@ -57,8 +57,6 @@
 
 /// Loops through our list of wounds healing them until we run out of healing or all wounds are healed
 /mob/living/proc/heal_wounds(heal_amount, datum/source)
-	if(heal_amount <= 0)
-		return FALSE
 	var/healed_any = FALSE
 	for(var/datum/wound/wound as anything in get_wounds())
 		if(heal_amount <= 0)
@@ -67,11 +65,6 @@
 		if(amount_healed)
 			heal_amount -= amount_healed
 			healed_any = TRUE
-	for(var/obj/item/organ/artery/artery as anything in getorganslotlist(ORGAN_SLOT_ARTERY))
-		if(!artery.damage)
-			continue
-		artery.applyOrganDamage(-heal_amount)
-		healed_any = TRUE
 	return healed_any
 
 /// Simple version for adding a wound - DO NOT CALL THIS ON CARBON MOBS!

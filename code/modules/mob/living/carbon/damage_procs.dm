@@ -142,12 +142,11 @@
 	if(. <= 75)
 		if(getOxyLoss() > 75)
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+			var/obj/item/organ/brain = getorganslot(ORGAN_SLOT_BRAIN)
+			brain?.consider_processing()
 
 	else if(getOxyLoss() <= 75)
 		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-
-	var/obj/item/organ/brain = getorganslot(ORGAN_SLOT_BRAIN)
-	brain?.consider_processing()
 
 /mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

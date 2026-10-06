@@ -128,7 +128,6 @@
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, M)
 	UnregisterSignal(owner, COMSIG_ATOM_EXAMINE)
-	var/initial_zone = current_zone
 	owner = null
 	if(M)
 		M.internal_organs -= src

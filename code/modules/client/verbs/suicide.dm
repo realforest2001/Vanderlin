@@ -166,30 +166,6 @@
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
 
-/mob/living/simple_animal/verb/suicide()
-	set hidden = 1
-	if(!usr.client.holder)
-		return
-	if(!canSuicide())
-		return
-	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
-						"<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>")
-
-		suicide_log()
-
-		death(FALSE)
-
-/mob/living/proc/suicide_log()
-	log_message("committed suicide as [src.type]", LOG_ATTACK)
-
-/mob/living/carbon/human/suicide_log()
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
-
 /mob/living/proc/canSuicide()
 	switch(stat)
 		if(CONSCIOUS)
